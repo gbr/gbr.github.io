@@ -2,22 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>/</loc>
+    <loc>http://glennryan.info/</loc>
     <lastmod>2016-02-26T23:29:58-08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/2016/02/26/first</loc>
+    <loc>http://glennryan.info/2016/02/26/first</loc>
     <lastmod>2016-02-26T23:29:58-08:00</lastmod>
   </url>
   
   <url>
-    <loc>/math/</loc>
+    <loc>http://glennryan.info/math/</loc>
   </url>
   
   <url>
-    <loc>/sample/</loc>
+    <loc>http://glennryan.info/sample/</loc>
   </url>
   
 </urlset>
