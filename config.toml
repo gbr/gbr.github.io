@@ -4,7 +4,7 @@ layoutdir = "layouts"
 publishdir = "public"
 languageCode = "en-us"
 title = "glenn ryan"
-theme = "hikari"
+theme = "hugo-hikari-theme"
 # Shown in the side menu
 copyright = "&copy; Glenn Ryan 2016. All rights reserved."
 canonifyurls = true
