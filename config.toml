@@ -36,6 +36,10 @@ disqusShortname = "glennryan"
 	search_enabled = true
 	search = "Search"
 
+	[[params.offcanvas.portfolio]]
+		name = "Nitrile"
+		url = "//nitrile.cc"
+
 	[[params.offcanvas.socialnetworks]]
 		name = "Github"
 		url = "//github.com/gbr"
