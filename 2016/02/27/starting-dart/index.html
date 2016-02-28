@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>starting dart &middot; glenn ryan</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Glenn Ryan">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.15" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="http://glennryan.info/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700|Lora:400,700,400italic" rel="stylesheet" type="text/css">
+</head>
+<body>
+    
+    <div class="off-canvas">
+    <figure class="avatar">
+        <img src="http://glennryan.info/img/avatar.jpg" title="Glenn Ryan">
+    </figure>
+    <div class="bio">
+        
+        <h1>hi, i&rsquo;m <a href="mailto:contact@glennryan.info">@glennryan</a></h1>
+        
+        
+        <p>I&rsquo;m a software engineer trying to keep my toolbox sharp and my problem-solving skills even sharper. I write about it here.</p>
+        
+    </div>
+    <nav>
+
+        
+
+        
+        <h6>Search</h6>
+        
+
+        <div>
+            <form name="google-search" method="get" action="http://www.google.com/search" target="_blank">
+                <input type="hidden" name="sitesearch" value="http://glennryan.info/" />
+                <input name="q" type="text" />
+                <input type="submit" name="sa" value="Google" />
+            </form>
+        </div>
+
+        
+
+        
+        <h6>Subscribe</h6>
+        
+
+        <ul>
+            <li><a target="_blank" href="http://glennryan.info/index.xml">RSS feed</a></li>
+        </ul>
+
+        
+
+        
+        <h6>Find me on</h6>
+        
+
+        <ul>
+        
+            <li><a target="_blank" href="//github.com/gbr">Github</a></li>
+        
+            <li><a target="_blank" href="//twitter.com/bgarryan">Twitter</a></li>
+        
+            <li><a target="_blank" href="//linkedin.com/in/gbryan">LinkedIn</a></li>
+        
+        </ul>
+    </nav>
+</div>
+
+
+    <div class="site-wrapper">
+        <header>
+	<div class="h-wrap">
+		
+		<h1 class="title"><a href="http://glennryan.info/">glenn ryan</a></h1>
+		
+		<a class="menu-icon" title="Menu"><span class="lines"></span></a>
+	</div>
+</header>
+        
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                    <time datetime="" itemprop="datePublished">
+                    27. February 2016
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">starting dart</h1>
+                <h5 class="reading-time"></h5>
+                <div itemprop="articleBody">
+                    
+
+<h3 id="what-i-wanted:f67c76d5effc368f32a31f09e6236041">what i wanted</h3>
+
+<p>I have a side project under wraps that I intend to work on over the next couple of months. On and off since December, I&rsquo;ve brainstormed a number of modern languages and frameworks out there to find at least one set of tools most conducive to getting this app prototyped <em>quickly</em>, <em>efficiently</em> and in a way that is <em>maintainable</em> and <em>readable</em> for a single full-stack developer. It would also help, I thought, if I enjoyed the langauges/frameworks I learn along the way. As someone who has only written business-critical, production code for the web in Java (JSF and Primefaces 😜), I want this experience to be a little more modern. I want it to involve &mdash; at least mostly &mdash; <em>open source</em> tools, and I want it to be simple to prototype and understand from end to end.</p>
+
+<h3 id="how-i-found-it:f67c76d5effc368f32a31f09e6236041">how i found it</h3>
+
+<p>When I expressed these desires and constraints to my friend, he referred me to this video:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/pB0WvcxTbCA" frameborder="0" allowfullscreen></iframe>
+
+<p>The presenter delivers a very thorough, though impartial, overview of fundamentals to nail down and quite clearly delineates two different paths for a web developer: front end and back end. He does not say that one person cannot excel at both, but he certainly implies mastering one fork of the road before approaching the other is most effective. Furthermore, though he comments briefly on each framework and language he introduces, he rarely expresses an opinion other than what he thought the job market seemed to favor at the time of the video. This was a good start, but I needed a nudge in a direction.</p>
+
+<p>Fortunately, we can always rely on the YouTube community to express a clear opinion, right or wrong.</p>
+
+<p>I noticed, several comments down from the top, mention of a MEAN stack and a few comments below it praising said mention. This looked promising. I researched what this MEAN stack was and how it was being used. Quite a few top results in my Google search revealed stunning single-page, JavaScript web apps written by a lone developer. Some of these people were generous enough to leave their repos public for others to study their code. I was instantly sold.</p>
+
+<h3 id="how-i-got-turned-around:f67c76d5effc368f32a31f09e6236041">how i got turned around</h3>
+
+<p>I spent some time getting to know JavaScript and learning some web dev fundamentals, meanwhile gathering tutorials and resources to really get started with this MEAN thing. Thanks to these venerable blog-writers, I gathered quite a bit of base material and knowledge to work with. Unfortunately, it all dematerialized once I took a step back and considered all my options once more before going &ldquo;all in&rdquo;, so to speak, with MEAN. I researched the negative, the neutral and the positive, ultimately becoming disenchanted with the &ldquo;magic&rdquo; of this combination.</p>
+
+<p>Without going into too much detail (some of which requires disclosing more than I would like on the design of my app), it all started with Angular. it became clear that though Angular 1.x is a decent framework that is now very mature, it is anticipated to be usurped quite strongly by its successor Angular 2 (now in beta). Likewise, many praised, at its expense, the modular and flexible combination of React with Flux architecture. And, finally, many exonerated Meteor.js as taking the goals of the MEAN stack to the level it should have gone to begin with.</p>
+
+<p>I reconsidered those options but found that they were all unsuitable to the app I envisioned, being either too flexible or too narrow in design, or not having the marketability guarantee a framework by a top tech company can provide. So I opted to be a semi-early adopter of Angular 2, given its beta status. I lost use of some directives I originally intended to use for my app, but this was fine; <a href="http://angular-tips.com/blog/2015/09/migrating-directives-to-angular-2/">it&rsquo;s not terrible to convert them</a>. I just needed to learn to use the new framework. And from there I fell down another rabbit hole. At my disposable in Angular 2 were three language options: JavaScript, TypeScript and Dart.</p>
+
+<h3 id="how-i-got-here:f67c76d5effc368f32a31f09e6236041">how i got here</h3>
+
+<p><em>Having an open mind is as confusing as it is enriching.</em></p>
+
+<p>I did some research into each option, weighing pros and cons. It seemed nearly obvious to me that the benefits lie almost entirely in choosing one or both of the non-JS options. Then, it seemed to me that I preferred Dart over TS, but I was not sure how realistic this choice would be. In doing so, I posed three dangers to my project:</p>
+
+<ol>
+<li>A huge loss in learning materials and examples I could learn from</li>
+<li>The possibility that Dart that could be dead in a few years</li>
+<li>Potential inoperability with key JavaScript libraries this app needs</li>
+</ol>
+
+<p>Concerns one and two are the risks of being an early adopter, but this is cost that yields to a much greater reward: the fun and practice of developing in the unknown, not to mention the oppurtunity to contribute to Angular 2 (via field-testing) and its community (via knowledge-sharing). The third problem posed the greatest challenge to the Dart route. Thankfully, the Dart team has <a href="https://www.dartlang.org/articles/js-dart-interop/">released some interoperability libraries</a> to help with this very thing.</p>
+
+<blockquote>
+<p>“When my information changes, I alter my conclusions. What do you do, sir?”
+&mdash; John Maynard Keyes</p>
+</blockquote>
+
+<p>Then, I thought, if I&rsquo;m going this far, why not go further? <a href="http://stackoverflow.com/questions/29218468/does-angular-2-0-alpha-work-with-the-components-in-angular-material-project">I&rsquo;ve lost use of Angular Meterials at this stage of Angular 2</a>, so why not try Polymer too? <a href="https://dart.academy/dart-angular-2-and-polymer-together/">It&rsquo;s compatible with Dart and Angular 2</a>. And why write the Node.js/Express backend in JS or TS if Dart with <a href="https://pub.dartlang.org/packages/shelf">shelf</a> can do the same exact thing? I&rsquo;d rather keep the synergy of using one language throughout the entirety of the app. If it&rsquo;s possible, why not try it? This app is just a prototype and has no constraints other than the time I am willing to spend on it. So here I am, <a href="https://www.dartlang.org/codelabs/darrrt/">getting started with Dart</a>. I&rsquo;ll come back in a later post and let you know how it went.</p>
+
+                </div>
+                <div class="feat share">
+                    <a href="//twitter.com/share" class="popup">
+                        <span class="icon-twitter"></span>
+                    </a>
+                </div>
+                
+                <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'glennryan';
+    var disqus_identifier = 'http:\/\/glennryan.info\/2016\/02\/27\/starting-dart';
+    var disqus_title = 'starting dart';
+    var disqus_url = 'http:\/\/glennryan.info\/2016\/02\/27\/starting-dart';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+                
+                
+                    <a rel="prev" href="http://glennryan.info/2016/02/27/a-clean-slate-deleting-all-tweets-with-python" id="prev">
+                        &larr; <span class="nav-title nav-title-prev"></span>
+                    </a>
+                
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>POWERED BY <a href="//gohugo.io">HUGO</a> - THEME: <a href="//github.com/digitalcraftsman/hugo-hikari-theme">HIKARI</a> - © 2016 <a href="mailto:contact@glennryan.info">GLENN RYAN</a></small>
+	
+</footer>
+    </div>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://glennryan.info/js/main.js"></script>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-74357056-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+<!-- Syntax highlighting -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!-- Reading time approximation -->
+<script src="http://glennryan.info/js/Countable.js"></script>
+<script>Countable.renderReadTime(200, 'div[itemprop=articleBody]', '.reading-time');</script>
+
+</body>
+</html>

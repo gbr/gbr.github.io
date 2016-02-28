@@ -97,6 +97,7 @@
                     </h5>
                 </div>
                 <h1 class="page-title" itemprop="name headline">a clean slate: deleting all tweets with python</h1>
+                <h5 class="reading-time"></h5>
                 <div itemprop="articleBody">
                     <p>As my first order of business, I was looking to to delete all prior tweets from my account, since I plan to start using Twitter in a more professional capacity from now on. To do so, I see there are <a href="tweetdelete.net">various sites</a> and <a href="https://www.gocardigan.com/">services</a> out there to assist with that. But part of beginning this blog was a commitment to exploring how I can use official  APIs, third-party libraries or my own code from scratch to accomplish things on the web.</p>
 
@@ -132,6 +133,10 @@
 <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
                 
+                    <a rel="next" href="http://glennryan.info/2016/02/27/starting-dart" id="next">
+                        <span class="nav-title nav-title-next"></span> &rarr;
+                    </a>
+                
                 
             </article>
         </section>
@@ -161,5 +166,10 @@ ga('send', 'pageview');
 <!-- Syntax highlighting -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
+
+<!-- Reading time approximation -->
+<script src="http://glennryan.info/js/Countable.js"></script>
+<script>Countable.renderReadTime(200, 'div[itemprop=articleBody]', '.reading-time');</script>
+
 </body>
 </html>
