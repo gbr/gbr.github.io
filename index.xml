@@ -7,8 +7,52 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Glenn Ryan 2016. All rights reserved.</copyright>
-    <lastBuildDate>Sat, 27 Feb 2016 22:31:15 -0800</lastBuildDate>
+    <lastBuildDate>Sun, 28 Feb 2016 01:44:08 -0800</lastBuildDate>
     <atom:link href="http://glennryan.info/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>read time</title>
+      <link>http://glennryan.info/2016/02/28/read-time</link>
+      <pubDate>Sun, 28 Feb 2016 01:44:08 -0800</pubDate>
+      
+      <guid>http://glennryan.info/2016/02/28/read-time</guid>
+      <description>&lt;p&gt;I just added a reading time feature to the site, where now, under the article title, there is a guesstimate of how long it will take to read the article, assuming you read 200 WPM on average.&lt;/p&gt;
+
+&lt;p&gt;I ran into &lt;a href=&#34;http://juristr.com/blog/2013/07/how-to-setup-reading-time-indicator-ten-minutes/&#34;&gt;this article&lt;/a&gt; explaining how to do it in short time. Following the directions, I downloaded the &lt;a href=&#34;https://raw.github.com/RadLikeWhoa/Countable/master/Countable.js&#34;&gt;Countable script&lt;/a&gt; and placed it into my static JS folder. Rather than write the chunk of code Juri suggests in a separate file or in an embedded script tag, I put it into Countable itself, in its own function called renderReadTime. And then I added function params to make it a little more clean:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;...
+    enabled: function (element) {
+      var isEnabled = false
+
+      if (element &amp;amp;&amp;amp; element.nodeType === 1) {
+        _loop(_liveElements, function (live) {
+          if (live.element === element) isEnabled = true
+        })
+      }
+
+      return isEnabled
+    },
+
+    renderReadTime: function (wpm, fromElement, toElement) {
+      this.once($(fromElement)[0], function (counter) {
+        var estimatedRaw = counter.words / wpm,
+        minutes = Math.round(estimatedRaw);
+        var effectiveTime = (minutes &amp;lt; 1) ? &amp;quot;a few secs&amp;quot; : minutes + &amp;quot; min read&amp;quot;;
+          $(toElement).html(effectiveTime);
+      });
+    }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Unfortunately, it&amp;rsquo;s still not &lt;em&gt;that&lt;/em&gt; clean when I actually call it:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;{{ &amp;quot;&amp;lt;!-- Reading time approximation --&amp;gt;&amp;quot; | safeHTML }}
+&amp;lt;script src=&amp;quot;{{ .Site.BaseURL }}js/Countable.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script&amp;gt;Countable.renderReadTime(200, &#39;div[itemprop=articleBody]&#39;, &#39;.reading-time&#39;);&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I&amp;rsquo;ll admit that my greatest weakness with front-end web development is HTML/CSS, so I&amp;rsquo;m sure I&amp;rsquo;ve made some cardinal sins here with my example code. I&amp;rsquo;ve got to do some reading up on that. But hey, that&amp;rsquo;s what this blog is for.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>starting dart</title>
@@ -61,7 +105,7 @@
 &amp;mdash; John Maynard Keyes&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Then, I thought, if I&amp;rsquo;m going this far, why not go further? &lt;a href=&#34;http://stackoverflow.com/questions/29218468/does-angular-2-0-alpha-work-with-the-components-in-angular-material-project&#34;&gt;I&amp;rsquo;ve lost use of Angular Meterials at this stage of Angular 2&lt;/a&gt;, so why not try Polymer too? &lt;a href=&#34;https://dart.academy/dart-angular-2-and-polymer-together/&#34;&gt;It&amp;rsquo;s compatible with Dart and Angular 2&lt;/a&gt;. And why write the Node.js/Express backend in JS or TS if Dart with &lt;a href=&#34;https://pub.dartlang.org/packages/shelf&#34;&gt;shelf&lt;/a&gt; can do the same exact thing? I&amp;rsquo;d rather keep the synergy of using one language throughout the entirety of the app. If it&amp;rsquo;s possible, why not try it? This app is just a prototype and has no constraints other than the time I am willing to spend on it. So here I am, &lt;a href=&#34;https://www.dartlang.org/codelabs/darrrt/&#34;&gt;getting started with Dart&lt;/a&gt;. I&amp;rsquo;ll come back in a later post and let you know how it went.&lt;/p&gt;
+&lt;p&gt;Then, I thought, if I&amp;rsquo;m going this far, why not go further? &lt;a href=&#34;http://stackoverflow.com/questions/29218468/does-angular-2-0-alpha-work-with-the-components-in-angular-material-project&#34;&gt;I&amp;rsquo;ve lost use of Angular Materials at this stage of Angular 2&lt;/a&gt;, so why not try Polymer too? &lt;a href=&#34;https://dart.academy/dart-angular-2-and-polymer-together/&#34;&gt;It&amp;rsquo;s compatible with Dart and Angular 2&lt;/a&gt;. And why write the Node.js/Express backend in JS or TS if Dart with &lt;a href=&#34;https://pub.dartlang.org/packages/shelf&#34;&gt;shelf&lt;/a&gt; can do the same exact thing? I&amp;rsquo;d rather keep the synergy of using one language throughout the entirety of the app. If it&amp;rsquo;s possible, why not try it? This app is just a prototype and has no constraints other than the time I am willing to spend on it. So here I am, &lt;a href=&#34;https://www.dartlang.org/codelabs/darrrt/&#34;&gt;getting started with Dart&lt;/a&gt;. I&amp;rsquo;ll come back in a later post and let you know how it went.&lt;/p&gt;
 </description>
     </item>
     

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>read time &middot; glenn ryan</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Glenn Ryan">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.15" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="http://glennryan.info/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700|Lora:400,700,400italic" rel="stylesheet" type="text/css">
+</head>
+<body>
+    
+    <div class="off-canvas">
+    <figure class="avatar">
+        <img src="http://glennryan.info/img/avatar.jpg" title="Glenn Ryan">
+    </figure>
+    <div class="bio">
+        
+        <h1>hi, i&rsquo;m <a href="mailto:contact@glennryan.info">@glennryan</a></h1>
+        
+        
+        <p>I&rsquo;m a software engineer trying to keep my toolbox sharp and my problem-solving skills even sharper. I write about it here.</p>
+        
+    </div>
+    <nav>
+
+        
+
+        
+        <h6>Search</h6>
+        
+
+        <div>
+            <form name="google-search" method="get" action="http://www.google.com/search" target="_blank">
+                <input type="hidden" name="sitesearch" value="http://glennryan.info/" />
+                <input name="q" type="text" />
+                <input type="submit" name="sa" value="Google" />
+            </form>
+        </div>
+
+        
+
+        
+        <h6>Subscribe</h6>
+        
+
+        <ul>
+            <li><a target="_blank" href="http://glennryan.info/index.xml">RSS feed</a></li>
+        </ul>
+
+        
+
+        
+        <h6>Find me on</h6>
+        
+
+        <ul>
+        
+            <li><a target="_blank" href="//github.com/gbr">Github</a></li>
+        
+            <li><a target="_blank" href="//twitter.com/bgarryan">Twitter</a></li>
+        
+            <li><a target="_blank" href="//linkedin.com/in/gbryan">LinkedIn</a></li>
+        
+        </ul>
+    </nav>
+</div>
+
+
+    <div class="site-wrapper">
+        <header>
+	<div class="h-wrap">
+		
+		<h1 class="title"><a href="http://glennryan.info/">glenn ryan</a></h1>
+		
+		<a class="menu-icon" title="Menu"><span class="lines"></span></a>
+	</div>
+</header>
+        
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                    <time datetime="" itemprop="datePublished">
+                    28. February 2016
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">read time</h1>
+                <h5 class="reading-time"></h5>
+                <div itemprop="articleBody">
+                    <p>I just added a reading time feature to the site, where now, under the article title, there is a guesstimate of how long it will take to read the article, assuming you read 200 WPM on average.</p>
+
+<p>I ran into <a href="http://juristr.com/blog/2013/07/how-to-setup-reading-time-indicator-ten-minutes/">this article</a> explaining how to do it in short time. Following the directions, I downloaded the <a href="https://raw.github.com/RadLikeWhoa/Countable/master/Countable.js">Countable script</a> and placed it into my static JS folder. Rather than write the chunk of code Juri suggests in a separate file or in an embedded script tag, I put it into Countable itself, in its own function called renderReadTime. And then I added function params to make it a little more clean:</p>
+
+<pre><code class="language-javascript">...
+    enabled: function (element) {
+      var isEnabled = false
+
+      if (element &amp;&amp; element.nodeType === 1) {
+        _loop(_liveElements, function (live) {
+          if (live.element === element) isEnabled = true
+        })
+      }
+
+      return isEnabled
+    },
+
+    renderReadTime: function (wpm, fromElement, toElement) {
+      this.once($(fromElement)[0], function (counter) {
+        var estimatedRaw = counter.words / wpm,
+        minutes = Math.round(estimatedRaw);
+        var effectiveTime = (minutes &lt; 1) ? &quot;a few secs&quot; : minutes + &quot; min read&quot;;
+          $(toElement).html(effectiveTime);
+      });
+    }
+</code></pre>
+
+<p>Unfortunately, it&rsquo;s still not <em>that</em> clean when I actually call it:</p>
+
+<pre><code class="language-html">{{ &quot;&lt;!-- Reading time approximation --&gt;&quot; | safeHTML }}
+&lt;script src=&quot;{{ .Site.BaseURL }}js/Countable.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;Countable.renderReadTime(200, 'div[itemprop=articleBody]', '.reading-time');&lt;/script&gt;
+</code></pre>
+
+<p>I&rsquo;ll admit that my greatest weakness with front-end web development is HTML/CSS, so I&rsquo;m sure I&rsquo;ve made some cardinal sins here with my example code. I&rsquo;ve got to do some reading up on that. But hey, that&rsquo;s what this blog is for.</p>
+
+                </div>
+                <div class="feat share">
+                    <a href="//twitter.com/share" class="popup">
+                        <span class="icon-twitter"></span>
+                    </a>
+                </div>
+                
+                <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'glennryan';
+    var disqus_identifier = 'http:\/\/glennryan.info\/2016\/02\/28\/read-time';
+    var disqus_title = 'read time';
+    var disqus_url = 'http:\/\/glennryan.info\/2016\/02\/28\/read-time';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+                
+                
+                    <a rel="prev" href="http://glennryan.info/2016/02/27/starting-dart" id="prev">
+                        &larr; <span class="nav-title nav-title-prev"></span>
+                    </a>
+                
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>POWERED BY <a href="//gohugo.io">HUGO</a> - THEME: <a href="//github.com/digitalcraftsman/hugo-hikari-theme">HIKARI</a> - © 2016 <a href="mailto:contact@glennryan.info">GLENN RYAN</a></small>
+	
+</footer>
+    </div>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://glennryan.info/js/main.js"></script>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-74357056-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+<!-- Syntax highlighting -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!-- Reading time approximation -->
+<script src="http://glennryan.info/js/Countable.js"></script>
+<script>Countable.renderReadTime(200, 'div[itemprop=articleBody]', '.reading-time');</script>
+
+</body>
+</html>
