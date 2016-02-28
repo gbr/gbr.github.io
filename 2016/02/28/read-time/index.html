@@ -118,10 +118,9 @@
 
     renderReadTime: function (wpm, fromElement, toElement) {
       this.once($(fromElement)[0], function (counter) {
-        var estimatedRaw = counter.words / wpm,
-        minutes = Math.round(estimatedRaw);
-        var effectiveTime = (minutes &lt; 1) ? &quot;a few secs&quot; : minutes + &quot; min read&quot;;
-          $(toElement).html(effectiveTime);
+        var minutes = Math.round(counter.words / wpm),
+        effectiveTime = (minutes &lt; 1) ? &quot;a few secs&quot; : minutes + &quot; min read&quot;;
+        $(toElement).html(effectiveTime);
       });
     }
 </code></pre>
