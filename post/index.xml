@@ -79,11 +79,11 @@
  &lt;/div&gt;
 
 
-&lt;p&gt;The presenter delivers a very thorough, though impartial, overview of fundamentals to nail down and quite clearly delineates two different paths for a web developer: front end and back end. He does not say that one person cannot excel at both, but he certainly implies one should mastering one fork of the road before approaching the other. Yet he rarely expresses an opinion other than what he thinks the job market favors in terms of volume of available jobs. This was a good start, but I needed a nudge in a direction.&lt;/p&gt;
+&lt;p&gt;The presenter delivers a very thorough, though impartial, overview of fundamentals to nail down, taking the traditional approach of divorcing front-end from back-end. He gives his opinions on some frameworks, though through the lens of market strength more than anything. This was a very helpful start, but I needed to know what would be best for a lone, full-stack engineer.&lt;/p&gt;
 
-&lt;p&gt;Fortunately, we can always rely on the YouTube community to express a clear opinion, right or wrong.&lt;/p&gt;
+&lt;p&gt;Fortunately, we can always rely on the YouTube community to spout out some ideas, right or wrong.&lt;/p&gt;
 
-&lt;p&gt;I noticed, several comments down from the top, mention of a MEAN stack and a few comments below it praising said mention. This looked promising. I researched what this MEAN stack was and how it was being used. Some of the top results in my Google search revealed stunning single-page, JavaScript web apps written by a lone developer. Some of these people were generous enough to leave their repos public for others to study their code. I was instantly sold.&lt;/p&gt;
+&lt;p&gt;I noticed, several comments down from the top, mention of a MEAN stack and a few replies to it praising it. This looked promising. I researched what this MEAN stack was and how it was being used. Some of the top results in my Google search revealed stunning single-page, JavaScript web apps written by a lone developer. Some of these people were generous enough to leave their repos public for others to study their code. I was instantly sold.&lt;/p&gt;
 
 &lt;h3 id=&#34;how-i-got-turned-around:f67c76d5effc368f32a31f09e6236041&#34;&gt;how i got turned around&lt;/h3&gt;
 
@@ -130,7 +130,7 @@
 
 &lt;p&gt;So I found this nice Python script, courtesy of &lt;a href=&#34;https://github.com/davej&#34;&gt;Dave Jeffery&lt;/a&gt;.&lt;/p&gt;
 
-&lt;script src=&#34;https://gist.github.com/davej/113241.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;//gist.github.com/davej/113241.js&#34;&gt;&lt;/script&gt;
 
 &lt;p&gt;I registered my twitter application under bird_eater (ha, get it? because it&amp;rsquo;s Python getting rid of tweets&amp;hellip; eh) and put in my key and secret. I then followed the directions from the script&amp;rsquo;s output et voilà! I am now tweet-free. I can restart my Twitter profile with a clean slate &amp;mdash; notwithstanding the other parts of my account.&lt;/p&gt;
 
