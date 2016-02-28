@@ -103,34 +103,36 @@
 
 <p>I ran into <a href="http://juristr.com/blog/2013/07/how-to-setup-reading-time-indicator-ten-minutes/">this article</a> explaining how to do it in short time. Following the directions, I downloaded the <a href="https://raw.github.com/RadLikeWhoa/Countable/master/Countable.js">Countable script</a> and placed it into my static JS folder. Rather than write the chunk of code Juri suggests in a separate file or in an embedded script tag, I put it into Countable itself, in its own function called renderReadTime. And then I added function params to make it a little more clean:</p>
 
-<pre><code class="language-javascript">...
-    enabled: function (element) {
-      var isEnabled = false
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>...
+    enabled<span style="color: #666666">:</span> <span style="color: #AA22FF; font-weight: bold">function</span> (element) {
+      <span style="color: #AA22FF; font-weight: bold">var</span> isEnabled <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">false</span>
 
-      if (element &amp;&amp; element.nodeType === 1) {
-        _loop(_liveElements, function (live) {
-          if (live.element === element) isEnabled = true
+      <span style="color: #AA22FF; font-weight: bold">if</span> (element <span style="color: #666666">&amp;&amp;</span> element.nodeType <span style="color: #666666">===</span> <span style="color: #666666">1</span>) {
+        _loop(_liveElements, <span style="color: #AA22FF; font-weight: bold">function</span> (live) {
+          <span style="color: #AA22FF; font-weight: bold">if</span> (live.element <span style="color: #666666">===</span> element) isEnabled <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">true</span>
         })
       }
 
-      return isEnabled
+      <span style="color: #AA22FF; font-weight: bold">return</span> isEnabled
     },
 
-    renderReadTime: function (wpm, fromElement, toElement) {
-      this.once($(fromElement)[0], function (counter) {
-        var minutes = Math.round(counter.words / wpm),
-        effectiveTime = (minutes &lt; 1) ? &quot;a few secs&quot; : minutes + &quot; min read&quot;;
+    renderReadTime<span style="color: #666666">:</span> <span style="color: #AA22FF; font-weight: bold">function</span> (wpm, fromElement, toElement) {
+      <span style="color: #AA22FF; font-weight: bold">this</span>.once($(fromElement)[<span style="color: #666666">0</span>], <span style="color: #AA22FF; font-weight: bold">function</span> (counter) {
+        <span style="color: #AA22FF; font-weight: bold">var</span> minutes <span style="color: #666666">=</span> <span style="color: #AA22FF">Math</span>.round(counter.words <span style="color: #666666">/</span> wpm),
+        effectiveTime <span style="color: #666666">=</span> (minutes <span style="color: #666666">&lt;</span> <span style="color: #666666">1</span>) <span style="color: #666666">?</span> <span style="color: #BB4444">&quot;a few secs&quot;</span> <span style="color: #666666">:</span> minutes <span style="color: #666666">+</span> <span style="color: #BB4444">&quot; min read&quot;</span>;
         $(toElement).html(effectiveTime);
       });
     }
-</code></pre>
+</pre></div>
+
 
 <p>Unfortunately, it&rsquo;s still not <em>that</em> clean when I actually call it:</p>
 
-<pre><code class="language-html">{{ &quot;&lt;!-- Reading time approximation --&gt;&quot; | safeHTML }}
-&lt;script src=&quot;{{ .Site.BaseURL }}js/Countable.js&quot;&gt;&lt;/script&gt;
-&lt;script&gt;Countable.renderReadTime(200, 'div[itemprop=articleBody]', '.reading-time');&lt;/script&gt;
-</code></pre>
+<p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>{{ &quot;<span style="color: #008800; font-style: italic">&lt;!-- Reading time approximation --&gt;</span>&quot; | safeHTML }}
+&lt;<span style="color: #008000; font-weight: bold">script</span> <span style="color: #BB4444">src</span><span style="color: #666666">=</span><span style="color: #BB4444">&quot;{{ .Site.BaseURL }}js/Countable.js&quot;</span>&gt;&lt;/<span style="color: #008000; font-weight: bold">script</span>&gt;
+&lt;<span style="color: #008000; font-weight: bold">script</span>&gt;Countable.renderReadTime(<span style="color: #666666">200</span>, <span style="color: #BB4444">&#39;div[itemprop=articleBody]&#39;</span>, <span style="color: #BB4444">&#39;.reading-time&#39;</span>);&lt;/<span style="color: #008000; font-weight: bold">script</span>&gt;
+</pre></div>
+</p>
 
 <p>I&rsquo;ll admit that my greatest weakness with front-end web development is HTML/CSS, so I&rsquo;m sure I&rsquo;ve made some cardinal sins here with my example code. I&rsquo;ve got to do some reading up on that. But hey, that&rsquo;s what this blog is for.</p>
 

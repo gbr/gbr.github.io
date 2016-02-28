@@ -20,34 +20,36 @@
 
 &lt;p&gt;I ran into &lt;a href=&#34;http://juristr.com/blog/2013/07/how-to-setup-reading-time-indicator-ten-minutes/&#34;&gt;this article&lt;/a&gt; explaining how to do it in short time. Following the directions, I downloaded the &lt;a href=&#34;https://raw.github.com/RadLikeWhoa/Countable/master/Countable.js&#34;&gt;Countable script&lt;/a&gt; and placed it into my static JS folder. Rather than write the chunk of code Juri suggests in a separate file or in an embedded script tag, I put it into Countable itself, in its own function called renderReadTime. And then I added function params to make it a little more clean:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;...
-    enabled: function (element) {
-      var isEnabled = false
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;...
+    enabled&lt;span style=&#34;color: #666666&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;function&lt;/span&gt; (element) {
+      &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;var&lt;/span&gt; isEnabled &lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;false&lt;/span&gt;
 
-      if (element &amp;amp;&amp;amp; element.nodeType === 1) {
-        _loop(_liveElements, function (live) {
-          if (live.element === element) isEnabled = true
+      &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;if&lt;/span&gt; (element &lt;span style=&#34;color: #666666&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; element.nodeType &lt;span style=&#34;color: #666666&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color: #666666&#34;&gt;1&lt;/span&gt;) {
+        _loop(_liveElements, &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;function&lt;/span&gt; (live) {
+          &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;if&lt;/span&gt; (live.element &lt;span style=&#34;color: #666666&#34;&gt;===&lt;/span&gt; element) isEnabled &lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;true&lt;/span&gt;
         })
       }
 
-      return isEnabled
+      &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;return&lt;/span&gt; isEnabled
     },
 
-    renderReadTime: function (wpm, fromElement, toElement) {
-      this.once($(fromElement)[0], function (counter) {
-        var minutes = Math.round(counter.words / wpm),
-        effectiveTime = (minutes &amp;lt; 1) ? &amp;quot;a few secs&amp;quot; : minutes + &amp;quot; min read&amp;quot;;
+    renderReadTime&lt;span style=&#34;color: #666666&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;function&lt;/span&gt; (wpm, fromElement, toElement) {
+      &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;this&lt;/span&gt;.once($(fromElement)[&lt;span style=&#34;color: #666666&#34;&gt;0&lt;/span&gt;], &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;function&lt;/span&gt; (counter) {
+        &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;var&lt;/span&gt; minutes &lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #AA22FF&#34;&gt;Math&lt;/span&gt;.round(counter.words &lt;span style=&#34;color: #666666&#34;&gt;/&lt;/span&gt; wpm),
+        effectiveTime &lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt; (minutes &lt;span style=&#34;color: #666666&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #666666&#34;&gt;1&lt;/span&gt;) &lt;span style=&#34;color: #666666&#34;&gt;?&lt;/span&gt; &lt;span style=&#34;color: #BB4444&#34;&gt;&amp;quot;a few secs&amp;quot;&lt;/span&gt; &lt;span style=&#34;color: #666666&#34;&gt;:&lt;/span&gt; minutes &lt;span style=&#34;color: #666666&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color: #BB4444&#34;&gt;&amp;quot; min read&amp;quot;&lt;/span&gt;;
         $(toElement).html(effectiveTime);
       });
     }
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;Unfortunately, it&amp;rsquo;s still not &lt;em&gt;that&lt;/em&gt; clean when I actually call it:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;{{ &amp;quot;&amp;lt;!-- Reading time approximation --&amp;gt;&amp;quot; | safeHTML }}
-&amp;lt;script src=&amp;quot;{{ .Site.BaseURL }}js/Countable.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
-&amp;lt;script&amp;gt;Countable.renderReadTime(200, &#39;div[itemprop=articleBody]&#39;, &#39;.reading-time&#39;);&amp;lt;/script&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;{{ &amp;quot;&lt;span style=&#34;color: #008800; font-style: italic&#34;&gt;&amp;lt;!-- Reading time approximation --&amp;gt;&lt;/span&gt;&amp;quot; | safeHTML }}
+&amp;lt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;script&lt;/span&gt; &lt;span style=&#34;color: #BB4444&#34;&gt;src&lt;/span&gt;&lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color: #BB4444&#34;&gt;&amp;quot;{{ .Site.BaseURL }}js/Countable.js&amp;quot;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;script&lt;/span&gt;&amp;gt;
+&amp;lt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;script&lt;/span&gt;&amp;gt;Countable.renderReadTime(&lt;span style=&#34;color: #666666&#34;&gt;200&lt;/span&gt;, &lt;span style=&#34;color: #BB4444&#34;&gt;&amp;#39;div[itemprop=articleBody]&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color: #BB4444&#34;&gt;&amp;#39;.reading-time&amp;#39;&lt;/span&gt;);&amp;lt;/&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;script&lt;/span&gt;&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
 
 &lt;p&gt;I&amp;rsquo;ll admit that my greatest weakness with front-end web development is HTML/CSS, so I&amp;rsquo;m sure I&amp;rsquo;ve made some cardinal sins here with my example code. I&amp;rsquo;ve got to do some reading up on that. But hey, that&amp;rsquo;s what this blog is for.&lt;/p&gt;
 </description>
