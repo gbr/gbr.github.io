@@ -101,7 +101,9 @@
  ...
     
     &lt;span style=&#34;color: #008800; font-style: italic&#34;&gt;&amp;lt;!-- Reading time approximation --&amp;gt;&lt;/span&gt;
-    &amp;lt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;script&lt;/span&gt;&amp;gt;util.renderReadTime(&lt;span style=&#34;color: #666666&#34;&gt;200&lt;/span&gt;, &lt;span style=&#34;color: #BB4444&#34;&gt;&amp;#39;div[itemprop=articleBody]&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color: #BB4444&#34;&gt;&amp;#39;.js-reading-time&amp;#39;&lt;/span&gt;);&amp;lt;/&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;script&lt;/span&gt;&amp;gt;
+    &amp;lt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;footer&lt;/span&gt;&amp;gt;
+      &amp;lt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;script&lt;/span&gt;&amp;gt;util.renderReadTime(&lt;span style=&#34;color: #666666&#34;&gt;200&lt;/span&gt;, &lt;span style=&#34;color: #BB4444&#34;&gt;&amp;#39;div[itemprop=articleBody]&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color: #BB4444&#34;&gt;&amp;#39;.js-reading-time&amp;#39;&lt;/span&gt;);&amp;lt;/&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;script&lt;/span&gt;&amp;gt;
+    &amp;lt;/&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;footer&lt;/span&gt;&amp;gt;
 &amp;lt;/&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;body&lt;/span&gt;&amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/p&gt;
