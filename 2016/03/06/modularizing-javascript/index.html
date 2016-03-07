@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>modularizing javascript &middot; glenn ryan</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Glenn Ryan">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.15" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="http://glennryan.info/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700|Lora:400,700,400italic" rel="stylesheet" type="text/css">
+    <meta name="wot-verification" content="652c1efdb5c70c204ad4"/>
+</head>
+<body>
+    
+    <div class="off-canvas">
+    <figure class="avatar">
+        <img src="http://glennryan.info/img/avatar.jpg" title="Glenn Ryan">
+    </figure>
+    <div class="bio">
+        
+        <h1>hi, i&rsquo;m <a href="mailto:contact@glennryan.info">@glennryan</a></h1>
+        
+        
+        <p>I&rsquo;m a software engineer trying to keep my toolbox sharp and my problem-solving skills even sharper. I write about it here.</p>
+        
+    </div>
+    <nav>
+
+        
+
+        
+        <h6>Search</h6>
+        
+
+        <div>
+            <form name="google-search" method="get" action="http://www.google.com/search" target="_blank">
+                <input type="hidden" name="sitesearch" value="http://glennryan.info/" />
+                <input name="q" type="text" />
+                <input type="submit" name="sa" value="Google" />
+            </form>
+        </div>
+
+        
+
+        
+        <h6>Subscribe</h6>
+        
+
+        <ul>
+            <li><a target="_blank" href="http://glennryan.info/index.xml">RSS feed</a></li>
+        </ul>
+
+        
+
+        
+        <h6>Find me on</h6>
+        
+
+        <ul>
+        
+            <li><a target="_blank" href="//github.com/gbr">Github</a></li>
+        
+            <li><a target="_blank" href="//twitter.com/bgarryan">Twitter</a></li>
+        
+            <li><a target="_blank" href="//linkedin.com/in/gbryan">LinkedIn</a></li>
+        
+        </ul>
+    </nav>
+</div>
+
+
+    <div class="site-wrapper">
+        <header>
+	<div class="h-wrap">
+		
+		<h1 class="title"><a href="http://glennryan.info/">glenn ryan</a></h1>
+		
+		<a class="menu-icon" title="Menu"><span class="lines"></span></a>
+	</div>
+</header>
+        
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                    <time datetime="" itemprop="datePublished">
+                    6. March 2016
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">modularizing javascript</h1>
+                <h5 class="js-reading-time"></h5>
+                <div itemprop="articleBody">
+                    
+
+<h3 id="preface:9f0e3ff308c335a3432c99c24ca3f959">preface()</h3>
+
+<p>I originally intended this week&rsquo;s post to discuss design philosophies of front-end web development. Particularly, I wanted to focus on two things: the <em>separation of concerns</em> of HTML, CSS and JavaScript and <em>imperative vs declarative patterns</em> for manipulating the DOM tree. I already see that I should have split these up into two posts; they&rsquo;re both pretty meaty topics. While I work on material for those posts, I decided to quickly write up this one to address my (well-founded) anxieties toward potential front-end antipatterns at the end of <a href="http://glennryan.info/2016/02/28/read-time">my last post</a>.</p>
+
+<h3 id="context:9f0e3ff308c335a3432c99c24ca3f959">context()</h3>
+
+<p>I think we can all agree that spaghetti code is bad. Even if you have very modest intentions for something you&rsquo;re writing, it&rsquo;s good to have some organization principles up top and to adapt them as things change. This blog, for example, began with a main JavaScript window.onLoad function and a few script library class here and there at the bottom of the main template. But I am already seeing the JS code expand in ways that do not jive well with this original groundwork. I had to spend some time thinking about how I can foster some modularity and organization as the supporting HTML, CSS and JavaScript code expands. More on that later.</p>
+
+<p>Sometimes organization is as simple as wrapping your JavaScript code in a <a href="https://developers.livechatinc.com/blog/always-use-closures-in-your-javascript-app/">closure</a>, then using something like CommonJS or AMD to grab dependencies only as you need them. Sometimes it&rsquo;s sprinkling in a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode">statement</a> or <a href="https://docs.oracle.com/javase/7/docs/api/java/lang/Override.html">annotation</a> to make your intentions or practices more clear. In the bigger picture, though, you need to abstract the model and functionality of your code into conceptual pieces, then use design patterns and algorithms to clearly define their behavior and interoperability.</p>
+
+<p>That&rsquo;s all well and good, but we know time constraints, feature creep and, well, apathy (<em>ahem</em> laziness) are all real problems.</p>
+
+
+<figure >
+    <a href="http://xkcd.com/844/">
+        <img src="http://imgs.xkcd.com/comics/good_code.png" />
+    </a>
+    
+</figure>
+
+
+<p>I don&rsquo;t have a silver bullet to give you to hack away those threats to good code in real production environments. But I will outline below what I&rsquo;ve done to lay down some modular infrastructure for my (tiny) blog to help me with it. Maybe some of it could apply to you.</p>
+
+<h3 id="project-structure:9f0e3ff308c335a3432c99c24ca3f959">project.structure()</h3>
+
+<p>So in that <a href="http://glennryan.info/2016/02/28/read-time">last post</a> I referred to earlier, I felt the suggested way of invoking the <a href="https://sacha.me/Countable/">Countable</a> library was kind of dirty, so I tried to clean it up by&hellip; something even more dirty. And I knew at the end it was a mess but didn&rsquo;t have the know-how to do anything about it. Still speaking from the place of a novice, I think I have a pretty clean way of doing things now.</p>
+
+<p>First, <em>don&rsquo;t touch third-party JavaScript code</em>. Just because isn&rsquo;t presented to you in a special archive file (think .jar) or stored in a special place on your computer doesn&rsquo;t mean you shouldn&rsquo;t treat it as separate. You may need to replace it whole as newer versions of it release, or you may decide one day to invoke the script through a URL rather than a local plath. Organization is all about predicting what you can the best that you can, then trying to fool-proof the rest. What I&rsquo;ve done is created a vendor directory to store my third-party scripts, then created a src directory for my code. Now, (a redacted version of) my js directory looks like this:</p>
+
+<pre><code>.
+├── src
+│   ├── main.js
+│   └── ...
+ └── vendor
+    └── Countable.js
+    └── ...
+</code></pre>
+
+<h3 id="export:9f0e3ff308c335a3432c99c24ca3f959">export()</h3>
+
+<p>Luckily, the Countable library already takes care of exporting itself in a way that complies with whatever module system is used (CommonJS, AMD or global):</p>
+
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>  <span style="color: #AA22FF; font-weight: bold">if</span> (<span style="color: #AA22FF; font-weight: bold">typeof</span> exports <span style="color: #666666">===</span> <span style="color: #BB4444">&#39;object&#39;</span>) {
+    module.exports <span style="color: #666666">=</span> Countable
+  } <span style="color: #AA22FF; font-weight: bold">else</span> <span style="color: #AA22FF; font-weight: bold">if</span> (<span style="color: #AA22FF; font-weight: bold">typeof</span> define <span style="color: #666666">===</span> <span style="color: #BB4444">&#39;function&#39;</span> <span style="color: #666666">&amp;&amp;</span> define.amd) {
+    define(<span style="color: #AA22FF; font-weight: bold">function</span> () { <span style="color: #AA22FF; font-weight: bold">return</span> Countable })
+  } <span style="color: #AA22FF; font-weight: bold">else</span> {
+    global.Countable <span style="color: #666666">=</span> Countable
+  }
+</pre></div>
+
+
+<p>It suffices to follow this pattern for the rest of the modules.</p>
+
+<h3 id="require:9f0e3ff308c335a3432c99c24ca3f959">require()</h3>
+
+<p>Next, I took my renderReadTime function out of there (I can&rsquo;t get over how utterly stupid that was) and placed it into a util.js file in my src directory. I modeled the way I modularized it after Countable. And I imported in a way parallel to the way I export (still not sure if this is necessary or even good; please correct me in the comments if not):</p>
+
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>  <span style="color: #AA22FF; font-weight: bold">if</span> (<span style="color: #AA22FF; font-weight: bold">typeof</span> exports <span style="color: #666666">===</span> <span style="color: #BB4444">&#39;object&#39;</span>) {
+    <span style="color: #AA22FF; font-weight: bold">var</span> Countable <span style="color: #666666">=</span> require(<span style="color: #BB4444">&#39;../vendor/Countable&#39;</span>);
+  } <span style="color: #AA22FF; font-weight: bold">else</span> <span style="color: #AA22FF; font-weight: bold">if</span> (<span style="color: #AA22FF; font-weight: bold">typeof</span> define <span style="color: #666666">===</span> <span style="color: #BB4444">&#39;function&#39;</span> <span style="color: #666666">&amp;&amp;</span> define.amd) {
+    require([<span style="color: #BB4444">&#39;../vendor/Countable&#39;</span>]);
+  } <span style="color: #AA22FF; font-weight: bold">else</span> {
+    Countable <span style="color: #666666">=</span> global.Countable;
+  }
+</pre></div>
+
+
+<h3 id="invoke:9f0e3ff308c335a3432c99c24ca3f959">invoke()</h3>
+
+<p>Finally, I took my HTML invocation of renderReadTime out of the footer of my main template and and put it into the footer of the precise subtemplate it will be used for: article.html. I don&rsquo;t know what I was thinking in placing it elsewhere, to be honest. Now the exact selectors I am using to render the read time output are in the same place as my function call, which makes it all that much easier to read and understand, as well as easier to change in the future.</p>
+
+<p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>&lt;<span style="color: #008000; font-weight: bold">body</span>&gt;
+    
+...
+                &lt;<span style="color: #008000; font-weight: bold">h1</span> <span style="color: #BB4444">class</span><span style="color: #666666">=</span><span style="color: #BB4444">&quot;page-title&quot;</span> <span style="color: #BB4444">itemprop</span><span style="color: #666666">=</span><span style="color: #BB4444">&quot;name headline&quot;</span>&gt;{{ .Title }}&lt;/<span style="color: #008000; font-weight: bold">h1</span>&gt;
+                &lt;<span style="color: #008000; font-weight: bold">h5</span> <span style="color: #BB4444">class</span><span style="color: #666666">=</span><span style="color: #BB4444">&quot;js-reading-time&quot;</span>&gt;&lt;/<span style="color: #008000; font-weight: bold">h5</span>&gt;
+                &lt;<span style="color: #008000; font-weight: bold">div</span> <span style="color: #BB4444">itemprop</span><span style="color: #666666">=</span><span style="color: #BB4444">&quot;articleBody&quot;</span>&gt;
+                    <span style="color: #008800; font-style: italic">&lt;!-- Content --&gt;</span>
+                &lt;/<span style="color: #008000; font-weight: bold">div</span>&gt;
+ ...
+    
+    <span style="color: #008800; font-style: italic">&lt;!-- Reading time approximation --&gt;</span>
+    &lt;<span style="color: #008000; font-weight: bold">script</span>&gt;util.renderReadTime(<span style="color: #666666">200</span>, <span style="color: #BB4444">&#39;div[itemprop=articleBody]&#39;</span>, <span style="color: #BB4444">&#39;.js-reading-time&#39;</span>);&lt;/<span style="color: #008000; font-weight: bold">script</span>&gt;
+&lt;/<span style="color: #008000; font-weight: bold">body</span>&gt;
+</pre></div>
+</p>
+
+<p>And that&rsquo;s it! I didn&rsquo;t change the functionality of the blog, just organized it better so, as I add third-party files and more code of my own, it will be very easy to see how to divide it up and modularize it.</p>
+
+<h3 id="stack-pop:9f0e3ff308c335a3432c99c24ca3f959">stack.pop()</h3>
+
+<p>Now that that&rsquo;s out of the way, I plan to follow this up by discussing separation of concerns of HTML, CSS and JS before getting to declarative and imperative design patterns. The hope is to eventually warm into discussing differences in philosophy between Angular, React and Polymer. In particular, I want to compare them under the lens of whether they give HTML or JS/Dart the biggest piece of the pie when it comes to describing the form and behavior of your content.</p>
+
+                </div>
+                <div class="feat share">
+                    <a href="//twitter.com/share" class="popup">
+                        <span class="icon-twitter"></span>
+                    </a>
+                </div>
+                
+                <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'glennryan';
+    var disqus_identifier = 'http:\/\/glennryan.info\/2016\/03\/06\/modularizing-javascript';
+    var disqus_title = 'modularizing javascript';
+    var disqus_url = 'http:\/\/glennryan.info\/2016\/03\/06\/modularizing-javascript';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+                
+                
+                    <a rel="prev" href="http://glennryan.info/2016/02/28/read-time" id="prev">
+                        &larr; <span class="nav-title nav-title-prev"></span>
+                    </a>
+                
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>POWERED BY <a href="//gohugo.io">HUGO</a> - THEME: <a href="//github.com/digitalcraftsman/hugo-hikari-theme">HIKARI</a> - © 2016 <a href="mailto:contact@glennryan.info">GLENN RYAN</a></small>
+	
+</footer>
+    </div>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://glennryan.info/js/src/main.js"></script>
+<script src="http://glennryan.info/js/vendor/Countable.js"></script>
+<script src="http://glennryan.info/js/src/util.js"></script>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-74357056-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+
+    
+    <!-- Reading time approximation -->
+    <script>util.renderReadTime(200, 'div[itemprop=articleBody]', '.js-reading-time');</script>
+</body>
+</html>

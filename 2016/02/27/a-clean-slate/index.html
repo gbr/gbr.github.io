@@ -4,7 +4,7 @@
 
  <html class="no-js"> 
 <head>
-    <title>read time &middot; glenn ryan</title>
+    <title>a clean slate &middot; glenn ryan</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="content-language" content="en-us" />
@@ -93,49 +93,28 @@
                 <div class="feat">
                     <h5 class="page-date">
                     <time datetime="" itemprop="datePublished">
-                    28. February 2016
+                    27. February 2016
                     </time>
                     </h5>
                 </div>
-                <h1 class="page-title" itemprop="name headline">read time</h1>
+                <h1 class="page-title" itemprop="name headline">a clean slate</h1>
                 <h5 class="js-reading-time"></h5>
                 <div itemprop="articleBody">
-                    <p>I just added a reading time feature to the site, where now, under the article title, there is a guesstimate of how long it will take to read the article, assuming you read 200 WPM on average.</p>
+                    
 
-<p>I ran into <a href="http://juristr.com/blog/2013/07/how-to-setup-reading-time-indicator-ten-minutes/">this article</a> explaining how to do it in short time. Following the directions, I downloaded the <a href="https://raw.github.com/RadLikeWhoa/Countable/master/Countable.js">Countable script</a> and placed it into my static JS folder. Rather than write the chunk of code Juri suggests in a separate file or in an embedded script tag, I put it into Countable itself, in its own function called renderReadTime. And then I added function params to make it a little more clean:</p>
+<h3 id="start:b6885e1f85551f51a4707c402f8200a3">start()</h3>
 
-<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>...
-    enabled<span style="color: #666666">:</span> <span style="color: #AA22FF; font-weight: bold">function</span> (element) {
-      <span style="color: #AA22FF; font-weight: bold">var</span> isEnabled <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">false</span>
+<p>As my first order of business, I was looking to to delete all prior tweets from my account, since I plan to start using Twitter in a more professional capacity from now on. To do so, I see there are <a href="tweetdelete.net">various sites</a> and <a href="https://www.gocardigan.com/">services</a> out there to assist with that. But part of beginning this blog was a commitment to exploring how I can use official  APIs, third-party libraries or my own code from scratch to accomplish things on the web.</p>
 
-      <span style="color: #AA22FF; font-weight: bold">if</span> (element <span style="color: #666666">&amp;&amp;</span> element.nodeType <span style="color: #666666">===</span> <span style="color: #666666">1</span>) {
-        _loop(_liveElements, <span style="color: #AA22FF; font-weight: bold">function</span> (live) {
-          <span style="color: #AA22FF; font-weight: bold">if</span> (live.element <span style="color: #666666">===</span> element) isEnabled <span style="color: #666666">=</span> <span style="color: #AA22FF; font-weight: bold">true</span>
-        })
-      }
+<p>So I found this nice Python script, courtesy of <a href="https://github.com/davej">Dave Jeffery</a>.</p>
 
-      <span style="color: #AA22FF; font-weight: bold">return</span> isEnabled
-    },
+<script src="//gist.github.com/davej/113241.js"></script>
 
-    renderReadTime<span style="color: #666666">:</span> <span style="color: #AA22FF; font-weight: bold">function</span> (wpm, fromElement, toElement) {
-      <span style="color: #AA22FF; font-weight: bold">this</span>.once($(fromElement)[<span style="color: #666666">0</span>], <span style="color: #AA22FF; font-weight: bold">function</span> (counter) {
-        <span style="color: #AA22FF; font-weight: bold">var</span> minutes <span style="color: #666666">=</span> <span style="color: #AA22FF">Math</span>.round(counter.words <span style="color: #666666">/</span> wpm),
-        effectiveTime <span style="color: #666666">=</span> (minutes <span style="color: #666666">&lt;</span> <span style="color: #666666">1</span>) <span style="color: #666666">?</span> <span style="color: #BB4444">&quot;a few secs&quot;</span> <span style="color: #666666">:</span> minutes <span style="color: #666666">+</span> <span style="color: #BB4444">&quot; min read&quot;</span>;
-        $(toElement).html(effectiveTime);
-      });
-    }
-</pre></div>
+<p>I registered my twitter application under bird_eater (ha, get it? because it&rsquo;s Python getting rid of tweets&hellip; eh) and put in my key and secret. I then followed the directions from the script&rsquo;s output et voilà! I am now tweet-free. I can restart my Twitter profile with a clean slate &mdash; notwithstanding the other parts of my account.</p>
 
+<h3 id="continue:b6885e1f85551f51a4707c402f8200a3">continue</h3>
 
-<p>Unfortunately, it&rsquo;s still not <em>that</em> clean when I actually call it:</p>
-
-<p><div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span>{{ &quot;<span style="color: #008800; font-style: italic">&lt;!-- Reading time approximation --&gt;</span>&quot; | safeHTML }}
-&lt;<span style="color: #008000; font-weight: bold">script</span> <span style="color: #BB4444">src</span><span style="color: #666666">=</span><span style="color: #BB4444">&quot;{{ .Site.BaseURL }}js/Countable.js&quot;</span>&gt;&lt;/<span style="color: #008000; font-weight: bold">script</span>&gt;
-&lt;<span style="color: #008000; font-weight: bold">script</span>&gt;Countable.renderReadTime(<span style="color: #666666">200</span>, <span style="color: #BB4444">&#39;div[itemprop=articleBody]&#39;</span>, <span style="color: #BB4444">&#39;.reading-time&#39;</span>);&lt;/<span style="color: #008000; font-weight: bold">script</span>&gt;
-</pre></div>
-</p>
-
-<p>I&rsquo;ll admit that my greatest weakness with front-end web development is HTML/CSS, so I&rsquo;m sure I&rsquo;ve made some cardinal sins here with my example code. I&rsquo;ve got to do some reading up on that. But hey, that&rsquo;s what this blog is for.</p>
+<p>In fact, why not take care of those things, too? To take this further, I should expand on this script to make it a bit more sophisticated. Some ideas could be deleting certain tweets, unfollowing accounts, removing likes and lists, etc. That could be a promising project.</p>
 
                 </div>
                 <div class="feat share">
@@ -147,9 +126,9 @@
                 <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'glennryan';
-    var disqus_identifier = 'http:\/\/glennryan.info\/2016\/02\/28\/read-time';
-    var disqus_title = 'read time';
-    var disqus_url = 'http:\/\/glennryan.info\/2016\/02\/28\/read-time';
+    var disqus_identifier = 'http:\/\/glennryan.info\/2016\/02\/27\/a-clean-slate';
+    var disqus_title = 'a clean slate';
+    var disqus_url = 'http:\/\/glennryan.info\/2016\/02\/27\/a-clean-slate';
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -161,14 +140,10 @@
 <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
                 
-                    <a rel="next" href="http://glennryan.info/2016/03/06/modularizing-javascript" id="next">
+                    <a rel="next" href="http://glennryan.info/2016/02/27/starting-dart" id="next">
                         <span class="nav-title nav-title-next"></span> &rarr;
                     </a>
                 
-                
-                    <a rel="prev" href="http://glennryan.info/2016/02/27/starting-dart" id="prev">
-                        &larr; <span class="nav-title nav-title-prev"></span>
-                    </a>
                 
             </article>
         </section>

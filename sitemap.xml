@@ -3,8 +3,13 @@
   
   <url>
     <loc>http://glennryan.info/</loc>
-    <lastmod>2016-02-28T01:44:08-08:00</lastmod>
+    <lastmod>2016-03-06T17:25:52-08:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://glennryan.info/2016/03/06/modularizing-javascript</loc>
+    <lastmod>2016-03-06T17:25:52-08:00</lastmod>
   </url>
   
   <url>
@@ -18,7 +23,7 @@
   </url>
   
   <url>
-    <loc>http://glennryan.info/2016/02/27/a-clean-slate-deleting-all-tweets-with-python</loc>
+    <loc>http://glennryan.info/2016/02/27/a-clean-slate</loc>
     <lastmod>2016-02-27T14:08:44-08:00</lastmod>
   </url>
   

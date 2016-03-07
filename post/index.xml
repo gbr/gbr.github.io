@@ -7,8 +7,112 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Glenn Ryan 2016. All rights reserved.</copyright>
-    <lastBuildDate>Sun, 28 Feb 2016 01:44:08 -0800</lastBuildDate>
+    <lastBuildDate>Sun, 06 Mar 2016 17:25:52 -0800</lastBuildDate>
     <atom:link href="http://glennryan.info/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>modularizing javascript</title>
+      <link>http://glennryan.info/2016/03/06/modularizing-javascript</link>
+      <pubDate>Sun, 06 Mar 2016 17:25:52 -0800</pubDate>
+      
+      <guid>http://glennryan.info/2016/03/06/modularizing-javascript</guid>
+      <description>
+
+&lt;h3 id=&#34;preface:9f0e3ff308c335a3432c99c24ca3f959&#34;&gt;preface()&lt;/h3&gt;
+
+&lt;p&gt;I originally intended this week&amp;rsquo;s post to discuss design philosophies of front-end web development. Particularly, I wanted to focus on two things: the &lt;em&gt;separation of concerns&lt;/em&gt; of HTML, CSS and JavaScript and &lt;em&gt;imperative vs declarative patterns&lt;/em&gt; for manipulating the DOM tree. I already see that I should have split these up into two posts; they&amp;rsquo;re both pretty meaty topics. While I work on material for those posts, I decided to quickly write up this one to address my (well-founded) anxieties toward potential front-end antipatterns at the end of &lt;a href=&#34;http://glennryan.info/2016/02/28/read-time&#34;&gt;my last post&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;context:9f0e3ff308c335a3432c99c24ca3f959&#34;&gt;context()&lt;/h3&gt;
+
+&lt;p&gt;I think we can all agree that spaghetti code is bad. Even if you have very modest intentions for something you&amp;rsquo;re writing, it&amp;rsquo;s good to have some organization principles up top and to adapt them as things change. This blog, for example, began with a main JavaScript window.onLoad function and a few script library class here and there at the bottom of the main template. But I am already seeing the JS code expand in ways that do not jive well with this original groundwork. I had to spend some time thinking about how I can foster some modularity and organization as the supporting HTML, CSS and JavaScript code expands. More on that later.&lt;/p&gt;
+
+&lt;p&gt;Sometimes organization is as simple as wrapping your JavaScript code in a &lt;a href=&#34;https://developers.livechatinc.com/blog/always-use-closures-in-your-javascript-app/&#34;&gt;closure&lt;/a&gt;, then using something like CommonJS or AMD to grab dependencies only as you need them. Sometimes it&amp;rsquo;s sprinkling in a &lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode&#34;&gt;statement&lt;/a&gt; or &lt;a href=&#34;https://docs.oracle.com/javase/7/docs/api/java/lang/Override.html&#34;&gt;annotation&lt;/a&gt; to make your intentions or practices more clear. In the bigger picture, though, you need to abstract the model and functionality of your code into conceptual pieces, then use design patterns and algorithms to clearly define their behavior and interoperability.&lt;/p&gt;
+
+&lt;p&gt;That&amp;rsquo;s all well and good, but we know time constraints, feature creep and, well, apathy (&lt;em&gt;ahem&lt;/em&gt; laziness) are all real problems.&lt;/p&gt;
+
+
+&lt;figure &gt;
+    &lt;a href=&#34;http://xkcd.com/844/&#34;&gt;
+        &lt;img src=&#34;http://imgs.xkcd.com/comics/good_code.png&#34; /&gt;
+    &lt;/a&gt;
+    
+&lt;/figure&gt;
+
+
+&lt;p&gt;I don&amp;rsquo;t have a silver bullet to give you to hack away those threats to good code in real production environments. But I will outline below what I&amp;rsquo;ve done to lay down some modular infrastructure for my (tiny) blog to help me with it. Maybe some of it could apply to you.&lt;/p&gt;
+
+&lt;h3 id=&#34;project-structure:9f0e3ff308c335a3432c99c24ca3f959&#34;&gt;project.structure()&lt;/h3&gt;
+
+&lt;p&gt;So in that &lt;a href=&#34;http://glennryan.info/2016/02/28/read-time&#34;&gt;last post&lt;/a&gt; I referred to earlier, I felt the suggested way of invoking the &lt;a href=&#34;https://sacha.me/Countable/&#34;&gt;Countable&lt;/a&gt; library was kind of dirty, so I tried to clean it up by&amp;hellip; something even more dirty. And I knew at the end it was a mess but didn&amp;rsquo;t have the know-how to do anything about it. Still speaking from the place of a novice, I think I have a pretty clean way of doing things now.&lt;/p&gt;
+
+&lt;p&gt;First, &lt;em&gt;don&amp;rsquo;t touch third-party JavaScript code&lt;/em&gt;. Just because isn&amp;rsquo;t presented to you in a special archive file (think .jar) or stored in a special place on your computer doesn&amp;rsquo;t mean you shouldn&amp;rsquo;t treat it as separate. You may need to replace it whole as newer versions of it release, or you may decide one day to invoke the script through a URL rather than a local plath. Organization is all about predicting what you can the best that you can, then trying to fool-proof the rest. What I&amp;rsquo;ve done is created a vendor directory to store my third-party scripts, then created a src directory for my code. Now, (a redacted version of) my js directory looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.
+├── src
+│   ├── main.js
+│   └── ...
+ └── vendor
+    └── Countable.js
+    └── ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;export:9f0e3ff308c335a3432c99c24ca3f959&#34;&gt;export()&lt;/h3&gt;
+
+&lt;p&gt;Luckily, the Countable library already takes care of exporting itself in a way that complies with whatever module system is used (CommonJS, AMD or global):&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;  &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;typeof&lt;/span&gt; exports &lt;span style=&#34;color: #666666&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color: #BB4444&#34;&gt;&amp;#39;object&amp;#39;&lt;/span&gt;) {
+    module.exports &lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt; Countable
+  } &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;typeof&lt;/span&gt; define &lt;span style=&#34;color: #666666&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color: #BB4444&#34;&gt;&amp;#39;function&amp;#39;&lt;/span&gt; &lt;span style=&#34;color: #666666&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; define.amd) {
+    define(&lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;function&lt;/span&gt; () { &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;return&lt;/span&gt; Countable })
+  } &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;else&lt;/span&gt; {
+    global.Countable &lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt; Countable
+  }
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;It suffices to follow this pattern for the rest of the modules.&lt;/p&gt;
+
+&lt;h3 id=&#34;require:9f0e3ff308c335a3432c99c24ca3f959&#34;&gt;require()&lt;/h3&gt;
+
+&lt;p&gt;Next, I took my renderReadTime function out of there (I can&amp;rsquo;t get over how utterly stupid that was) and placed it into a util.js file in my src directory. I modeled the way I modularized it after Countable. And I imported in a way parallel to the way I export (still not sure if this is necessary or even good; please correct me in the comments if not):&lt;/p&gt;
+
+&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;  &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;typeof&lt;/span&gt; exports &lt;span style=&#34;color: #666666&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color: #BB4444&#34;&gt;&amp;#39;object&amp;#39;&lt;/span&gt;) {
+    &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;var&lt;/span&gt; Countable &lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt; require(&lt;span style=&#34;color: #BB4444&#34;&gt;&amp;#39;../vendor/Countable&amp;#39;&lt;/span&gt;);
+  } &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;typeof&lt;/span&gt; define &lt;span style=&#34;color: #666666&#34;&gt;===&lt;/span&gt; &lt;span style=&#34;color: #BB4444&#34;&gt;&amp;#39;function&amp;#39;&lt;/span&gt; &lt;span style=&#34;color: #666666&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; define.amd) {
+    require([&lt;span style=&#34;color: #BB4444&#34;&gt;&amp;#39;../vendor/Countable&amp;#39;&lt;/span&gt;]);
+  } &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;else&lt;/span&gt; {
+    Countable &lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt; global.Countable;
+  }
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3 id=&#34;invoke:9f0e3ff308c335a3432c99c24ca3f959&#34;&gt;invoke()&lt;/h3&gt;
+
+&lt;p&gt;Finally, I took my HTML invocation of renderReadTime out of the footer of my main template and and put it into the footer of the precise subtemplate it will be used for: article.html. I don&amp;rsquo;t know what I was thinking in placing it elsewhere, to be honest. Now the exact selectors I am using to render the read time output are in the same place as my function call, which makes it all that much easier to read and understand, as well as easier to change in the future.&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&amp;lt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;body&lt;/span&gt;&amp;gt;
+    
+...
+                &amp;lt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;h1&lt;/span&gt; &lt;span style=&#34;color: #BB4444&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color: #BB4444&#34;&gt;&amp;quot;page-title&amp;quot;&lt;/span&gt; &lt;span style=&#34;color: #BB4444&#34;&gt;itemprop&lt;/span&gt;&lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color: #BB4444&#34;&gt;&amp;quot;name headline&amp;quot;&lt;/span&gt;&amp;gt;{{ .Title }}&amp;lt;/&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;h1&lt;/span&gt;&amp;gt;
+                &amp;lt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;h5&lt;/span&gt; &lt;span style=&#34;color: #BB4444&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color: #BB4444&#34;&gt;&amp;quot;js-reading-time&amp;quot;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;h5&lt;/span&gt;&amp;gt;
+                &amp;lt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;div&lt;/span&gt; &lt;span style=&#34;color: #BB4444&#34;&gt;itemprop&lt;/span&gt;&lt;span style=&#34;color: #666666&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color: #BB4444&#34;&gt;&amp;quot;articleBody&amp;quot;&lt;/span&gt;&amp;gt;
+                    &lt;span style=&#34;color: #008800; font-style: italic&#34;&gt;&amp;lt;!-- Content --&amp;gt;&lt;/span&gt;
+                &amp;lt;/&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;div&lt;/span&gt;&amp;gt;
+ ...
+    
+    &lt;span style=&#34;color: #008800; font-style: italic&#34;&gt;&amp;lt;!-- Reading time approximation --&amp;gt;&lt;/span&gt;
+    &amp;lt;&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;script&lt;/span&gt;&amp;gt;util.renderReadTime(&lt;span style=&#34;color: #666666&#34;&gt;200&lt;/span&gt;, &lt;span style=&#34;color: #BB4444&#34;&gt;&amp;#39;div[itemprop=articleBody]&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color: #BB4444&#34;&gt;&amp;#39;.js-reading-time&amp;#39;&lt;/span&gt;);&amp;lt;/&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;script&lt;/span&gt;&amp;gt;
+&amp;lt;/&lt;span style=&#34;color: #008000; font-weight: bold&#34;&gt;body&lt;/span&gt;&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;p&gt;And that&amp;rsquo;s it! I didn&amp;rsquo;t change the functionality of the blog, just organized it better so, as I add third-party files and more code of my own, it will be very easy to see how to divide it up and modularize it.&lt;/p&gt;
+
+&lt;h3 id=&#34;stack-pop:9f0e3ff308c335a3432c99c24ca3f959&#34;&gt;stack.pop()&lt;/h3&gt;
+
+&lt;p&gt;Now that that&amp;rsquo;s out of the way, I plan to follow this up by discussing separation of concerns of HTML, CSS and JS before getting to declarative and imperative design patterns. The hope is to eventually warm into discussing differences in philosophy between Angular, React and Polymer. In particular, I want to compare them under the lens of whether they give HTML or JS/Dart the biggest piece of the pie when it comes to describing the form and behavior of your content.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>read time</title>
@@ -63,13 +167,13 @@
       <guid>http://glennryan.info/2016/02/27/starting-dart</guid>
       <description>
 
-&lt;h3 id=&#34;what-i-wanted:f67c76d5effc368f32a31f09e6236041&#34;&gt;what i wanted&lt;/h3&gt;
+&lt;h3 id=&#34;preface:f67c76d5effc368f32a31f09e6236041&#34;&gt;preface()&lt;/h3&gt;
 
 &lt;p&gt;I have a side project under wraps that I intend to work on over the next couple of months. I&amp;rsquo;m doing it for several reasons. Not only do I think the idea behind the project has potential, but I have some take-aways I hope to work towards. As a junior-level engineer, I want to have more hands-on experience with design. And, above all, as an embedded C developer, I want to modernize my toolbox and become more well-rounded as a result. I have had prior employment in the web development space, if only briefly, so I thought writing an app for the web would be great way to build off prior experience yet venture into the new.&lt;/p&gt;
 
 &lt;p&gt;On and off since December, I&amp;rsquo;ve considered plenty of modern languages and frameworks out there to find at least one set of tools most conducive to prototyping this app &lt;em&gt;quickly&lt;/em&gt;, &lt;em&gt;efficiently&lt;/em&gt; and in a way that is &lt;em&gt;maintainable&lt;/em&gt; and &lt;em&gt;readable&lt;/em&gt; for a single full-stack developer. It would also help, I thought, if I enjoyed the langauges/frameworks I learn along the way. As someone who has only written production code for the web in Java (using JSF and Primefaces), I want this experience to be a little more modern. I want it to involve &lt;em&gt;open source&lt;/em&gt; tools.&lt;/p&gt;
 
-&lt;h3 id=&#34;how-i-found-it:f67c76d5effc368f32a31f09e6236041&#34;&gt;how i found it&lt;/h3&gt;
+&lt;h3 id=&#34;search-start:f67c76d5effc368f32a31f09e6236041&#34;&gt;search.start()&lt;/h3&gt;
 
 &lt;p&gt;When I expressed these desires and constraints to my friend, he referred me to this video:&lt;/p&gt;
 
@@ -85,7 +189,7 @@
 
 &lt;p&gt;I noticed, several comments down from the top, mention of a MEAN stack and a few replying comments praising it. This looked promising. I researched what this MEAN stack was and how it was being used. Some of the top results in my Google search revealed stunning single-page, JavaScript web apps written by a lone developer. Some of these people were generous enough to leave their repos public for others to study their code. I was instantly sold.&lt;/p&gt;
 
-&lt;h3 id=&#34;how-i-got-turned-around:f67c76d5effc368f32a31f09e6236041&#34;&gt;how i got turned around&lt;/h3&gt;
+&lt;h3 id=&#34;search-redirect:f67c76d5effc368f32a31f09e6236041&#34;&gt;search.redirect()&lt;/h3&gt;
 
 &lt;p&gt;I spent some time getting to know JavaScript and revisiting web dev fundamentals, meanwhile gathering tutorials and resources to really get started with this MEAN thing. Thanks to these venerable blog-writers, I gathered quite a bit of base material and knowledge to work with. Unfortunately, it all dematerialized once I took a step back and considered all my options once more before going &amp;ldquo;all in&amp;rdquo;, so to speak, with MEAN. I researched the negative, the neutral and the positive, ultimately becoming disenchanted with the &amp;ldquo;magic&amp;rdquo; of this combination.&lt;/p&gt;
 
@@ -93,7 +197,7 @@
 
 &lt;p&gt;I reconsidered those options but found that they were all unsuitable for my app, being either too flexible or too narrow in design. So I decided to upgrade to Angular 2. I lost use of some directives I originally intended to use for my app, but this was fine; &lt;a href=&#34;http://angular-tips.com/blog/2015/09/migrating-directives-to-angular-2/&#34;&gt;it&amp;rsquo;s not terrible to convert them&lt;/a&gt;. I just needed to learn the ins and outs of the new framework. And from there I fell down another rabbit hole. At my disposal in Angular 2 were three language options: JavaScript, TypeScript and Dart.&lt;/p&gt;
 
-&lt;h3 id=&#34;how-i-got-here:f67c76d5effc368f32a31f09e6236041&#34;&gt;how i got here&lt;/h3&gt;
+&lt;h3 id=&#34;search-restart:f67c76d5effc368f32a31f09e6236041&#34;&gt;search.restart()&lt;/h3&gt;
 
 &lt;p&gt;&lt;em&gt;Having an open mind is as confusing as it is enriching.&lt;/em&gt;&lt;/p&gt;
 
@@ -121,18 +225,24 @@
     </item>
     
     <item>
-      <title>a clean slate: deleting all tweets with python</title>
-      <link>http://glennryan.info/2016/02/27/a-clean-slate-deleting-all-tweets-with-python</link>
+      <title>a clean slate</title>
+      <link>http://glennryan.info/2016/02/27/a-clean-slate</link>
       <pubDate>Sat, 27 Feb 2016 14:08:44 -0800</pubDate>
       
-      <guid>http://glennryan.info/2016/02/27/a-clean-slate-deleting-all-tweets-with-python</guid>
-      <description>&lt;p&gt;As my first order of business, I was looking to to delete all prior tweets from my account, since I plan to start using Twitter in a more professional capacity from now on. To do so, I see there are &lt;a href=&#34;tweetdelete.net&#34;&gt;various sites&lt;/a&gt; and &lt;a href=&#34;https://www.gocardigan.com/&#34;&gt;services&lt;/a&gt; out there to assist with that. But part of beginning this blog was a commitment to exploring how I can use official  APIs, third-party libraries or my own code from scratch to accomplish things on the web.&lt;/p&gt;
+      <guid>http://glennryan.info/2016/02/27/a-clean-slate</guid>
+      <description>
+
+&lt;h3 id=&#34;start:b6885e1f85551f51a4707c402f8200a3&#34;&gt;start()&lt;/h3&gt;
+
+&lt;p&gt;As my first order of business, I was looking to to delete all prior tweets from my account, since I plan to start using Twitter in a more professional capacity from now on. To do so, I see there are &lt;a href=&#34;tweetdelete.net&#34;&gt;various sites&lt;/a&gt; and &lt;a href=&#34;https://www.gocardigan.com/&#34;&gt;services&lt;/a&gt; out there to assist with that. But part of beginning this blog was a commitment to exploring how I can use official  APIs, third-party libraries or my own code from scratch to accomplish things on the web.&lt;/p&gt;
 
 &lt;p&gt;So I found this nice Python script, courtesy of &lt;a href=&#34;https://github.com/davej&#34;&gt;Dave Jeffery&lt;/a&gt;.&lt;/p&gt;
 
 &lt;script src=&#34;//gist.github.com/davej/113241.js&#34;&gt;&lt;/script&gt;
 
 &lt;p&gt;I registered my twitter application under bird_eater (ha, get it? because it&amp;rsquo;s Python getting rid of tweets&amp;hellip; eh) and put in my key and secret. I then followed the directions from the script&amp;rsquo;s output et voilà! I am now tweet-free. I can restart my Twitter profile with a clean slate &amp;mdash; notwithstanding the other parts of my account.&lt;/p&gt;
+
+&lt;h3 id=&#34;continue:b6885e1f85551f51a4707c402f8200a3&#34;&gt;continue&lt;/h3&gt;
 
 &lt;p&gt;In fact, why not take care of those things, too? To take this further, I should expand on this script to make it a bit more sophisticated. Some ideas could be deleting certain tweets, unfollowing accounts, removing likes and lists, etc. That could be a promising project.&lt;/p&gt;
 </description>
