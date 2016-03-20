@@ -27,7 +27,7 @@
     </figure>
     <div class="bio">
         
-        <h1>hi, i&rsquo;m <a href="mailto:contact@glennryan.info">@glennryan</a></h1>
+        <h1>hi, i&rsquo;m <a href="mailto:contact@glennryan.info" target="_blank">@glennryan</a></h1>
         
         
         <p>I&rsquo;m a software engineer trying to keep my toolbox sharp and my problem-solving skills even sharper. I write about it here.</p>
@@ -67,7 +67,7 @@
 
         <ul>
         
-            <li><a target="_blank" href="//github.com/gbr">Github</a></li>
+            <li><a target="_blank" href="//github.com/gbr">GitHub</a></li>
         
             <li><a target="_blank" href="//twitter.com/bgarryan">Twitter</a></li>
         
@@ -102,13 +102,13 @@
                 <div itemprop="articleBody">
                     
 
-<h3 id="preface:f67c76d5effc368f32a31f09e6236041">preface()</h3>
+<h3 id="preface">preface()</h3>
 
 <p>I have a side project under wraps that I intend to work on over the next couple of months. I&rsquo;m doing it for several reasons. Not only do I think the idea behind the project has potential, but I have some take-aways I hope to work towards. As a junior-level engineer, I want to have more hands-on experience with design. And, above all, as an embedded C developer, I want to modernize my toolbox and become more well-rounded as a result. I have had prior employment in the web development space, if only briefly, so I thought writing an app for the web would be great way to build off prior experience yet venture into the new.</p>
 
 <p>On and off since December, I&rsquo;ve considered plenty of modern languages and frameworks out there to find at least one set of tools most conducive to prototyping this app <em>quickly</em>, <em>efficiently</em> and in a way that is <em>maintainable</em> and <em>readable</em> for a single full-stack developer. It would also help, I thought, if I enjoyed the langauges/frameworks I learn along the way. As someone who has only written production code for the web in Java (using JSF and Primefaces), I want this experience to be a little more modern. I want it to involve <em>open source</em> tools.</p>
 
-<h3 id="search-start:f67c76d5effc368f32a31f09e6236041">search.start()</h3>
+<h3 id="search-start">search.start()</h3>
 
 <p>When I expressed these desires and constraints to my friend, he referred me to this video:</p>
 
@@ -124,15 +124,15 @@
 
 <p>I noticed, several comments down from the top, mention of a MEAN stack and a few replying comments praising it. This looked promising. I researched what this MEAN stack was and how it was being used. Some of the top results in my Google search revealed stunning single-page, JavaScript web apps written by a lone developer. Some of these people were generous enough to leave their repos public for others to study their code. I was instantly sold.</p>
 
-<h3 id="search-redirect:f67c76d5effc368f32a31f09e6236041">search.redirect()</h3>
+<h3 id="search-redirect">search.redirect()</h3>
 
 <p>I spent some time getting to know JavaScript and revisiting web dev fundamentals, meanwhile gathering tutorials and resources to really get started with this MEAN thing. Thanks to these venerable blog-writers, I gathered quite a bit of base material and knowledge to work with. Unfortunately, it all dematerialized once I took a step back and considered all my options once more before going &ldquo;all in&rdquo;, so to speak, with MEAN. I researched the negative, the neutral and the positive, ultimately becoming disenchanted with the &ldquo;magic&rdquo; of this combination.</p>
 
 <p>It all started with Angular. it became clear that though Angular 1.x is a decent-enough framework that is now very mature, it is anticipated to be usurped quite strongly by its successor Angular 2 (now in beta). Likewise, many praised, at the expense of Angular 1.x, the modular and flexible combination of React with Flux architecture. And, finally, many encouraged people to stray away from the MEAN stack in favor of something like Meteor.js.</p>
 
-<p>I reconsidered those options but found that they were all unsuitable for my app, being either too flexible or too narrow in design. So I decided to upgrade to Angular 2. I lost use of some directives I originally intended to use for my app, but this was fine; <a href="http://angular-tips.com/blog/2015/09/migrating-directives-to-angular-2/">it&rsquo;s not terrible to convert them</a>. I just needed to learn the ins and outs of the new framework. And from there I fell down another rabbit hole. At my disposal in Angular 2 were three language options: JavaScript, TypeScript and Dart.</p>
+<p>I reconsidered those options but found that they were all unsuitable for my app, being either too flexible or too narrow in design. So I decided to upgrade to Angular 2. I lost use of some directives I originally intended to use for my app, but this was fine; <a href="http://angular-tips.com/blog/2015/09/migrating-directives-to-angular-2/" target="_blank">it&rsquo;s not terrible to convert them</a>. I just needed to learn the ins and outs of the new framework. And from there I fell down another rabbit hole. At my disposal in Angular 2 were three language options: JavaScript, TypeScript and Dart.</p>
 
-<h3 id="search-restart:f67c76d5effc368f32a31f09e6236041">search.restart()</h3>
+<h3 id="search-restart">search.restart()</h3>
 
 <p><em>Having an open mind is as confusing as it is enriching.</em></p>
 
@@ -146,16 +146,16 @@
 <li>Potential incompatibility with key JavaScript libraries this app needs</li>
 </ol>
 
-<p>Concerns one and two are the risks of being an early adopter, but this is cost that yields to a much greater reward: the fun and practice of developing in the unknown, not to mention the oppurtunity to potentially contribute to Angular 2 and Dart (via field-testing) and their communities (via knowledge-sharing). The third problem posed the greatest challenge to the Dart route. Thankfully, the Dart team has <a href="https://www.dartlang.org/articles/js-dart-interop/">released some interoperability libraries</a> to help with this very thing.</p>
+<p>Concerns one and two are the risks of being an early adopter, but this is cost that yields to a much greater reward: the fun and practice of developing in the unknown, not to mention the oppurtunity to potentially contribute to Angular 2 and Dart (via field-testing) and their communities (via knowledge-sharing). The third problem posed the greatest challenge to the Dart route. Thankfully, the Dart team has <a href="https://www.dartlang.org/articles/js-dart-interop/" target="_blank">released some interoperability libraries</a> to help with this very thing.</p>
 
 <blockquote>
 <p>“When my information changes, I alter my conclusions. What do you do, sir?”
 &mdash; John Maynard Keyes</p>
 </blockquote>
 
-<p>Then, I thought, if I&rsquo;m going this far, why not go further? <a href="http://stackoverflow.com/questions/29218468/does-angular-2-0-alpha-work-with-the-components-in-angular-material-project">I&rsquo;ve lost use of Angular Materials at this stage of Angular 2</a>, so why not try Polymer too? <a href="https://dart.academy/dart-angular-2-and-polymer-together/">It&rsquo;s compatible with Dart and Angular 2</a>. And why write the Node.js/Express backend in JS or TS if Dart with <a href="https://pub.dartlang.org/packages/shelf">shelf</a> can also do the job, thanks to JS interoperability? I&rsquo;d rather keep the focus of using one language throughout the entirety of the app. If it&rsquo;s possible, why not try it? If it&rsquo;s just a prototype with no constraints, what else do I have to lose than the time I am willing to spend on it?</p>
+<p>Then, I thought, if I&rsquo;m going this far, why not go further? <a href="http://stackoverflow.com/questions/29218468/does-angular-2-0-alpha-work-with-the-components-in-angular-material-project" target="_blank">I&rsquo;ve lost use of Angular Materials at this stage of Angular 2</a>, so why not try Polymer too? <a href="https://dart.academy/dart-angular-2-and-polymer-together/" target="_blank">It&rsquo;s compatible with Dart and Angular 2</a>. And why write the Node.js/Express backend in JS or TS if Dart with <a href="https://pub.dartlang.org/packages/shelf" target="_blank">shelf</a> can also do the job, thanks to JS interoperability? I&rsquo;d rather keep the focus of using one language throughout the entirety of the app. If it&rsquo;s possible, why not try it? If it&rsquo;s just a prototype with no constraints, what else do I have to lose than the time I am willing to spend on it?</p>
 
-<p>So here I am, <a href="https://www.dartlang.org/codelabs/darrrt/">getting started with Dart</a>. I&rsquo;ll come back in a later post and let you know how it went.</p>
+<p>So here I am, <a href="https://www.dartlang.org/codelabs/darrrt/" target="_blank">getting started with Dart</a>. I&rsquo;ll come back in a later post and let you know how it went.</p>
 
                 </div>
                 <div class="feat share">
@@ -195,7 +195,7 @@
 
         <footer>
 	
-	<small>POWERED BY <a href="//gohugo.io">HUGO</a> - THEME: <a href="//github.com/digitalcraftsman/hugo-hikari-theme">HIKARI</a> - © 2016 <a href="mailto:contact@glennryan.info">GLENN RYAN</a></small>
+	<small>POWERED BY <a href="//gohugo.io" target="_blank">HUGO</a> - THEME: <a href="//github.com/digitalcraftsman/hugo-hikari-theme" target="_blank">HIKARI</a> - © 2016 <a href="mailto:contact@glennryan.info" target="_blank">GLENN RYAN</a></small>
 	
 </footer>
     </div>

@@ -27,7 +27,7 @@
     </figure>
     <div class="bio">
         
-        <h1>hi, i&rsquo;m <a href="mailto:contact@glennryan.info">@glennryan</a></h1>
+        <h1>hi, i&rsquo;m <a href="mailto:contact@glennryan.info" target="_blank">@glennryan</a></h1>
         
         
         <p>I&rsquo;m a software engineer trying to keep my toolbox sharp and my problem-solving skills even sharper. I write about it here.</p>
@@ -67,7 +67,7 @@
 
         <ul>
         
-            <li><a target="_blank" href="//github.com/gbr">Github</a></li>
+            <li><a target="_blank" href="//github.com/gbr">GitHub</a></li>
         
             <li><a target="_blank" href="//twitter.com/bgarryan">Twitter</a></li>
         
@@ -102,15 +102,15 @@
                 <div itemprop="articleBody">
                     
 
-<h3 id="preface:9f0e3ff308c335a3432c99c24ca3f959">preface()</h3>
+<h3 id="preface">preface()</h3>
 
-<p>I originally intended this week&rsquo;s post to discuss design philosophies of front-end web development. Particularly, I wanted to focus on two things: the <em>separation of concerns</em> of HTML, CSS and JavaScript and <em>imperative vs declarative patterns</em> for manipulating the DOM tree. I already see that I should have split these up into two posts; they&rsquo;re both pretty meaty topics. While I work on material for those posts, I decided to quickly write up this one to address my (well-founded) anxieties toward potential front-end antipatterns at the end of <a href="http://glennryan.info/2016/02/28/read-time">my last post</a>.</p>
+<p>I originally intended this week&rsquo;s post to discuss design philosophies of front-end web development. Particularly, I wanted to focus on two things: the <em>separation of concerns</em> of HTML, CSS and JavaScript and <em>imperative vs declarative patterns</em> for manipulating the DOM tree. I already see that I should have split these up into two posts; they&rsquo;re both pretty meaty topics. While I work on material for those posts, I decided to quickly write up this one to address my (well-founded) anxieties toward potential front-end antipatterns at the end of <a href="http://glennryan.info/2016/02/28/read-time" target="_blank">my last post</a>.</p>
 
-<h3 id="context:9f0e3ff308c335a3432c99c24ca3f959">context()</h3>
+<h3 id="context">context()</h3>
 
 <p>I think we can all agree that spaghetti code is bad. Even if you have very modest intentions for something you&rsquo;re writing, it&rsquo;s good to have some organization principles up top and to adapt them as things change. This blog, for example, began with a main JavaScript window.onLoad function and a few script library class here and there at the bottom of the main template. But I am already seeing the JS code expand in ways that do not jive well with this original groundwork. I had to spend some time thinking about how I can foster some modularity and organization as the supporting HTML, CSS and JavaScript code expands. More on that later.</p>
 
-<p>Sometimes organization is as simple as wrapping your JavaScript code in a <a href="https://developers.livechatinc.com/blog/always-use-closures-in-your-javascript-app/">closure</a>, then using something like CommonJS or AMD to grab dependencies only as you need them. Sometimes it&rsquo;s sprinkling in a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode">statement</a> or <a href="https://docs.oracle.com/javase/7/docs/api/java/lang/Override.html">annotation</a> to make your intentions or practices more clear. In the bigger picture, though, you need to abstract the model and functionality of your code into conceptual pieces, then use design patterns and algorithms to clearly define their behavior and interoperability.</p>
+<p>Sometimes organization is as simple as wrapping your JavaScript code in a <a href="https://developers.livechatinc.com/blog/always-use-closures-in-your-javascript-app/" target="_blank">closure</a>, then using something like CommonJS or AMD to grab dependencies only as you need them. Sometimes it&rsquo;s sprinkling in a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode" target="_blank">statement</a> or <a href="https://docs.oracle.com/javase/7/docs/api/java/lang/Override.html" target="_blank">annotation</a> to make your intentions or practices more clear. In the bigger picture, though, you need to abstract the model and functionality of your code into conceptual pieces, then use design patterns and algorithms to clearly define their behavior and interoperability.</p>
 
 <p>That&rsquo;s all well and good, but we know time constraints, feature creep and, well, apathy (<em>ahem</em> laziness) are all real problems.</p>
 
@@ -125,9 +125,9 @@
 
 <p>I don&rsquo;t have a silver bullet to give you to hack away those threats to good code in real production environments. But I will outline below what I&rsquo;ve done to lay down some modular infrastructure for my (tiny) blog to help me with it. Maybe some of it could apply to you.</p>
 
-<h3 id="project-structure:9f0e3ff308c335a3432c99c24ca3f959">project.structure()</h3>
+<h3 id="project-structure">project.structure()</h3>
 
-<p>So in that <a href="http://glennryan.info/2016/02/28/read-time">last post</a> I referred to earlier, I felt the suggested way of invoking the <a href="https://sacha.me/Countable/">Countable</a> library was kind of dirty, so I tried to clean it up by&hellip; something even more dirty. And I knew at the end it was a mess but didn&rsquo;t have the know-how to do anything about it. Still speaking from the place of a novice, I think I have a pretty clean way of doing things now.</p>
+<p>So in that <a href="http://glennryan.info/2016/02/28/read-time" target="_blank">last post</a> I referred to earlier, I felt the suggested way of invoking the <a href="https://sacha.me/Countable/" target="_blank">Countable</a> library was kind of dirty, so I tried to clean it up by&hellip; something even more dirty. And I knew at the end it was a mess but didn&rsquo;t have the know-how to do anything about it. Still speaking from the place of a novice, I think I have a pretty clean way of doing things now.</p>
 
 <p>First, <em>don&rsquo;t touch third-party JavaScript code</em>. Just because isn&rsquo;t presented to you in a special archive file (think .jar) or stored in a special place on your computer doesn&rsquo;t mean you shouldn&rsquo;t treat it as separate. You may need to replace it whole as newer versions of it release, or you may decide one day to invoke the script through a URL rather than a local path. Organization is all about predicting what you can the best that you can, then trying to fool-proof the rest. What I&rsquo;ve done is created a vendor directory to store my third-party scripts, then created a src directory for my code. Now, (a redacted version of) my js directory looks like this:</p>
 
@@ -140,7 +140,7 @@
     └── ...
 </code></pre>
 
-<h3 id="export:9f0e3ff308c335a3432c99c24ca3f959">export()</h3>
+<h3 id="export">export()</h3>
 
 <p>Luckily, the Countable library already takes care of exporting itself in a way that complies with whatever module system is used (CommonJS, AMD or global):</p>
 
@@ -156,7 +156,7 @@
 
 <p>It suffices to follow this pattern for the rest of the modules.</p>
 
-<h3 id="require:9f0e3ff308c335a3432c99c24ca3f959">require()</h3>
+<h3 id="require">require()</h3>
 
 <p>Next, I took my renderReadTime function out of there (I can&rsquo;t get over how utterly stupid that was) and placed it into a util.js file in my src directory. I modeled the way I modularized it after Countable. And I imported in a way parallel to the way I export (still not sure if this is necessary or even good; please correct me in the comments if not):</p>
 
@@ -170,7 +170,7 @@
 </pre></div>
 
 
-<h3 id="invoke:9f0e3ff308c335a3432c99c24ca3f959">invoke()</h3>
+<h3 id="invoke">invoke()</h3>
 
 <p>Finally, I took my HTML invocation of renderReadTime out of the footer of my main template and and put it into the footer of the precise subtemplate it will be used for: article.html. I don&rsquo;t know what I was thinking in placing it elsewhere, to be honest. Now the exact selectors I am using to render the read time output are in the same place as my function call, which makes it all that much easier to read and understand, as well as easier to change in the future.</p>
 
@@ -194,7 +194,7 @@
 
 <p>And that&rsquo;s it! I didn&rsquo;t change the functionality of the blog, just organized it better so, as I add third-party files and more code of my own, it will be very easy to see how to divide it up and modularize it.</p>
 
-<h3 id="stack-pop:9f0e3ff308c335a3432c99c24ca3f959">stack.pop()</h3>
+<h3 id="stack-pop">stack.pop()</h3>
 
 <p>Now that that&rsquo;s out of the way, I plan to follow this up by discussing separation of concerns of HTML, CSS and JS before getting to declarative and imperative design patterns. The hope is to eventually warm into discussing differences in philosophy between Angular, React and Polymer. In particular, I want to compare them under the lens of whether they give HTML or JS/Dart the biggest piece of the pie when it comes to describing the form and behavior of your content.</p>
 
@@ -222,6 +222,10 @@
 <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
                 
+                    <a rel="next" href="http://glennryan.info/2016/03/14/dart-streams" id="next">
+                        <span class="nav-title nav-title-next"></span> &rarr;
+                    </a>
+                
                 
                     <a rel="prev" href="http://glennryan.info/2016/02/28/read-time" id="prev">
                         &larr; <span class="nav-title nav-title-prev"></span>
@@ -232,7 +236,7 @@
 
         <footer>
 	
-	<small>POWERED BY <a href="//gohugo.io">HUGO</a> - THEME: <a href="//github.com/digitalcraftsman/hugo-hikari-theme">HIKARI</a> - © 2016 <a href="mailto:contact@glennryan.info">GLENN RYAN</a></small>
+	<small>POWERED BY <a href="//gohugo.io" target="_blank">HUGO</a> - THEME: <a href="//github.com/digitalcraftsman/hugo-hikari-theme" target="_blank">HIKARI</a> - © 2016 <a href="mailto:contact@glennryan.info" target="_blank">GLENN RYAN</a></small>
 	
 </footer>
     </div>

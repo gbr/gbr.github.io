@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>dart streams &middot; glenn ryan&#39;s blog</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Glenn Ryan">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.15" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="http://glennryan.info/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700|Lora:400,700,400italic" rel="stylesheet" type="text/css">
+    <meta name="wot-verification" content="652c1efdb5c70c204ad4"/>
+</head>
+<body>
+    
+    <div class="off-canvas">
+    <figure class="avatar">
+        <img src="http://glennryan.info/img/avatar.jpg" title="Glenn Ryan">
+    </figure>
+    <div class="bio">
+        
+        <h1>hi, i&rsquo;m <a href="mailto:contact@glennryan.info" target="_blank">@glennryan</a></h1>
+        
+        
+        <p>I&rsquo;m a software engineer trying to keep my toolbox sharp and my problem-solving skills even sharper. I write about it here.</p>
+        
+    </div>
+    <nav>
+
+        
+
+        
+        <h6>Search</h6>
+        
+
+        <div>
+            <form name="google-search" method="get" action="http://www.google.com/search" target="_blank">
+                <input type="hidden" name="sitesearch" value="http://glennryan.info/" />
+                <input name="q" type="text" />
+                <input type="submit" name="sa" value="Google" />
+            </form>
+        </div>
+
+        
+
+        
+        <h6>Subscribe</h6>
+        
+
+        <ul>
+            <li><a target="_blank" href="http://glennryan.info/index.xml">RSS feed</a></li>
+        </ul>
+
+        
+
+        
+        <h6>Find me on</h6>
+        
+
+        <ul>
+        
+            <li><a target="_blank" href="//github.com/gbr">GitHub</a></li>
+        
+            <li><a target="_blank" href="//twitter.com/bgarryan">Twitter</a></li>
+        
+            <li><a target="_blank" href="//linkedin.com/in/gbryan">LinkedIn</a></li>
+        
+        </ul>
+    </nav>
+</div>
+
+
+    <div class="site-wrapper">
+        <header>
+	<div class="h-wrap">
+		
+		<h1 class="title"><a href="http://glennryan.info/">glenn ryan&#39;s blog</a></h1>
+		
+		<a class="menu-icon" title="Menu"><span class="lines"></span></a>
+	</div>
+</header>
+        
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                    <time datetime="" itemprop="datePublished">
+                    14. March 2016
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">dart streams</h1>
+                <h5 class="js-reading-time"></h5>
+                <div itemprop="articleBody">
+                    
+
+<p>I&rsquo;ve been pretty gungho about Dart for the past month or so. I&rsquo;ve been fascinated by its stark yet conservative contrast with JavaScript, and its capacity as a runtime environment to compete with the likes of Node.js and Golang. It had its fair amount of mentions alongside TypeScript, Flow and Babel as attempts to &ldquo;fix&rdquo; current-standard JavaScript for the past few years. Proponents of Dart speak of it as a language for tomorrow by taking a clean break of JS today. I want to evaluate whether I truly prefer Dart over JS and whether I could see myself realistically using it in lieu of its alternatives. More on that later.</p>
+
+<p>So I&rsquo;ve spent the past few weeks going through the Dart tutorials, guides and docs. Before tackling the <a href="https://angular.io/" target="_blank">two</a> <a href="https://www.polymer-project.org/1.0/" target="_blank">major</a> Dart client-side frameworks, I wanted to test-drive and understand the bare language itself a little better. It comes with batteries included for the most part, with strong http and async libraries. To really dig in with the latter, I decided to port Andre Staltz&rsquo;s <a href="https://gist.github.com/staltz/868e7e9bc2a7b8c1f754#the-introduction-to-reactive-programming-youve-been-missing" target="_blank">RxJS demo</a> to Dart. And rather than entirely rely on the (unofficial) <a href="https://pub.dartlang.org/packages/rxdart" target="_blank">rxdart package</a>, I wanted to see how far Dart&rsquo;s native Stream API could take me before things got awkward.</p>
+
+<h3 id="new-stream-consciousness">new Stream<Consciousness>()</h3>
+
+<p>The Stream API and its affiliate interfaces (discussed below) resemble in many ways Java&rsquo;s <a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html" target="_blank">java.util.stream</a> package. It is built from and has many interactions with Futures &mdash; the Dart equivalent to JavaScript&rsquo;s Promises. Andre Staltz aptly likens Streams to Futures++ (well, Promises in his case).  In Dart, these are the two building blocks for a powerful (if sometimes cumbersome) implementation of the Observer design patter for asynchronous flow of data.</p>
+
+<p>Functional reactive programming (and, well, the <a href="https://en.wikipedia.org/wiki/Observer_pattern" target="_blank">Observer pattern</a>) isn&rsquo;t anything new, but it has really taken off in the JavaScript world lately. I believe this was as a result of Netflix&rsquo;s success with the Rx library in its asynchronous Java backend. Since much of modern JavaScript heavily relies on using asynchronous constructs to avoid callback hell, this adoption of Rx is very understandable, both in a Node.js runtime environment and in the browser. It really takes off in an MVC context, since it shines as a way of managing state across multiple events that interact with each other.<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup></p>
+
+<h3 id="the-code">the code</h3>
+
+<p>Anyway, let&rsquo;s see some code. I&rsquo;ll show off my functional but very rough draft of the Dart port. The DartPad app is below. I apologize for the narrow window. I recommend <a href="https://dartpad.dartlang.org/339f21ae3e12f75ef27e" target="_blank">opening the app in DartPad</a> and <a href="https://gist.github.com/339f21ae3e12f75ef27e" target="_blank">reading the code in its gist</a> for a wider view.</p>
+
+<iframe src='https://dartpad.dartlang.org/embed-html.html?id=339f21ae3e12f75ef27e&run=true&verticalRatio=70' style='height:450px;width:100%;' frameborder='0'></iframe>
+
+<p>As you can see, it&rsquo;s not quite as terse as its RxJS equivalent, but, like I said, this was my attempt to get to know the native Stream API, not explore a full <em>library</em> like RxJS. If you understand what the original JavaScript from Andrew Schultz is doing, my Dart code should be mostly self-explanatory, save for the implementations of equivalents for RxJs&rsquo; merge and combineLatest at the end.</p>
+
+<p>First, the good:</p>
+
+<ul>
+<li>In combination with Dart&rsquo;s mostly terse syntax and expressiveness, it&rsquo;s a pretty smooth ride for very basic things</li>
+<li>The triumvirate of the StreamController<sup class="footnote-ref" id="fnref:2"><a rel="footnote" href="#fn:2">2</a></sup>, StreamSubscription<sup class="footnote-ref" id="fnref:3"><a rel="footnote" href="#fn:3">3</a></sup> and StreamTransformer<sup class="footnote-ref" id="fnref:4"><a rel="footnote" href="#fn:4">4</a></sup> classes makes for powerful allies in manipulating streams and their flow</li>
+<li>The clear and type-delineated distinction between single-subscription streams and broadcast streams (equivalent to Hot and Cold observables in Rx) makes for less gotchas and relatively easy debugging (assuming you have WebStorm or some other IDE)</li>
+</ul>
+
+<p>Then the bad:</p>
+
+<ul>
+<li>Timing is a little more difficult than I would expect, and I had to slightly depart from the original JS a few times to keep things going in the right order. This is particularly true when it comes to using async/await in callbacks associated with a stream. Not only did I have to improvise a bit, but I had to remove the nullifying stream map altogether, since the timing always came at the wrong place, no matter what I did.</li>
+<li>Doing more than what the basic Stream API (not just the Stream class but all its associated interfaces) provides you with the basic public methods is not just terribly verbose but a one-way trip to class hell. From this angle, I can really see the Java in Dart. It turns out it really is a <a href="http://steve-yegge.blogspot.com/2006/03/execution-in-kingdom-of-nouns.html" target="_blank">Kingdom of the Nouns</a> despite a very verb-y support for top-level functions. This is why I eventually gave in and shamefully stole my combineLatest from the <a href="rxdart/test/observable/combine_latest_test.dart" target="_blank">rxdart source code</a>. More on that later.</li>
+<li>I understand Streams are just Future++ and Dart does not currently contain an official FRP library to compare with RxJS, but, given my last point, they could have at least provided methods that resemble startsWith and merge, among some of the other, simpler methods. Having to break out those helper classes should only be for people who write libraries and contribute to the core language. Yet, you really have to if you&rsquo;re going to do anything substantial with the Streams API. Ideally, and in my humble opinion, the average developer should only have to use StreamIterator and StreamView beyond the Stream class.</li>
+</ul>
+
+<p>So, despite these things, I ultimately completed the app. It&rsquo;s ostensibly the same as the RxJS version, despite some internal differences. And what do I think at the end?</p>
+
+<h3 id="my-evaluation">my evaluation</h3>
+
+<p>Note: What is to follow are some strong opinions on Google and Facebook technologies, none of which have strong feelings attached to them. I have deep respect for both companies, so should employees of either company read this, please don&rsquo;t take this personally, but instead hire me! :)</p>
+
+<p>I think Google did the right thing in not trying to push Dart as the next JavaScript. It really is a retread back to Java culture in many ways, even with its more ambitious departures like optional typing. And I&rsquo;m sure that was intentional (after all, it has some very talented people behind it &mdash; some of whom I&rsquo;m sure agree with the critiques above and to follow) Thing is, that retread to Java world removes so much of the expressive power JS provides.</p>
+
+<p>The reason why we have this huge JS resurgeance right now is that a single person can prototype an entire library very quickly. Even if we just use the Good Parts of JS, its expressiveness heightens productivity because it is so strong. On the flip side, Dart allows its user to be productive in a different way: it is relatively easy to use and relatively hard to mess up or misunderstand, just like Java. But it loses its prototpying power (possibly also because it does away with prototypes, but that&rsquo;s another article). It has basically become a lighter Java with some JavaScript touches.</p>
+
+<p>And this is okay! We need more languages like that. I just think that this fundamental difference is why we can&rsquo;t put Dart side-by-side with JS and its other transpilers. It&rsquo;s in its own class. For that reason, though the Dart community encourages individually contributed packages, I don&rsquo;t see Dart sustaining itself from them in the way JS does. Given its relatively low popularity at the moment, what Dart packages need are <em>certified</em>, <em>authentic</em>, <em>official</em> stamping from Google so its users have the assurance of quality and prospects of long-term maintenence. The Polymer and Angular.dart/Angular 2 packages can do that, accompanied by a utility like <a href="https://github.com/google/quiver-dart" target="_blank">quiver</a> from Google. The problem is that these aren&rsquo;t enough. We would need more. We need tested, production-ready code to be productive now, as Dart itself tries to do by being so conventional and plain.</p>
+
+<p>These packages I desire would do away with the issues I had during my experience putting together this port. Sure, I can use rxdart, but (no offense to its creator/contributors &ndash; I&rsquo;m sure you are all very talented, smart people) <em>I don&rsquo;t want to</em>. I gladly use and rely on all sorts of modules in the JS ecosystem because of their wide userbase and engaged contributors. These users adopt and deploy these modules in all types of scenarios, which in turn keeps the contributors honest. I can&rsquo;t say the same of, well, any Dart package, except the ones I know are actively used and maintained at Google.</p>
+
+<p>I know, I know. You&rsquo;re telling me to contribute to said packages instead of complaining. And I was ready to do that. But then we have two problems.</p>
+
+<ul>
+<li>Doing anything beyond the basic with Dart&rsquo;s core APIs will result in highly verbose, overly classical code. It&rsquo;s a Catch-22. As I said before, this is in direct contrast with the ease of writing a library in JS due to the strong expressive power (despite its gotchas and flaws).</li>
+<li>Assuming I am willing to surmount the former, I don&rsquo;t have the satisfaction of knowing someone else out there will benefit from my work, given Dart&rsquo;s dubious popularity right now.</li>
+</ul>
+
+<p>And you know? I think some of the early adopters of Dart already realized these things, but their rants are nowhere to be found. They simply moved on without a trace. Case in point, my hero Victor Savkin made a few posts about <a href="http://victorsavkin.com/post/55007674849/functional-reactive-programming-in-dart/" target="_blank">FRP in Dart</a>, but now he talks about TypeScript, and doesn&rsquo;t give a single example in Dart anymore. At one point <a href="http://victorsavkin.com/post/123555572351/writing-angular-2-in-typescript" target="_blank">he extolls TypeScript</a> over some of its more elegant functional contenders by pointing out it &ldquo;takes 95% of the usefulness of a good statically-typed language and brings it to the JavaScript ecosystem&rdquo;. He lists Dart in an earlier list but doesn&rsquo;t address it directly, yet here we have our answer.</p>
+
+<h3 id="side-rant-you-can-safely-ignore">side rant (you can safely ignore)</h3>
+
+<p>From what I&rsquo;ve heard, Google is a relatively conservative company when it comes to language adoption. Facebook stands on the other side of the spectrum, not just by starting out with a language like PHP but in then using Thrift RPC to interface with languages like Erlang (!) and the Node.js runtime. These two companies make a great foil for each other, which is exactly what the web and the JS ecosystem needs.<sup class="footnote-ref" id="fnref:5"><a rel="footnote" href="#fn:5">5</a></sup> But, in this case, I think Dart did not remain true to the domain it was trying to enter because it erred in being too conservative. The front-end and full-stack world is enamored by JS exactly because it is not Java.</p>
+
+<p>Where I really want Dart to shine is not in the browser or the server but in the phone. Flutter seems like such a great idea to me, and Dart could be Google&rsquo;s Swift. In fact, if it could flat-out replace Java, I would be a happy camper.</p>
+
+<h3 id="conclusion">conclusion</h3>
+
+<p>As I said, I have decided to put down Dart for a bit. For this reason among others, I have also decided to switch my current project from Angular/Polymer to Flux/React. It doesn&rsquo;t need to be isomorphic, but it does require the fine-tuning of state and change detection that the latter provides. I will try out Angular 2 with TypeScript in a different project, hopefully with Go in the server. In the meantime, I&rsquo;ll continue playing around with the JS/Node.js ecosystem, trying to catch up with the advancements of the past year. No hard feelings, right Google? You&rsquo;re still my hero. :)</p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:1">After studying this, I can really understand why Angular 2 developers were eager to adopt Rx as away of competing with the strong state management and unidrectional flow provided by a React.js + Flux combination.
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+<li id="fn:2"><em>StreamController</em> manages an underlying stream via its public methods add(), addError() and close(). It has a simple state machine which you must learn to work with if you want to use it effectively. It begins with an <em>initial state</em>, when it has no subscription to a stream. Then, it has a <em>subscribed state</em> when it attains its first subscription. You may register a callback function with the onListen and onCancel members, which is pretty self-explanatory. It then has <em>cancelled state</em>. And finally, there&rsquo;s a <em>closed state</em>, where no more events can be added. There a few more key nuances, but that&rsquo;s the gist of it.
+ <a class="footnote-return" href="#fnref:2"><sup>[return]</sup></a></li>
+<li id="fn:3"><em>StreamSubscription</em> is the behind-the-scenes returned object of the listen() method. You can manipulate it further via the onData property. In this app, we only use the listen() method at the end and we don&rsquo;t explicitly use the return value. Nonethless, it provides a flexible way of further modifying actions associated with a Stream as you pass the object through the flow of your code.
+ <a class="footnote-return" href="#fnref:3"><sup>[return]</sup></a></li>
+<li id="fn:4"><em>StreamTransformer</em> is a way of creating new streams bound to an originating stream using transformers, a common idiom in the Dart language. I didn&rsquo;t end up using it in this app because the code didn&rsquo;t quite call for it (though the combineLatest implementation almost makes sense in the context of StreamTransformer, if it weren&rsquo;t for the fact that it&rsquo;s supposed to take two Stream objects as arguments, not a Stream and an action).
+ <a class="footnote-return" href="#fnref:4"><sup>[return]</sup></a></li>
+<li id="fn:5">For the server side, I think Google has a stronger contender in Go than in a PHP JIT compiler to C++. But for the client, I think Facebook wins with React and Flux over Angular. Interestingly, I think using Go as a backend language has much in design philosophy in common with React and Flux. There is a certainly a shared preference for taking the parts of what is given (industrial-strength components with batteries included) and putting it together to get what you need rather than using a ready-made, full-solution framework. Every time I read about Go server frameworks, there is a vocal majority quipping that this isn&rsquo;t the Go way. I really wish I had the time right now to play with Go some more, but that will have to be another time and another article.
+ <a class="footnote-return" href="#fnref:5"><sup>[return]</sup></a></li>
+</ol>
+</div>
+
+                </div>
+                <div class="feat share">
+                    <a href="//twitter.com/share" class="popup">
+                        <span class="icon-twitter"></span>
+                    </a>
+                </div>
+                
+                <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'glennryan';
+    var disqus_identifier = 'http:\/\/glennryan.info\/2016\/03\/14\/dart-streams';
+    var disqus_title = 'dart streams';
+    var disqus_url = 'http:\/\/glennryan.info\/2016\/03\/14\/dart-streams';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+                
+                
+                    <a rel="prev" href="http://glennryan.info/2016/03/06/modularizing-javascript" id="prev">
+                        &larr; <span class="nav-title nav-title-prev"></span>
+                    </a>
+                
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>POWERED BY <a href="//gohugo.io" target="_blank">HUGO</a> - THEME: <a href="//github.com/digitalcraftsman/hugo-hikari-theme" target="_blank">HIKARI</a> - © 2016 <a href="mailto:contact@glennryan.info" target="_blank">GLENN RYAN</a></small>
+	
+</footer>
+    </div>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://glennryan.info/js/src/main.js"></script>
+<script src="http://glennryan.info/js/vendor/Countable.js"></script>
+<script src="http://glennryan.info/js/src/util.js"></script>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-74357056-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+
+    
+    <!-- Reading time approximation -->
+    <script>util.renderReadTime(200, 'div[itemprop=articleBody]', '.js-reading-time');</script>
+</body>
+</html>

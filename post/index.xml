@@ -7,8 +7,102 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Glenn Ryan 2016. All rights reserved.</copyright>
-    <lastBuildDate>Sun, 06 Mar 2016 17:25:52 -0800</lastBuildDate>
+    <lastBuildDate>Mon, 14 Mar 2016 22:48:00 -0700</lastBuildDate>
     <atom:link href="http://glennryan.info/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>dart streams</title>
+      <link>http://glennryan.info/2016/03/14/dart-streams</link>
+      <pubDate>Mon, 14 Mar 2016 22:48:00 -0700</pubDate>
+      
+      <guid>http://glennryan.info/2016/03/14/dart-streams</guid>
+      <description>
+
+&lt;p&gt;I&amp;rsquo;ve been pretty gungho about Dart for the past month or so. I&amp;rsquo;ve been fascinated by its stark yet conservative contrast with JavaScript, and its capacity as a runtime environment to compete with the likes of Node.js and Golang. It had its fair amount of mentions alongside TypeScript, Flow and Babel as attempts to &amp;ldquo;fix&amp;rdquo; current-standard JavaScript for the past few years. Proponents of Dart speak of it as a language for tomorrow by taking a clean break of JS today. I want to evaluate whether I truly prefer Dart over JS and whether I could see myself realistically using it in lieu of its alternatives. More on that later.&lt;/p&gt;
+
+&lt;p&gt;So I&amp;rsquo;ve spent the past few weeks going through the Dart tutorials, guides and docs. Before tackling the &lt;a href=&#34;https://angular.io/&#34; target=&#34;_blank&#34;&gt;two&lt;/a&gt; &lt;a href=&#34;https://www.polymer-project.org/1.0/&#34; target=&#34;_blank&#34;&gt;major&lt;/a&gt; Dart client-side frameworks, I wanted to test-drive and understand the bare language itself a little better. It comes with batteries included for the most part, with strong http and async libraries. To really dig in with the latter, I decided to port Andre Staltz&amp;rsquo;s &lt;a href=&#34;https://gist.github.com/staltz/868e7e9bc2a7b8c1f754#the-introduction-to-reactive-programming-youve-been-missing&#34; target=&#34;_blank&#34;&gt;RxJS demo&lt;/a&gt; to Dart. And rather than entirely rely on the (unofficial) &lt;a href=&#34;https://pub.dartlang.org/packages/rxdart&#34; target=&#34;_blank&#34;&gt;rxdart package&lt;/a&gt;, I wanted to see how far Dart&amp;rsquo;s native Stream API could take me before things got awkward.&lt;/p&gt;
+
+&lt;h3 id=&#34;new-stream-consciousness&#34;&gt;new Stream&lt;Consciousness&gt;()&lt;/h3&gt;
+
+&lt;p&gt;The Stream API and its affiliate interfaces (discussed below) resemble in many ways Java&amp;rsquo;s &lt;a href=&#34;https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html&#34; target=&#34;_blank&#34;&gt;java.util.stream&lt;/a&gt; package. It is built from and has many interactions with Futures &amp;mdash; the Dart equivalent to JavaScript&amp;rsquo;s Promises. Andre Staltz aptly likens Streams to Futures++ (well, Promises in his case).  In Dart, these are the two building blocks for a powerful (if sometimes cumbersome) implementation of the Observer design patter for asynchronous flow of data.&lt;/p&gt;
+
+&lt;p&gt;Functional reactive programming (and, well, the &lt;a href=&#34;https://en.wikipedia.org/wiki/Observer_pattern&#34; target=&#34;_blank&#34;&gt;Observer pattern&lt;/a&gt;) isn&amp;rsquo;t anything new, but it has really taken off in the JavaScript world lately. I believe this was as a result of Netflix&amp;rsquo;s success with the Rx library in its asynchronous Java backend. Since much of modern JavaScript heavily relies on using asynchronous constructs to avoid callback hell, this adoption of Rx is very understandable, both in a Node.js runtime environment and in the browser. It really takes off in an MVC context, since it shines as a way of managing state across multiple events that interact with each other.&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:1&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:1&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;the-code&#34;&gt;the code&lt;/h3&gt;
+
+&lt;p&gt;Anyway, let&amp;rsquo;s see some code. I&amp;rsquo;ll show off my functional but very rough draft of the Dart port. The DartPad app is below. I apologize for the narrow window. I recommend &lt;a href=&#34;https://dartpad.dartlang.org/339f21ae3e12f75ef27e&#34; target=&#34;_blank&#34;&gt;opening the app in DartPad&lt;/a&gt; and &lt;a href=&#34;https://gist.github.com/339f21ae3e12f75ef27e&#34; target=&#34;_blank&#34;&gt;reading the code in its gist&lt;/a&gt; for a wider view.&lt;/p&gt;
+
+&lt;iframe src=&#39;https://dartpad.dartlang.org/embed-html.html?id=339f21ae3e12f75ef27e&amp;run=true&amp;verticalRatio=70&#39; style=&#39;height:450px;width:100%;&#39; frameborder=&#39;0&#39;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;As you can see, it&amp;rsquo;s not quite as terse as its RxJS equivalent, but, like I said, this was my attempt to get to know the native Stream API, not explore a full &lt;em&gt;library&lt;/em&gt; like RxJS. If you understand what the original JavaScript from Andrew Schultz is doing, my Dart code should be mostly self-explanatory, save for the implementations of equivalents for RxJs&amp;rsquo; merge and combineLatest at the end.&lt;/p&gt;
+
+&lt;p&gt;First, the good:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In combination with Dart&amp;rsquo;s mostly terse syntax and expressiveness, it&amp;rsquo;s a pretty smooth ride for very basic things&lt;/li&gt;
+&lt;li&gt;The triumvirate of the StreamController&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:2&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:2&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;, StreamSubscription&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:3&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:3&#34;&gt;3&lt;/a&gt;&lt;/sup&gt; and StreamTransformer&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:4&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:4&#34;&gt;4&lt;/a&gt;&lt;/sup&gt; classes makes for powerful allies in manipulating streams and their flow&lt;/li&gt;
+&lt;li&gt;The clear and type-delineated distinction between single-subscription streams and broadcast streams (equivalent to Hot and Cold observables in Rx) makes for less gotchas and relatively easy debugging (assuming you have WebStorm or some other IDE)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Then the bad:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Timing is a little more difficult than I would expect, and I had to slightly depart from the original JS a few times to keep things going in the right order. This is particularly true when it comes to using async/await in callbacks associated with a stream. Not only did I have to improvise a bit, but I had to remove the nullifying stream map altogether, since the timing always came at the wrong place, no matter what I did.&lt;/li&gt;
+&lt;li&gt;Doing more than what the basic Stream API (not just the Stream class but all its associated interfaces) provides you with the basic public methods is not just terribly verbose but a one-way trip to class hell. From this angle, I can really see the Java in Dart. It turns out it really is a &lt;a href=&#34;http://steve-yegge.blogspot.com/2006/03/execution-in-kingdom-of-nouns.html&#34; target=&#34;_blank&#34;&gt;Kingdom of the Nouns&lt;/a&gt; despite a very verb-y support for top-level functions. This is why I eventually gave in and shamefully stole my combineLatest from the &lt;a href=&#34;rxdart/test/observable/combine_latest_test.dart&#34; target=&#34;_blank&#34;&gt;rxdart source code&lt;/a&gt;. More on that later.&lt;/li&gt;
+&lt;li&gt;I understand Streams are just Future++ and Dart does not currently contain an official FRP library to compare with RxJS, but, given my last point, they could have at least provided methods that resemble startsWith and merge, among some of the other, simpler methods. Having to break out those helper classes should only be for people who write libraries and contribute to the core language. Yet, you really have to if you&amp;rsquo;re going to do anything substantial with the Streams API. Ideally, and in my humble opinion, the average developer should only have to use StreamIterator and StreamView beyond the Stream class.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;So, despite these things, I ultimately completed the app. It&amp;rsquo;s ostensibly the same as the RxJS version, despite some internal differences. And what do I think at the end?&lt;/p&gt;
+
+&lt;h3 id=&#34;my-evaluation&#34;&gt;my evaluation&lt;/h3&gt;
+
+&lt;p&gt;Note: What is to follow are some strong opinions on Google and Facebook technologies, none of which have strong feelings attached to them. I have deep respect for both companies, so should employees of either company read this, please don&amp;rsquo;t take this personally, but instead hire me! :)&lt;/p&gt;
+
+&lt;p&gt;I think Google did the right thing in not trying to push Dart as the next JavaScript. It really is a retread back to Java culture in many ways, even with its more ambitious departures like optional typing. And I&amp;rsquo;m sure that was intentional (after all, it has some very talented people behind it &amp;mdash; some of whom I&amp;rsquo;m sure agree with the critiques above and to follow) Thing is, that retread to Java world removes so much of the expressive power JS provides.&lt;/p&gt;
+
+&lt;p&gt;The reason why we have this huge JS resurgeance right now is that a single person can prototype an entire library very quickly. Even if we just use the Good Parts of JS, its expressiveness heightens productivity because it is so strong. On the flip side, Dart allows its user to be productive in a different way: it is relatively easy to use and relatively hard to mess up or misunderstand, just like Java. But it loses its prototpying power (possibly also because it does away with prototypes, but that&amp;rsquo;s another article). It has basically become a lighter Java with some JavaScript touches.&lt;/p&gt;
+
+&lt;p&gt;And this is okay! We need more languages like that. I just think that this fundamental difference is why we can&amp;rsquo;t put Dart side-by-side with JS and its other transpilers. It&amp;rsquo;s in its own class. For that reason, though the Dart community encourages individually contributed packages, I don&amp;rsquo;t see Dart sustaining itself from them in the way JS does. Given its relatively low popularity at the moment, what Dart packages need are &lt;em&gt;certified&lt;/em&gt;, &lt;em&gt;authentic&lt;/em&gt;, &lt;em&gt;official&lt;/em&gt; stamping from Google so its users have the assurance of quality and prospects of long-term maintenence. The Polymer and Angular.dart/Angular 2 packages can do that, accompanied by a utility like &lt;a href=&#34;https://github.com/google/quiver-dart&#34; target=&#34;_blank&#34;&gt;quiver&lt;/a&gt; from Google. The problem is that these aren&amp;rsquo;t enough. We would need more. We need tested, production-ready code to be productive now, as Dart itself tries to do by being so conventional and plain.&lt;/p&gt;
+
+&lt;p&gt;These packages I desire would do away with the issues I had during my experience putting together this port. Sure, I can use rxdart, but (no offense to its creator/contributors &amp;ndash; I&amp;rsquo;m sure you are all very talented, smart people) &lt;em&gt;I don&amp;rsquo;t want to&lt;/em&gt;. I gladly use and rely on all sorts of modules in the JS ecosystem because of their wide userbase and engaged contributors. These users adopt and deploy these modules in all types of scenarios, which in turn keeps the contributors honest. I can&amp;rsquo;t say the same of, well, any Dart package, except the ones I know are actively used and maintained at Google.&lt;/p&gt;
+
+&lt;p&gt;I know, I know. You&amp;rsquo;re telling me to contribute to said packages instead of complaining. And I was ready to do that. But then we have two problems.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Doing anything beyond the basic with Dart&amp;rsquo;s core APIs will result in highly verbose, overly classical code. It&amp;rsquo;s a Catch-22. As I said before, this is in direct contrast with the ease of writing a library in JS due to the strong expressive power (despite its gotchas and flaws).&lt;/li&gt;
+&lt;li&gt;Assuming I am willing to surmount the former, I don&amp;rsquo;t have the satisfaction of knowing someone else out there will benefit from my work, given Dart&amp;rsquo;s dubious popularity right now.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;And you know? I think some of the early adopters of Dart already realized these things, but their rants are nowhere to be found. They simply moved on without a trace. Case in point, my hero Victor Savkin made a few posts about &lt;a href=&#34;http://victorsavkin.com/post/55007674849/functional-reactive-programming-in-dart/&#34; target=&#34;_blank&#34;&gt;FRP in Dart&lt;/a&gt;, but now he talks about TypeScript, and doesn&amp;rsquo;t give a single example in Dart anymore. At one point &lt;a href=&#34;http://victorsavkin.com/post/123555572351/writing-angular-2-in-typescript&#34; target=&#34;_blank&#34;&gt;he extolls TypeScript&lt;/a&gt; over some of its more elegant functional contenders by pointing out it &amp;ldquo;takes 95% of the usefulness of a good statically-typed language and brings it to the JavaScript ecosystem&amp;rdquo;. He lists Dart in an earlier list but doesn&amp;rsquo;t address it directly, yet here we have our answer.&lt;/p&gt;
+
+&lt;h3 id=&#34;side-rant-you-can-safely-ignore&#34;&gt;side rant (you can safely ignore)&lt;/h3&gt;
+
+&lt;p&gt;From what I&amp;rsquo;ve heard, Google is a relatively conservative company when it comes to language adoption. Facebook stands on the other side of the spectrum, not just by starting out with a language like PHP but in then using Thrift RPC to interface with languages like Erlang (!) and the Node.js runtime. These two companies make a great foil for each other, which is exactly what the web and the JS ecosystem needs.&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:5&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:5&#34;&gt;5&lt;/a&gt;&lt;/sup&gt; But, in this case, I think Dart did not remain true to the domain it was trying to enter because it erred in being too conservative. The front-end and full-stack world is enamored by JS exactly because it is not Java.&lt;/p&gt;
+
+&lt;p&gt;Where I really want Dart to shine is not in the browser or the server but in the phone. Flutter seems like such a great idea to me, and Dart could be Google&amp;rsquo;s Swift. In fact, if it could flat-out replace Java, I would be a happy camper.&lt;/p&gt;
+
+&lt;h3 id=&#34;conclusion&#34;&gt;conclusion&lt;/h3&gt;
+
+&lt;p&gt;As I said, I have decided to put down Dart for a bit. For this reason among others, I have also decided to switch my current project from Angular/Polymer to Flux/React. It doesn&amp;rsquo;t need to be isomorphic, but it does require the fine-tuning of state and change detection that the latter provides. I will try out Angular 2 with TypeScript in a different project, hopefully with Go in the server. In the meantime, I&amp;rsquo;ll continue playing around with the JS/Node.js ecosystem, trying to catch up with the advancements of the past year. No hard feelings, right Google? You&amp;rsquo;re still my hero. :)&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;After studying this, I can really understand why Angular 2 developers were eager to adopt Rx as away of competing with the strong state management and unidrectional flow provided by a React.js + Flux combination.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:1&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;&lt;em&gt;StreamController&lt;/em&gt; manages an underlying stream via its public methods add(), addError() and close(). It has a simple state machine which you must learn to work with if you want to use it effectively. It begins with an &lt;em&gt;initial state&lt;/em&gt;, when it has no subscription to a stream. Then, it has a &lt;em&gt;subscribed state&lt;/em&gt; when it attains its first subscription. You may register a callback function with the onListen and onCancel members, which is pretty self-explanatory. It then has &lt;em&gt;cancelled state&lt;/em&gt;. And finally, there&amp;rsquo;s a &lt;em&gt;closed state&lt;/em&gt;, where no more events can be added. There a few more key nuances, but that&amp;rsquo;s the gist of it.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:2&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:3&#34;&gt;&lt;em&gt;StreamSubscription&lt;/em&gt; is the behind-the-scenes returned object of the listen() method. You can manipulate it further via the onData property. In this app, we only use the listen() method at the end and we don&amp;rsquo;t explicitly use the return value. Nonethless, it provides a flexible way of further modifying actions associated with a Stream as you pass the object through the flow of your code.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:3&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:4&#34;&gt;&lt;em&gt;StreamTransformer&lt;/em&gt; is a way of creating new streams bound to an originating stream using transformers, a common idiom in the Dart language. I didn&amp;rsquo;t end up using it in this app because the code didn&amp;rsquo;t quite call for it (though the combineLatest implementation almost makes sense in the context of StreamTransformer, if it weren&amp;rsquo;t for the fact that it&amp;rsquo;s supposed to take two Stream objects as arguments, not a Stream and an action).
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:4&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:5&#34;&gt;For the server side, I think Google has a stronger contender in Go than in a PHP JIT compiler to C++. But for the client, I think Facebook wins with React and Flux over Angular. Interestingly, I think using Go as a backend language has much in design philosophy in common with React and Flux. There is a certainly a shared preference for taking the parts of what is given (industrial-strength components with batteries included) and putting it together to get what you need rather than using a ready-made, full-solution framework. Every time I read about Go server frameworks, there is a vocal majority quipping that this isn&amp;rsquo;t the Go way. I really wish I had the time right now to play with Go some more, but that will have to be another time and another article.
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:5&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>modularizing javascript</title>
@@ -18,15 +112,15 @@
       <guid>http://glennryan.info/2016/03/06/modularizing-javascript</guid>
       <description>
 
-&lt;h3 id=&#34;preface:9f0e3ff308c335a3432c99c24ca3f959&#34;&gt;preface()&lt;/h3&gt;
+&lt;h3 id=&#34;preface&#34;&gt;preface()&lt;/h3&gt;
 
-&lt;p&gt;I originally intended this week&amp;rsquo;s post to discuss design philosophies of front-end web development. Particularly, I wanted to focus on two things: the &lt;em&gt;separation of concerns&lt;/em&gt; of HTML, CSS and JavaScript and &lt;em&gt;imperative vs declarative patterns&lt;/em&gt; for manipulating the DOM tree. I already see that I should have split these up into two posts; they&amp;rsquo;re both pretty meaty topics. While I work on material for those posts, I decided to quickly write up this one to address my (well-founded) anxieties toward potential front-end antipatterns at the end of &lt;a href=&#34;http://glennryan.info/2016/02/28/read-time&#34;&gt;my last post&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I originally intended this week&amp;rsquo;s post to discuss design philosophies of front-end web development. Particularly, I wanted to focus on two things: the &lt;em&gt;separation of concerns&lt;/em&gt; of HTML, CSS and JavaScript and &lt;em&gt;imperative vs declarative patterns&lt;/em&gt; for manipulating the DOM tree. I already see that I should have split these up into two posts; they&amp;rsquo;re both pretty meaty topics. While I work on material for those posts, I decided to quickly write up this one to address my (well-founded) anxieties toward potential front-end antipatterns at the end of &lt;a href=&#34;http://glennryan.info/2016/02/28/read-time&#34; target=&#34;_blank&#34;&gt;my last post&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h3 id=&#34;context:9f0e3ff308c335a3432c99c24ca3f959&#34;&gt;context()&lt;/h3&gt;
+&lt;h3 id=&#34;context&#34;&gt;context()&lt;/h3&gt;
 
 &lt;p&gt;I think we can all agree that spaghetti code is bad. Even if you have very modest intentions for something you&amp;rsquo;re writing, it&amp;rsquo;s good to have some organization principles up top and to adapt them as things change. This blog, for example, began with a main JavaScript window.onLoad function and a few script library class here and there at the bottom of the main template. But I am already seeing the JS code expand in ways that do not jive well with this original groundwork. I had to spend some time thinking about how I can foster some modularity and organization as the supporting HTML, CSS and JavaScript code expands. More on that later.&lt;/p&gt;
 
-&lt;p&gt;Sometimes organization is as simple as wrapping your JavaScript code in a &lt;a href=&#34;https://developers.livechatinc.com/blog/always-use-closures-in-your-javascript-app/&#34;&gt;closure&lt;/a&gt;, then using something like CommonJS or AMD to grab dependencies only as you need them. Sometimes it&amp;rsquo;s sprinkling in a &lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode&#34;&gt;statement&lt;/a&gt; or &lt;a href=&#34;https://docs.oracle.com/javase/7/docs/api/java/lang/Override.html&#34;&gt;annotation&lt;/a&gt; to make your intentions or practices more clear. In the bigger picture, though, you need to abstract the model and functionality of your code into conceptual pieces, then use design patterns and algorithms to clearly define their behavior and interoperability.&lt;/p&gt;
+&lt;p&gt;Sometimes organization is as simple as wrapping your JavaScript code in a &lt;a href=&#34;https://developers.livechatinc.com/blog/always-use-closures-in-your-javascript-app/&#34; target=&#34;_blank&#34;&gt;closure&lt;/a&gt;, then using something like CommonJS or AMD to grab dependencies only as you need them. Sometimes it&amp;rsquo;s sprinkling in a &lt;a href=&#34;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode&#34; target=&#34;_blank&#34;&gt;statement&lt;/a&gt; or &lt;a href=&#34;https://docs.oracle.com/javase/7/docs/api/java/lang/Override.html&#34; target=&#34;_blank&#34;&gt;annotation&lt;/a&gt; to make your intentions or practices more clear. In the bigger picture, though, you need to abstract the model and functionality of your code into conceptual pieces, then use design patterns and algorithms to clearly define their behavior and interoperability.&lt;/p&gt;
 
 &lt;p&gt;That&amp;rsquo;s all well and good, but we know time constraints, feature creep and, well, apathy (&lt;em&gt;ahem&lt;/em&gt; laziness) are all real problems.&lt;/p&gt;
 
@@ -41,9 +135,9 @@
 
 &lt;p&gt;I don&amp;rsquo;t have a silver bullet to give you to hack away those threats to good code in real production environments. But I will outline below what I&amp;rsquo;ve done to lay down some modular infrastructure for my (tiny) blog to help me with it. Maybe some of it could apply to you.&lt;/p&gt;
 
-&lt;h3 id=&#34;project-structure:9f0e3ff308c335a3432c99c24ca3f959&#34;&gt;project.structure()&lt;/h3&gt;
+&lt;h3 id=&#34;project-structure&#34;&gt;project.structure()&lt;/h3&gt;
 
-&lt;p&gt;So in that &lt;a href=&#34;http://glennryan.info/2016/02/28/read-time&#34;&gt;last post&lt;/a&gt; I referred to earlier, I felt the suggested way of invoking the &lt;a href=&#34;https://sacha.me/Countable/&#34;&gt;Countable&lt;/a&gt; library was kind of dirty, so I tried to clean it up by&amp;hellip; something even more dirty. And I knew at the end it was a mess but didn&amp;rsquo;t have the know-how to do anything about it. Still speaking from the place of a novice, I think I have a pretty clean way of doing things now.&lt;/p&gt;
+&lt;p&gt;So in that &lt;a href=&#34;http://glennryan.info/2016/02/28/read-time&#34; target=&#34;_blank&#34;&gt;last post&lt;/a&gt; I referred to earlier, I felt the suggested way of invoking the &lt;a href=&#34;https://sacha.me/Countable/&#34; target=&#34;_blank&#34;&gt;Countable&lt;/a&gt; library was kind of dirty, so I tried to clean it up by&amp;hellip; something even more dirty. And I knew at the end it was a mess but didn&amp;rsquo;t have the know-how to do anything about it. Still speaking from the place of a novice, I think I have a pretty clean way of doing things now.&lt;/p&gt;
 
 &lt;p&gt;First, &lt;em&gt;don&amp;rsquo;t touch third-party JavaScript code&lt;/em&gt;. Just because isn&amp;rsquo;t presented to you in a special archive file (think .jar) or stored in a special place on your computer doesn&amp;rsquo;t mean you shouldn&amp;rsquo;t treat it as separate. You may need to replace it whole as newer versions of it release, or you may decide one day to invoke the script through a URL rather than a local path. Organization is all about predicting what you can the best that you can, then trying to fool-proof the rest. What I&amp;rsquo;ve done is created a vendor directory to store my third-party scripts, then created a src directory for my code. Now, (a redacted version of) my js directory looks like this:&lt;/p&gt;
 
@@ -56,7 +150,7 @@
     └── ...
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id=&#34;export:9f0e3ff308c335a3432c99c24ca3f959&#34;&gt;export()&lt;/h3&gt;
+&lt;h3 id=&#34;export&#34;&gt;export()&lt;/h3&gt;
 
 &lt;p&gt;Luckily, the Countable library already takes care of exporting itself in a way that complies with whatever module system is used (CommonJS, AMD or global):&lt;/p&gt;
 
@@ -72,7 +166,7 @@
 
 &lt;p&gt;It suffices to follow this pattern for the rest of the modules.&lt;/p&gt;
 
-&lt;h3 id=&#34;require:9f0e3ff308c335a3432c99c24ca3f959&#34;&gt;require()&lt;/h3&gt;
+&lt;h3 id=&#34;require&#34;&gt;require()&lt;/h3&gt;
 
 &lt;p&gt;Next, I took my renderReadTime function out of there (I can&amp;rsquo;t get over how utterly stupid that was) and placed it into a util.js file in my src directory. I modeled the way I modularized it after Countable. And I imported in a way parallel to the way I export (still not sure if this is necessary or even good; please correct me in the comments if not):&lt;/p&gt;
 
@@ -86,7 +180,7 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h3 id=&#34;invoke:9f0e3ff308c335a3432c99c24ca3f959&#34;&gt;invoke()&lt;/h3&gt;
+&lt;h3 id=&#34;invoke&#34;&gt;invoke()&lt;/h3&gt;
 
 &lt;p&gt;Finally, I took my HTML invocation of renderReadTime out of the footer of my main template and and put it into the footer of the precise subtemplate it will be used for: article.html. I don&amp;rsquo;t know what I was thinking in placing it elsewhere, to be honest. Now the exact selectors I am using to render the read time output are in the same place as my function call, which makes it all that much easier to read and understand, as well as easier to change in the future.&lt;/p&gt;
 
@@ -110,7 +204,7 @@
 
 &lt;p&gt;And that&amp;rsquo;s it! I didn&amp;rsquo;t change the functionality of the blog, just organized it better so, as I add third-party files and more code of my own, it will be very easy to see how to divide it up and modularize it.&lt;/p&gt;
 
-&lt;h3 id=&#34;stack-pop:9f0e3ff308c335a3432c99c24ca3f959&#34;&gt;stack.pop()&lt;/h3&gt;
+&lt;h3 id=&#34;stack-pop&#34;&gt;stack.pop()&lt;/h3&gt;
 
 &lt;p&gt;Now that that&amp;rsquo;s out of the way, I plan to follow this up by discussing separation of concerns of HTML, CSS and JS before getting to declarative and imperative design patterns. The hope is to eventually warm into discussing differences in philosophy between Angular, React and Polymer. In particular, I want to compare them under the lens of whether they give HTML or JS/Dart the biggest piece of the pie when it comes to describing the form and behavior of your content.&lt;/p&gt;
 </description>
@@ -124,7 +218,7 @@
       <guid>http://glennryan.info/2016/02/28/read-time</guid>
       <description>&lt;p&gt;I just added a reading time feature to the site, where now, under the article title, there is a guesstimate of how long it will take to read the article, assuming you read 200 WPM on average.&lt;/p&gt;
 
-&lt;p&gt;I ran into &lt;a href=&#34;http://juristr.com/blog/2013/07/how-to-setup-reading-time-indicator-ten-minutes/&#34;&gt;this article&lt;/a&gt; explaining how to do it in short time. Following the directions, I downloaded the &lt;a href=&#34;https://raw.github.com/RadLikeWhoa/Countable/master/Countable.js&#34;&gt;Countable script&lt;/a&gt; and placed it into my static JS folder. Rather than write the chunk of code Juri suggests in a separate file or in an embedded script tag, I put it into Countable itself, in its own function called renderReadTime. And then I added function params to make it a little more clean:&lt;/p&gt;
+&lt;p&gt;I ran into &lt;a href=&#34;http://juristr.com/blog/2013/07/how-to-setup-reading-time-indicator-ten-minutes/&#34; target=&#34;_blank&#34;&gt;this article&lt;/a&gt; explaining how to do it in short time. Following the directions, I downloaded the &lt;a href=&#34;https://raw.github.com/RadLikeWhoa/Countable/master/Countable.js&#34; target=&#34;_blank&#34;&gt;Countable script&lt;/a&gt; and placed it into my static JS folder. Rather than write the chunk of code Juri suggests in a separate file or in an embedded script tag, I put it into Countable itself, in its own function called renderReadTime. And then I added function params to make it a little more clean:&lt;/p&gt;
 
 &lt;div class=&#34;highlight&#34; style=&#34;background: #f8f8f8&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;...
     enabled&lt;span style=&#34;color: #666666&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color: #AA22FF; font-weight: bold&#34;&gt;function&lt;/span&gt; (element) {
@@ -169,13 +263,13 @@
       <guid>http://glennryan.info/2016/02/27/starting-dart</guid>
       <description>
 
-&lt;h3 id=&#34;preface:f67c76d5effc368f32a31f09e6236041&#34;&gt;preface()&lt;/h3&gt;
+&lt;h3 id=&#34;preface&#34;&gt;preface()&lt;/h3&gt;
 
 &lt;p&gt;I have a side project under wraps that I intend to work on over the next couple of months. I&amp;rsquo;m doing it for several reasons. Not only do I think the idea behind the project has potential, but I have some take-aways I hope to work towards. As a junior-level engineer, I want to have more hands-on experience with design. And, above all, as an embedded C developer, I want to modernize my toolbox and become more well-rounded as a result. I have had prior employment in the web development space, if only briefly, so I thought writing an app for the web would be great way to build off prior experience yet venture into the new.&lt;/p&gt;
 
 &lt;p&gt;On and off since December, I&amp;rsquo;ve considered plenty of modern languages and frameworks out there to find at least one set of tools most conducive to prototyping this app &lt;em&gt;quickly&lt;/em&gt;, &lt;em&gt;efficiently&lt;/em&gt; and in a way that is &lt;em&gt;maintainable&lt;/em&gt; and &lt;em&gt;readable&lt;/em&gt; for a single full-stack developer. It would also help, I thought, if I enjoyed the langauges/frameworks I learn along the way. As someone who has only written production code for the web in Java (using JSF and Primefaces), I want this experience to be a little more modern. I want it to involve &lt;em&gt;open source&lt;/em&gt; tools.&lt;/p&gt;
 
-&lt;h3 id=&#34;search-start:f67c76d5effc368f32a31f09e6236041&#34;&gt;search.start()&lt;/h3&gt;
+&lt;h3 id=&#34;search-start&#34;&gt;search.start()&lt;/h3&gt;
 
 &lt;p&gt;When I expressed these desires and constraints to my friend, he referred me to this video:&lt;/p&gt;
 
@@ -191,15 +285,15 @@
 
 &lt;p&gt;I noticed, several comments down from the top, mention of a MEAN stack and a few replying comments praising it. This looked promising. I researched what this MEAN stack was and how it was being used. Some of the top results in my Google search revealed stunning single-page, JavaScript web apps written by a lone developer. Some of these people were generous enough to leave their repos public for others to study their code. I was instantly sold.&lt;/p&gt;
 
-&lt;h3 id=&#34;search-redirect:f67c76d5effc368f32a31f09e6236041&#34;&gt;search.redirect()&lt;/h3&gt;
+&lt;h3 id=&#34;search-redirect&#34;&gt;search.redirect()&lt;/h3&gt;
 
 &lt;p&gt;I spent some time getting to know JavaScript and revisiting web dev fundamentals, meanwhile gathering tutorials and resources to really get started with this MEAN thing. Thanks to these venerable blog-writers, I gathered quite a bit of base material and knowledge to work with. Unfortunately, it all dematerialized once I took a step back and considered all my options once more before going &amp;ldquo;all in&amp;rdquo;, so to speak, with MEAN. I researched the negative, the neutral and the positive, ultimately becoming disenchanted with the &amp;ldquo;magic&amp;rdquo; of this combination.&lt;/p&gt;
 
 &lt;p&gt;It all started with Angular. it became clear that though Angular 1.x is a decent-enough framework that is now very mature, it is anticipated to be usurped quite strongly by its successor Angular 2 (now in beta). Likewise, many praised, at the expense of Angular 1.x, the modular and flexible combination of React with Flux architecture. And, finally, many encouraged people to stray away from the MEAN stack in favor of something like Meteor.js.&lt;/p&gt;
 
-&lt;p&gt;I reconsidered those options but found that they were all unsuitable for my app, being either too flexible or too narrow in design. So I decided to upgrade to Angular 2. I lost use of some directives I originally intended to use for my app, but this was fine; &lt;a href=&#34;http://angular-tips.com/blog/2015/09/migrating-directives-to-angular-2/&#34;&gt;it&amp;rsquo;s not terrible to convert them&lt;/a&gt;. I just needed to learn the ins and outs of the new framework. And from there I fell down another rabbit hole. At my disposal in Angular 2 were three language options: JavaScript, TypeScript and Dart.&lt;/p&gt;
+&lt;p&gt;I reconsidered those options but found that they were all unsuitable for my app, being either too flexible or too narrow in design. So I decided to upgrade to Angular 2. I lost use of some directives I originally intended to use for my app, but this was fine; &lt;a href=&#34;http://angular-tips.com/blog/2015/09/migrating-directives-to-angular-2/&#34; target=&#34;_blank&#34;&gt;it&amp;rsquo;s not terrible to convert them&lt;/a&gt;. I just needed to learn the ins and outs of the new framework. And from there I fell down another rabbit hole. At my disposal in Angular 2 were three language options: JavaScript, TypeScript and Dart.&lt;/p&gt;
 
-&lt;h3 id=&#34;search-restart:f67c76d5effc368f32a31f09e6236041&#34;&gt;search.restart()&lt;/h3&gt;
+&lt;h3 id=&#34;search-restart&#34;&gt;search.restart()&lt;/h3&gt;
 
 &lt;p&gt;&lt;em&gt;Having an open mind is as confusing as it is enriching.&lt;/em&gt;&lt;/p&gt;
 
@@ -213,16 +307,16 @@
 &lt;li&gt;Potential incompatibility with key JavaScript libraries this app needs&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;Concerns one and two are the risks of being an early adopter, but this is cost that yields to a much greater reward: the fun and practice of developing in the unknown, not to mention the oppurtunity to potentially contribute to Angular 2 and Dart (via field-testing) and their communities (via knowledge-sharing). The third problem posed the greatest challenge to the Dart route. Thankfully, the Dart team has &lt;a href=&#34;https://www.dartlang.org/articles/js-dart-interop/&#34;&gt;released some interoperability libraries&lt;/a&gt; to help with this very thing.&lt;/p&gt;
+&lt;p&gt;Concerns one and two are the risks of being an early adopter, but this is cost that yields to a much greater reward: the fun and practice of developing in the unknown, not to mention the oppurtunity to potentially contribute to Angular 2 and Dart (via field-testing) and their communities (via knowledge-sharing). The third problem posed the greatest challenge to the Dart route. Thankfully, the Dart team has &lt;a href=&#34;https://www.dartlang.org/articles/js-dart-interop/&#34; target=&#34;_blank&#34;&gt;released some interoperability libraries&lt;/a&gt; to help with this very thing.&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;“When my information changes, I alter my conclusions. What do you do, sir?”
 &amp;mdash; John Maynard Keyes&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Then, I thought, if I&amp;rsquo;m going this far, why not go further? &lt;a href=&#34;http://stackoverflow.com/questions/29218468/does-angular-2-0-alpha-work-with-the-components-in-angular-material-project&#34;&gt;I&amp;rsquo;ve lost use of Angular Materials at this stage of Angular 2&lt;/a&gt;, so why not try Polymer too? &lt;a href=&#34;https://dart.academy/dart-angular-2-and-polymer-together/&#34;&gt;It&amp;rsquo;s compatible with Dart and Angular 2&lt;/a&gt;. And why write the Node.js/Express backend in JS or TS if Dart with &lt;a href=&#34;https://pub.dartlang.org/packages/shelf&#34;&gt;shelf&lt;/a&gt; can also do the job, thanks to JS interoperability? I&amp;rsquo;d rather keep the focus of using one language throughout the entirety of the app. If it&amp;rsquo;s possible, why not try it? If it&amp;rsquo;s just a prototype with no constraints, what else do I have to lose than the time I am willing to spend on it?&lt;/p&gt;
+&lt;p&gt;Then, I thought, if I&amp;rsquo;m going this far, why not go further? &lt;a href=&#34;http://stackoverflow.com/questions/29218468/does-angular-2-0-alpha-work-with-the-components-in-angular-material-project&#34; target=&#34;_blank&#34;&gt;I&amp;rsquo;ve lost use of Angular Materials at this stage of Angular 2&lt;/a&gt;, so why not try Polymer too? &lt;a href=&#34;https://dart.academy/dart-angular-2-and-polymer-together/&#34; target=&#34;_blank&#34;&gt;It&amp;rsquo;s compatible with Dart and Angular 2&lt;/a&gt;. And why write the Node.js/Express backend in JS or TS if Dart with &lt;a href=&#34;https://pub.dartlang.org/packages/shelf&#34; target=&#34;_blank&#34;&gt;shelf&lt;/a&gt; can also do the job, thanks to JS interoperability? I&amp;rsquo;d rather keep the focus of using one language throughout the entirety of the app. If it&amp;rsquo;s possible, why not try it? If it&amp;rsquo;s just a prototype with no constraints, what else do I have to lose than the time I am willing to spend on it?&lt;/p&gt;
 
-&lt;p&gt;So here I am, &lt;a href=&#34;https://www.dartlang.org/codelabs/darrrt/&#34;&gt;getting started with Dart&lt;/a&gt;. I&amp;rsquo;ll come back in a later post and let you know how it went.&lt;/p&gt;
+&lt;p&gt;So here I am, &lt;a href=&#34;https://www.dartlang.org/codelabs/darrrt/&#34; target=&#34;_blank&#34;&gt;getting started with Dart&lt;/a&gt;. I&amp;rsquo;ll come back in a later post and let you know how it went.&lt;/p&gt;
 </description>
     </item>
     
@@ -234,17 +328,17 @@
       <guid>http://glennryan.info/2016/02/27/a-clean-slate</guid>
       <description>
 
-&lt;h3 id=&#34;start:b6885e1f85551f51a4707c402f8200a3&#34;&gt;start()&lt;/h3&gt;
+&lt;h3 id=&#34;start&#34;&gt;start()&lt;/h3&gt;
 
-&lt;p&gt;As my first order of business, I was looking to to delete all prior tweets from my account, since I plan to start using Twitter in a more professional capacity from now on. To do so, I see there are &lt;a href=&#34;tweetdelete.net&#34;&gt;various sites&lt;/a&gt; and &lt;a href=&#34;https://www.gocardigan.com/&#34;&gt;services&lt;/a&gt; out there to assist with that. But part of beginning this blog was a commitment to exploring how I can use official  APIs, third-party libraries or my own code from scratch to accomplish things on the web.&lt;/p&gt;
+&lt;p&gt;As my first order of business, I was looking to to delete all prior tweets from my account, since I plan to start using Twitter in a more professional capacity from now on. To do so, I see there are &lt;a href=&#34;tweetdelete.net&#34; target=&#34;_blank&#34;&gt;various sites&lt;/a&gt; and &lt;a href=&#34;https://www.gocardigan.com/&#34; target=&#34;_blank&#34;&gt;services&lt;/a&gt; out there to assist with that. But part of beginning this blog was a commitment to exploring how I can use official  APIs, third-party libraries or my own code from scratch to accomplish things on the web.&lt;/p&gt;
 
-&lt;p&gt;So I found this nice Python script, courtesy of &lt;a href=&#34;https://github.com/davej&#34;&gt;Dave Jeffery&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;So I found this nice Python script, courtesy of &lt;a href=&#34;https://github.com/davej&#34; target=&#34;_blank&#34;&gt;Dave Jeffery&lt;/a&gt;.&lt;/p&gt;
 
 &lt;script src=&#34;//gist.github.com/davej/113241.js&#34;&gt;&lt;/script&gt;
 
 &lt;p&gt;I registered my twitter application under bird_eater (ha, get it? because it&amp;rsquo;s Python getting rid of tweets&amp;hellip; eh) and put in my key and secret. I then followed the directions from the script&amp;rsquo;s output et voilà! I am now tweet-free. I can restart my Twitter profile with a clean slate &amp;mdash; notwithstanding the other parts of my account.&lt;/p&gt;
 
-&lt;h3 id=&#34;continue:b6885e1f85551f51a4707c402f8200a3&#34;&gt;continue&lt;/h3&gt;
+&lt;h3 id=&#34;continue&#34;&gt;continue&lt;/h3&gt;
 
 &lt;p&gt;In fact, why not take care of those things, too? To take this further, I should expand on this script to make it a bit more sophisticated. Some ideas could be deleting certain tweets, unfollowing accounts, removing likes and lists, etc. That could be a promising project.&lt;/p&gt;
 </description>
