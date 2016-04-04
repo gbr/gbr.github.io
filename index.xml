@@ -7,8 +7,66 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Glenn Ryan 2016. All rights reserved.</copyright>
-    <lastBuildDate>Mon, 14 Mar 2016 22:48:00 -0700</lastBuildDate>
+    <lastBuildDate>Sun, 03 Apr 2016 11:48:54 -0700</lastBuildDate>
     <atom:link href="http://glennryan.info/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>modular vs holistic</title>
+      <link>http://glennryan.info/2016/04/03/modular-vs-holistic</link>
+      <pubDate>Sun, 03 Apr 2016 11:48:54 -0700</pubDate>
+      
+      <guid>http://glennryan.info/2016/04/03/modular-vs-holistic</guid>
+      <description>
+
+&lt;h3 id=&#34;to-every-thing-there-is-a-season&#34;&gt;to every thing there is a season&lt;/h3&gt;
+
+&lt;p&gt;Last time, I channeled my frustration with the Java-like nature of Dart, and then spent some time digressing on the benefits of light, modular approaches to system design. I ended on an admiration for this tendency in the Go language and in Facebook&amp;rsquo;s React. I even (offline) gave up on striving for full-stack JavaScript in my app, deciding to try Go for the server, in lieu of Node.js. But that&amp;rsquo;s an entire blog post of its own.&lt;/p&gt;
+
+&lt;p&gt;This got me thinking. Surely, there is a time and a place for a modular approach, and the same for a more holistic one. Let&amp;rsquo;s walk through some case studies from a bird&amp;rsquo;s eye view. Please note, what to follow isn&amp;rsquo;t a compare and contrast &lt;em&gt;per se&lt;/em&gt;, as I myself have only tutorial-sized experience with many of these technologies, at most. To focus more on design thatn implementation, let&amp;rsquo;s assume each of these frameworks do a bang-up job at  what they set out to do. With that out of the way, I want to discuss their design philosophies and what exactly each example has set out to solve.&lt;/p&gt;
+
+&lt;h3 id=&#34;angular-ember-and-react&#34;&gt;angular &amp;amp; ember&amp;hellip; and react&lt;/h3&gt;
+
+&lt;p&gt;Angular and Ember are two JavaScript-based MVC frameworks that both went through rather massive changes in their 2.X versions, many of these radical transformations originating from React&amp;rsquo;s DNA. Angular, in particular, began to incorporate a more mindful state management pattern into its internals, as well as external support for Functional Reactive Programming in the form of RxJS and Immutable.js. Angular dropped the scope and directive model for web components, which really lends itself toward a much easier time managing the state of your app. It&amp;rsquo;s been pretty fun to follow &lt;a href=&#34;http://victorsavkin.com/post/137821436516/managing-state-in-angular-2-applications&#34; target=&#34;_blank&#34;&gt;Victor Savkin&amp;rsquo;s blog&lt;/a&gt; to see how well Angular incorporates with the Observer pattern via Streams and Properties. It&amp;rsquo;s also interesting to watch the debates unfold on the merits of the Flux model (Mediator pattern) vs this FRP Observer pattern.&lt;/p&gt;
+
+&lt;p&gt;I don&amp;rsquo;t know much about Ember, I&amp;rsquo;m afraid, but I have read that Ember 2.X borrowed from the React ecosystem in a way similar to Angular. Ember has been responsible for bringing much of the Ruby on Rails world into the JavaScript SPA frontend ecosystem. From what I&amp;rsquo;ve read, the link between Ruby and Ember is the &amp;ldquo;convention over configuration&amp;rdquo; mindset.&lt;/p&gt;
+
+&lt;p&gt;The interesting thing here is despite having changed to update their toolset and state model, their underlying philosophies haven&amp;rsquo;t budged one inch. They&amp;rsquo;re still the M, the V and the C. React is just the V. They&amp;rsquo;ve looked at the entire React ecosystem (a Flux implementation, react-router, etc.) as one big monolith and competed with &lt;em&gt;that&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;So let&amp;rsquo;s lump Ember and Angular together as the monoliths (as I already sort of have) and compare them to React and its ecosystem. Why would you pick one over the other?&lt;/p&gt;
+
+&lt;p&gt;Assuming we&amp;rsquo;re talking about a &lt;a href=&#34;http://en.wikipedia.org/wiki/Greenfield_project&#34; target=&#34;_blank&#34;&gt;greenfield&lt;/a&gt; app (for a &lt;a href=&#34;http://en.wikipedia.org/wiki/Brownfield_%28software_development%29&#34; target=&#34;_blank&#34;&gt;brownfield&lt;/a&gt; app, React is a no-brainer, since it can be sprinkled in with little concern for the existing infrastructure), monoliths (which I will also alias as &lt;em&gt;the holistic method&lt;/em&gt;) bring huge guarantees to the table when it comes to productivity.&lt;/p&gt;
+
+&lt;p&gt;For starters, they&amp;rsquo;re often opinionated, leaving less room for users to do something stupid. But this has further implications. For management, this can mean hiring someone with something like Angular on their resume theoretically guarantees they could join an Angular project and be quickly brought to speed on team conventions. For consultants, this is true to such an extreme that the developing team can be swapped out for a maintenence team with little handoff, and things probably won&amp;rsquo;t break (this is also why little old Java is still King of the Consulting Industry, what with its strong culture and powerful IDEs). For developers, though, gaining proficiency with an opinionated framework moreso means specializing yourself with that framework than with, in this case, JavaScript UI, since it abstracts much of the underlying domain away from you.&lt;/p&gt;
+
+&lt;p&gt;Worse than that, inflexibility can really suck for people who outgrow what the framework wants you to do and who know what they&amp;rsquo;re doing. The magic of MV*C comes at a cost.&lt;/p&gt;
+
+&lt;p&gt;Obviously, the biggest gain with monoliths is that they can provide you a lot out of the box, some more than others. MVCs themselves can scale down &amp;mdash; we see in Backbone a very simple, barebone set of building blocks that often become the platform for another mini-&amp;ldquo;framework&amp;rdquo; created by the user. How, then, do we make the choice to pursue something on the React side of the spectrum?&lt;/p&gt;
+
+&lt;p&gt;Well, depending on how far you go, you can really start to have the benefits of being framework-free &amp;mdash; ulimate flexibility &amp;mdash;, without its cost: having to reinvent the wheel. With something like React, you can pick and choose what you want, swap out some parts for others, and scale your dependencies for what your app minimally requires. Somtimes you don&amp;rsquo;t need an M or a C. Sometimes your models are just JS objects that you pass as JSON to your server. Sometimes there isn&amp;rsquo;t much state to manage. As Francois Ward says when giving his &lt;a href=&#34;https://medium.com/javascript-and-opinions/state-of-the-art-javascript-in-2016-ab67fc68eb0b#.6n9su1v5s&#34; target=&#34;_blank&#34;&gt;recommendations&lt;/a&gt; for building a React app in 2016,&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Is your application only 2–3 screens? Then you don’t need a router. Are you making a single page? Then you don’t even need Redux, just use React’s own state. Are you making a simple CRUD application? You don’t need Relay. [&amp;hellip;] Are you starting with Redux? You don’t need Redux-Form or Redux-Sagas.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This has some implications. As you develop your app, if the problem or the solution isn&amp;rsquo;t so well defined (and you&amp;rsquo;re using some form of Agile), you can add and remove these elements as you see fit. Also, we know by now the JavaScript world moves so fast.. and often breaks things. If something is obselete or no longer works, you can switch it for something else. As React proponents love to point out, this is almost like the Unix philosphy of doing only one thing and doing it really well.&lt;/p&gt;
+
+&lt;p&gt;With a tool (a &lt;em&gt;library&lt;/em&gt;, really) comes a good amount of convention, yet nothing to constrain us too much.&lt;/p&gt;
+
+&lt;p&gt;But now we have our issue. Independent libraries don&amp;rsquo;t always play well together. Sometimes you can shoehorn a solution, but it goes without saying that can have grave consequences. It seems most of the successful libraries used with React have undergone a good amount of grooming by the React team themselves (who may not always be able to be so generous with their time). And when we have libraries that are almost guaranteed to work well together (like everything in React&amp;rsquo;s GitHub repo), we risk becoming co-dependent and constraining ourselves to such an ecosystem, now being no different than our buddies on the MVC side. Furthermore, we risk developing an Achilles heel. See how Redux has now become the center of a large set of other tools? What if an alternative called Nosux comes along that trumps it times a million (and isn&amp;rsquo;t a 1:1 replacement)? Then it, too, trumps all of Redux&amp;rsquo;s dependents. And we all know how the JS world loves to quickly jump to the shiniest toy available.&lt;/p&gt;
+
+&lt;p&gt;If none of those things are an issue, we get down to the questions you need to ask yourself when choosing between holistic and modular approaches: &lt;em&gt;how much decision fatigue are you willing to endure&lt;/em&gt;, and &lt;em&gt;how much of the heavy lifting do you want to be responsible for&lt;/em&gt;?&lt;/p&gt;
+
+&lt;h3 id=&#34;oh-the-places-you-ll-go&#34;&gt;oh, the places you&amp;rsquo;ll go&lt;/h3&gt;
+
+&lt;p&gt;This kind of reasoning is more analagous to other domains of programming and even hardware than you might think. Like I said in my last post, Go&amp;rsquo;s web ecosystem is very much in line with React&amp;rsquo;s. The popular way to approach writing a web backend in Go is to start with net/http as a base library (the React in this analogy) and build from there. It&amp;rsquo;s common to spinkle on a router like gorilla/mux. You&amp;rsquo;ll often build the rest, but there are third-party handlers and middlewares out there too. These are the Reduxes and Relays of the Go world. See, not so different! Contrast this with the monolothic Ruby on Rails. And notice there is room for middle-ground in other frameworks and ecosystems, like Node.js with Connect, Express, Koa, etc.&lt;/p&gt;
+
+&lt;p&gt;And I will also take the oppurtunity to out myself as a current employee of Hewlett Packard Enterprises, particularly the newly acquired Aruba Networks. Here at HPE, we&amp;rsquo;ve announced the &lt;a href=&#34;http://www8.hp.com/h20195/v2/GetPDF.aspx/4AA5-8813ENW.pdf&#34; target=&#34;_blank&#34;&gt;HPE Composable Infrastructure&lt;/a&gt;. I deal more with software engineering than network design or server infrastructure myself, so I may be speaking out of school. But, from what I can tell, it seems that HPE&amp;rsquo;s approach here is very similar to this whole modular thing we have with React and Go: here is a solution that is easily adapted to the rapidly changing tech environment of today. Swap out, mix and add components as you see fit, with the help of this core software and your work in creating templates. The &lt;a href=&#34;http://h22168.www2.hpe.com/composable_infra/partner_program/us/en/github-repos.html&#34; target=&#34;_blank&#34;&gt;open API and SDKs&lt;/a&gt; have a similar call to arms for &lt;a href=&#34;http://h22168.www2.hpe.com/composable_infra/partner_program/us/en/index.html&#34; target=&#34;_blank&#34;&gt;partnering projects&lt;/a&gt; to develop their own tools based on the foundational design. I like how the diagram in the white paper shows a balance between &amp;ldquo;Traditional Business&amp;rdquo; and &amp;ldquo;The Idea Economy&amp;rdquo;, two seemingly incompatible forces.&lt;/p&gt;
+
+&lt;h3 id=&#34;react-please&#34;&gt;react, please?&lt;/h3&gt;
+
+&lt;p&gt;Bringing it back to React and web technologies, if I said something inaccurate, please be sure to let me know in the comments. I&amp;rsquo;m not an expert; I just wrote this in the hopes of helping a beginner in my position to decide what they need and to educate themselves on what all the hooplah is about.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>dart streams</title>
@@ -56,7 +114,7 @@
 
 &lt;h3 id=&#34;my-evaluation&#34;&gt;my evaluation&lt;/h3&gt;
 
-&lt;p&gt;Note: What is to follow are some strong opinions on Google and Facebook technologies, none of which have strong feelings attached to them. I have deep respect for both companies, so should employees of either company read this, please don&amp;rsquo;t take this personally, but instead hire me! :)&lt;/p&gt;
+&lt;p&gt;Note: What is to follow are some strong opinions on company-made technologies, none of which have strong feelings attached to them. I have deep respect for both companies, so should employees of either read this, please don&amp;rsquo;t take this personally, but instead hire me! :)&lt;/p&gt;
 
 &lt;p&gt;I think Google did the right thing in not trying to push Dart as the next JavaScript. It really is a retread back to Java culture in many ways, even with its more ambitious departures like optional typing. And I&amp;rsquo;m sure that was intentional (after all, it has some very talented people behind it &amp;mdash; some of whom I&amp;rsquo;m sure agree with the critiques above and to follow) Thing is, that retread to Java world removes so much of the expressive power JS provides.&lt;/p&gt;
 
@@ -73,7 +131,7 @@
 &lt;li&gt;Assuming I am willing to surmount the former, I don&amp;rsquo;t have the satisfaction of knowing someone else out there will benefit from my work, given Dart&amp;rsquo;s dubious popularity right now.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;And you know? I think some of the early adopters of Dart already realized these things, but their rants are nowhere to be found. They simply moved on without a trace. Case in point, my hero Victor Savkin made a few posts about &lt;a href=&#34;http://victorsavkin.com/post/55007674849/functional-reactive-programming-in-dart/&#34; target=&#34;_blank&#34;&gt;FRP in Dart&lt;/a&gt;, but now he talks about TypeScript, and doesn&amp;rsquo;t give a single example in Dart anymore. At one point &lt;a href=&#34;http://victorsavkin.com/post/123555572351/writing-angular-2-in-typescript&#34; target=&#34;_blank&#34;&gt;he extolls TypeScript&lt;/a&gt; over some of its more elegant functional contenders by pointing out it &amp;ldquo;takes 95% of the usefulness of a good statically-typed language and brings it to the JavaScript ecosystem&amp;rdquo;. He lists Dart in an earlier list but doesn&amp;rsquo;t address it directly, yet here we have our answer.&lt;/p&gt;
+&lt;p&gt;And you know? I think some of the early adopters of Dart already realized these things, but their rants are nowhere to be found. They simply moved on without a trace. Case in point, Victor Savkin, one of my heroess, made a few posts about &lt;a href=&#34;http://victorsavkin.com/post/55007674849/functional-reactive-programming-in-dart/&#34; target=&#34;_blank&#34;&gt;FRP in Dart&lt;/a&gt;, but now he talks about TypeScript almost exlusively, and doesn&amp;rsquo;t give a single example in Dart anymore. At one point &lt;a href=&#34;http://victorsavkin.com/post/123555572351/writing-angular-2-in-typescript&#34; target=&#34;_blank&#34;&gt;he extolls TypeScript&lt;/a&gt; over some of its more elegant functional contenders by pointing out it &amp;ldquo;takes 95% of the usefulness of a good statically-typed language and brings it to the JavaScript ecosystem&amp;rdquo;. He lists Dart in an earlier list of contenders but doesn&amp;rsquo;t address it directly, yet here we have our answer.&lt;/p&gt;
 
 &lt;h3 id=&#34;side-rant-you-can-safely-ignore&#34;&gt;side rant (you can safely ignore)&lt;/h3&gt;
 

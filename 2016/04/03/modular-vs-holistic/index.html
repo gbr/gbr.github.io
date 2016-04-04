@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>modular vs holistic &middot; glenn ryan&#39;s blog</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Glenn Ryan">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.15" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="http://glennryan.info/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700|Lora:400,700,400italic" rel="stylesheet" type="text/css">
+    <meta name="wot-verification" content="652c1efdb5c70c204ad4"/>
+</head>
+<body>
+    
+    <div class="off-canvas">
+    <figure class="avatar">
+        <img src="http://glennryan.info/img/avatar.jpg" title="Glenn Ryan">
+    </figure>
+    <div class="bio">
+        
+        <h1>hi, i&rsquo;m <a href="mailto:contact@glennryan.info" target="_blank">@glennryan</a></h1>
+        
+        
+        <p>I&rsquo;m a software engineer trying to keep my toolbox sharp and my problem-solving skills even sharper. I write about it here.</p>
+        
+    </div>
+    <nav>
+
+        
+
+        
+        <h6>Search</h6>
+        
+
+        <div>
+            <form name="google-search" method="get" action="http://www.google.com/search" target="_blank">
+                <input type="hidden" name="sitesearch" value="http://glennryan.info/" />
+                <input name="q" type="text" />
+                <input type="submit" name="sa" value="Google" />
+            </form>
+        </div>
+
+        
+
+        
+        <h6>Subscribe</h6>
+        
+
+        <ul>
+            <li><a target="_blank" href="http://glennryan.info/index.xml">RSS feed</a></li>
+        </ul>
+
+        
+
+        
+        <h6>Find me on</h6>
+        
+
+        <ul>
+        
+            <li><a target="_blank" href="//github.com/gbr">GitHub</a></li>
+        
+            <li><a target="_blank" href="//twitter.com/bgarryan">Twitter</a></li>
+        
+            <li><a target="_blank" href="//linkedin.com/in/gbryan">LinkedIn</a></li>
+        
+        </ul>
+    </nav>
+</div>
+
+
+    <div class="site-wrapper">
+        <header>
+	<div class="h-wrap">
+		
+		<h1 class="title"><a href="http://glennryan.info/">glenn ryan&#39;s blog</a></h1>
+		
+		<a class="menu-icon" title="Menu"><span class="lines"></span></a>
+	</div>
+</header>
+        
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                    <time datetime="" itemprop="datePublished">
+                    3. April 2016
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">modular vs holistic</h1>
+                <h5 class="js-reading-time"></h5>
+                <div itemprop="articleBody">
+                    
+
+<h3 id="to-every-thing-there-is-a-season">to every thing there is a season</h3>
+
+<p>Last time, I channeled my frustration with the Java-like nature of Dart, and then spent some time digressing on the benefits of light, modular approaches to system design. I ended on an admiration for this tendency in the Go language and in Facebook&rsquo;s React. I even (offline) gave up on striving for full-stack JavaScript in my app, deciding to try Go for the server, in lieu of Node.js. But that&rsquo;s an entire blog post of its own.</p>
+
+<p>This got me thinking. Surely, there is a time and a place for a modular approach, and the same for a more holistic one. Let&rsquo;s walk through some case studies from a bird&rsquo;s eye view. Please note, what to follow isn&rsquo;t a compare and contrast <em>per se</em>, as I myself have only tutorial-sized experience with many of these technologies, at most. To focus more on design thatn implementation, let&rsquo;s assume each of these frameworks do a bang-up job at  what they set out to do. With that out of the way, I want to discuss their design philosophies and what exactly each example has set out to solve.</p>
+
+<h3 id="angular-ember-and-react">angular &amp; ember&hellip; and react</h3>
+
+<p>Angular and Ember are two JavaScript-based MVC frameworks that both went through rather massive changes in their 2.X versions, many of these radical transformations originating from React&rsquo;s DNA. Angular, in particular, began to incorporate a more mindful state management pattern into its internals, as well as external support for Functional Reactive Programming in the form of RxJS and Immutable.js. Angular dropped the scope and directive model for web components, which really lends itself toward a much easier time managing the state of your app. It&rsquo;s been pretty fun to follow <a href="http://victorsavkin.com/post/137821436516/managing-state-in-angular-2-applications" target="_blank">Victor Savkin&rsquo;s blog</a> to see how well Angular incorporates with the Observer pattern via Streams and Properties. It&rsquo;s also interesting to watch the debates unfold on the merits of the Flux model (Mediator pattern) vs this FRP Observer pattern.</p>
+
+<p>I don&rsquo;t know much about Ember, I&rsquo;m afraid, but I have read that Ember 2.X borrowed from the React ecosystem in a way similar to Angular. Ember has been responsible for bringing much of the Ruby on Rails world into the JavaScript SPA frontend ecosystem. From what I&rsquo;ve read, the link between Ruby and Ember is the &ldquo;convention over configuration&rdquo; mindset.</p>
+
+<p>The interesting thing here is despite having changed to update their toolset and state model, their underlying philosophies haven&rsquo;t budged one inch. They&rsquo;re still the M, the V and the C. React is just the V. They&rsquo;ve looked at the entire React ecosystem (a Flux implementation, react-router, etc.) as one big monolith and competed with <em>that</em>.</p>
+
+<p>So let&rsquo;s lump Ember and Angular together as the monoliths (as I already sort of have) and compare them to React and its ecosystem. Why would you pick one over the other?</p>
+
+<p>Assuming we&rsquo;re talking about a <a href="http://en.wikipedia.org/wiki/Greenfield_project" target="_blank">greenfield</a> app (for a <a href="http://en.wikipedia.org/wiki/Brownfield_%28software_development%29" target="_blank">brownfield</a> app, React is a no-brainer, since it can be sprinkled in with little concern for the existing infrastructure), monoliths (which I will also alias as <em>the holistic method</em>) bring huge guarantees to the table when it comes to productivity.</p>
+
+<p>For starters, they&rsquo;re often opinionated, leaving less room for users to do something stupid. But this has further implications. For management, this can mean hiring someone with something like Angular on their resume theoretically guarantees they could join an Angular project and be quickly brought to speed on team conventions. For consultants, this is true to such an extreme that the developing team can be swapped out for a maintenence team with little handoff, and things probably won&rsquo;t break (this is also why little old Java is still King of the Consulting Industry, what with its strong culture and powerful IDEs). For developers, though, gaining proficiency with an opinionated framework moreso means specializing yourself with that framework than with, in this case, JavaScript UI, since it abstracts much of the underlying domain away from you.</p>
+
+<p>Worse than that, inflexibility can really suck for people who outgrow what the framework wants you to do and who know what they&rsquo;re doing. The magic of MV*C comes at a cost.</p>
+
+<p>Obviously, the biggest gain with monoliths is that they can provide you a lot out of the box, some more than others. MVCs themselves can scale down &mdash; we see in Backbone a very simple, barebone set of building blocks that often become the platform for another mini-&ldquo;framework&rdquo; created by the user. How, then, do we make the choice to pursue something on the React side of the spectrum?</p>
+
+<p>Well, depending on how far you go, you can really start to have the benefits of being framework-free &mdash; ulimate flexibility &mdash;, without its cost: having to reinvent the wheel. With something like React, you can pick and choose what you want, swap out some parts for others, and scale your dependencies for what your app minimally requires. Somtimes you don&rsquo;t need an M or a C. Sometimes your models are just JS objects that you pass as JSON to your server. Sometimes there isn&rsquo;t much state to manage. As Francois Ward says when giving his <a href="https://medium.com/javascript-and-opinions/state-of-the-art-javascript-in-2016-ab67fc68eb0b#.6n9su1v5s" target="_blank">recommendations</a> for building a React app in 2016,</p>
+
+<blockquote>
+<p>Is your application only 2–3 screens? Then you don’t need a router. Are you making a single page? Then you don’t even need Redux, just use React’s own state. Are you making a simple CRUD application? You don’t need Relay. [&hellip;] Are you starting with Redux? You don’t need Redux-Form or Redux-Sagas.</p>
+</blockquote>
+
+<p>This has some implications. As you develop your app, if the problem or the solution isn&rsquo;t so well defined (and you&rsquo;re using some form of Agile), you can add and remove these elements as you see fit. Also, we know by now the JavaScript world moves so fast.. and often breaks things. If something is obselete or no longer works, you can switch it for something else. As React proponents love to point out, this is almost like the Unix philosphy of doing only one thing and doing it really well.</p>
+
+<p>With a tool (a <em>library</em>, really) comes a good amount of convention, yet nothing to constrain us too much.</p>
+
+<p>But now we have our issue. Independent libraries don&rsquo;t always play well together. Sometimes you can shoehorn a solution, but it goes without saying that can have grave consequences. It seems most of the successful libraries used with React have undergone a good amount of grooming by the React team themselves (who may not always be able to be so generous with their time). And when we have libraries that are almost guaranteed to work well together (like everything in React&rsquo;s GitHub repo), we risk becoming co-dependent and constraining ourselves to such an ecosystem, now being no different than our buddies on the MVC side. Furthermore, we risk developing an Achilles heel. See how Redux has now become the center of a large set of other tools? What if an alternative called Nosux comes along that trumps it times a million (and isn&rsquo;t a 1:1 replacement)? Then it, too, trumps all of Redux&rsquo;s dependents. And we all know how the JS world loves to quickly jump to the shiniest toy available.</p>
+
+<p>If none of those things are an issue, we get down to the questions you need to ask yourself when choosing between holistic and modular approaches: <em>how much decision fatigue are you willing to endure</em>, and <em>how much of the heavy lifting do you want to be responsible for</em>?</p>
+
+<h3 id="oh-the-places-you-ll-go">oh, the places you&rsquo;ll go</h3>
+
+<p>This kind of reasoning is more analagous to other domains of programming and even hardware than you might think. Like I said in my last post, Go&rsquo;s web ecosystem is very much in line with React&rsquo;s. The popular way to approach writing a web backend in Go is to start with net/http as a base library (the React in this analogy) and build from there. It&rsquo;s common to spinkle on a router like gorilla/mux. You&rsquo;ll often build the rest, but there are third-party handlers and middlewares out there too. These are the Reduxes and Relays of the Go world. See, not so different! Contrast this with the monolothic Ruby on Rails. And notice there is room for middle-ground in other frameworks and ecosystems, like Node.js with Connect, Express, Koa, etc.</p>
+
+<p>And I will also take the oppurtunity to out myself as a current employee of Hewlett Packard Enterprises, particularly the newly acquired Aruba Networks. Here at HPE, we&rsquo;ve announced the <a href="http://www8.hp.com/h20195/v2/GetPDF.aspx/4AA5-8813ENW.pdf" target="_blank">HPE Composable Infrastructure</a>. I deal more with software engineering than network design or server infrastructure myself, so I may be speaking out of school. But, from what I can tell, it seems that HPE&rsquo;s approach here is very similar to this whole modular thing we have with React and Go: here is a solution that is easily adapted to the rapidly changing tech environment of today. Swap out, mix and add components as you see fit, with the help of this core software and your work in creating templates. The <a href="http://h22168.www2.hpe.com/composable_infra/partner_program/us/en/github-repos.html" target="_blank">open API and SDKs</a> have a similar call to arms for <a href="http://h22168.www2.hpe.com/composable_infra/partner_program/us/en/index.html" target="_blank">partnering projects</a> to develop their own tools based on the foundational design. I like how the diagram in the white paper shows a balance between &ldquo;Traditional Business&rdquo; and &ldquo;The Idea Economy&rdquo;, two seemingly incompatible forces.</p>
+
+<h3 id="react-please">react, please?</h3>
+
+<p>Bringing it back to React and web technologies, if I said something inaccurate, please be sure to let me know in the comments. I&rsquo;m not an expert; I just wrote this in the hopes of helping a beginner in my position to decide what they need and to educate themselves on what all the hooplah is about.</p>
+
+                </div>
+                <div class="feat share">
+                    <a href="//twitter.com/share" class="popup">
+                        <span class="icon-twitter"></span>
+                    </a>
+                </div>
+                
+                <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'glennryan';
+    var disqus_identifier = 'http:\/\/glennryan.info\/2016\/04\/03\/modular-vs-holistic';
+    var disqus_title = 'modular vs holistic';
+    var disqus_url = 'http:\/\/glennryan.info\/2016\/04\/03\/modular-vs-holistic';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+                
+                
+                    <a rel="prev" href="http://glennryan.info/2016/03/14/dart-streams" id="prev">
+                        &larr; <span class="nav-title nav-title-prev"></span>
+                    </a>
+                
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>POWERED BY <a href="//gohugo.io" target="_blank">HUGO</a> - THEME: <a href="//github.com/digitalcraftsman/hugo-hikari-theme" target="_blank">HIKARI</a> - © 2016 <a href="mailto:contact@glennryan.info" target="_blank">GLENN RYAN</a></small>
+	
+</footer>
+    </div>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://glennryan.info/js/src/main.js"></script>
+<script src="http://glennryan.info/js/vendor/Countable.js"></script>
+<script src="http://glennryan.info/js/src/util.js"></script>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-74357056-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+
+    
+    <!-- Reading time approximation -->
+    <script>util.renderReadTime(200, 'div[itemprop=articleBody]', '.js-reading-time');</script>
+</body>
+</html>
