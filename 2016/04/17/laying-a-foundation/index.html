@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+
+
+ <html class="no-js"> 
+<head>
+    <title>laying a foundation &middot; glenn ryan&#39;s blog</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="content-language" content="en-us" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Glenn Ryan">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.15" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="http://glennryan.info/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700|Lora:400,700,400italic" rel="stylesheet" type="text/css">
+    <meta name="wot-verification" content="652c1efdb5c70c204ad4"/>
+</head>
+<body>
+    
+    <div class="off-canvas">
+    <figure class="avatar">
+        <img src="http://glennryan.info/img/avatar.jpg" title="Glenn Ryan">
+    </figure>
+    <div class="bio">
+        
+        <h1>hi, i&rsquo;m <a href="mailto:contact@glennryan.info" target="_blank">@glennryan</a></h1>
+        
+        
+        <p>I&rsquo;m a software engineer trying to keep my toolbox sharp and my problem-solving skills even sharper. I write about it here.</p>
+        
+    </div>
+    <nav>
+
+        
+
+        
+        <h6>Search</h6>
+        
+
+        <div>
+            <form name="google-search" method="get" action="http://www.google.com/search" target="_blank">
+                <input type="hidden" name="sitesearch" value="http://glennryan.info/" />
+                <input name="q" type="text" />
+                <input type="submit" name="sa" value="Google" />
+            </form>
+        </div>
+
+        
+
+        
+        <h6>Subscribe</h6>
+        
+
+        <ul>
+            <li><a target="_blank" href="http://glennryan.info/index.xml">RSS feed</a></li>
+        </ul>
+
+        
+
+        
+        <h6>Find me on</h6>
+        
+
+        <ul>
+        
+            <li><a target="_blank" href="//github.com/gbr">GitHub</a></li>
+        
+            <li><a target="_blank" href="//twitter.com/bgarryan">Twitter</a></li>
+        
+            <li><a target="_blank" href="//linkedin.com/in/gbryan">LinkedIn</a></li>
+        
+        </ul>
+    </nav>
+</div>
+
+
+    <div class="site-wrapper">
+        <header>
+	<div class="h-wrap">
+		
+		<h1 class="title"><a href="http://glennryan.info/">glenn ryan&#39;s blog</a></h1>
+		
+		<a class="menu-icon" title="Menu"><span class="lines"></span></a>
+	</div>
+</header>
+        
+        <section class="single-wrap">
+            <article class="single-content" itemscope itemtype="//schema.org/BlogPosting">
+                <div class="feat">
+                    <h5 class="page-date">
+                    <time datetime="" itemprop="datePublished">
+                    17. April 2016
+                    </time>
+                    </h5>
+                </div>
+                <h1 class="page-title" itemprop="name headline">laying a foundation</h1>
+                <h5 class="js-reading-time"></h5>
+                <div itemprop="articleBody">
+                    
+
+<p>I have a bevy of subjects to explore, but I didn&rsquo;t have much time to prepare material over the past couple of weeks. My productivity with developing and reasoning about my app really took off, so I&rsquo;ve been focusing my energy on that. Therefore, I decided to dedicate this post to a few lessons I learned that I hope to carry forward in future projects. The below assumes this is an open source app that is nontrivial but in a rich domain (like web or mobile development).</p>
+
+<h3 id="it-was-here-already-long-ago">it was here already, long ago</h3>
+
+<p>You need to spend quite a bit of time reasoning about your app before a single line of code is written. I&rsquo;d recommend starting by scouting for &ldquo;Prior Art&rdquo;. Take advantage of the easy access we have to open source projects today. Hunt down apps that do something similar to yours, try to understand what problems they were trying to solve and dig deep into their code to see how they aimed to acheive it. Be empathetic but critical. You want to grasp with their intent to understand the whys and hows of their code but also see how things could have been done better differently, in your opinion of course.</p>
+
+<p>After some research, you will have hopefully gained quite a bit of perspective. As a side effect, if you were hoping to make the first or &ldquo;best&rdquo; of a solution domain, you know what you&rsquo;re up against.</p>
+
+<h3 id="all-streams-flow-into-the-sea-yet-the-sea-is-never-full">all streams flow into the sea, yet the sea is never full</h3>
+
+<p>Next, I would recommend researching the technology stack you want to use for your app. This can be a paralyzing act for some, given how some domains (front-end web dev, par excellence) have so much to choose from. But feeling good about your choices here can go a long way in staying confident in the long run. Depending on how this project scales from personal to library, make some wise choices on how brave you want to be in choosing the cuting-edge.</p>
+
+<p><em>Don&rsquo;t</em> believe the hype for anything. <em>Do</em> spend some time on tutorials and really think about how the tech you choose will behave when brought into the wild unknown of your future app.</p>
+
+<h3 id="the-eye-never-has-enough-of-seeing-nor-the-ear-its-fill-of-hearing">the eye never has enough of seeing, nor the ear its fill of hearing</h3>
+
+<p>That being said, don&rsquo;t spend too much time researching technology. This was a big mistake for me in my first nontrivial project, having swapped out languages and frameworks ad infinitum. Generally if you make enough &ldquo;macro&rdquo; design decisions up front (e.g., going modular vs holistic, as I discussed in my last post), you can trust that you&rsquo;ll probably make a pretty good initial decision.</p>
+
+<h3 id="what-is-crooked-cannot-be-straightened">what is crooked cannot be straightened</h3>
+
+<p>Now you&rsquo;re ready to start writing code? Well, don&rsquo;t. List out design patterns, write pseudocode, model your data and drum up some state machines,&mdash;as necessary, of course&mdash;doing the best you can. Some of these things are inherent to the technology stack you earlier decided on, while others are things you find appropriate for your unique solution.</p>
+
+<p>The key thing here is that your initial, unverified ideas about what your app will actually do are probably wrong because there are always hidden complexities, corner cases and logical errors that you will brush up against if you continue with it as-is. Doing the right amount of planning and design keeps your development on the straight and narrow. You want to avoid a shaky, sporadic design full of ugly hacks and corner case checking. You especially want to avoid ugliness that is not worth the refactoring required to fix it. That&rsquo;s to say either it&rsquo;s pointlessly trivial (and you should have thought of it), or it&rsquo;s so pervasive that it&rsquo;s nontrivial to get rid of.</p>
+
+<h3 id="what-is-lacking-cannot-be-counted">what is lacking cannot be counted</h3>
+
+<p>As stated before vis-a-vis prior planning, everything is a balance. Don&rsquo;t overdo planning or design. There <em>is</em> such a thing as overengineering. Believe me, it&rsquo;s just as much of a pain in the long run as an ugly, undercooked design.</p>
+
+<p>You <em>will</em> have bugs; there will always be problems you couldn&rsquo;t foresee in the planning phase. That is the reality of writing anything with state. Your design can&rsquo;t be proven. And so implementation will always deviate from design.</p>
+
+<p>It bears repeating: <em>everything is a balance</em>. I hope to explore the nuances of this balance more and more as I gain more experience.</p>
+
+<h3 id="better-one-handful-with-tranquility-than-two-handfuls-with-toil">better one handful with tranquility than two handfuls with toil</h3>
+
+<p>Now that you&rsquo;re ready to start with your code, remember to indulge in TDD. Break your code into units and express that bare logic in unit tests. Take your time, write out as much as you feel appropriate. Given good research and design, this part almost writes itself.</p>
+
+<p>Finally, my last piece of faux-wisdom: after all of the above skeleton work is done, you&rsquo;ve thrown in the meat of your app, and you have a <a href="https://medium.com/the-happy-startup-school/beyond-mvp-10-steps-to-make-your-product-minimum-loveable-51800164ae0c" target="_blank">Minimum Loveable Product</a>, consider it a prototype. This is the golden time when you can decide here whether to continue with what you have, interchange some parts, or throw it out and start over.</p>
+
+<p>Designing and planning is like the Ring of Power, and we&rsquo;re all the Frodos of the problem we&rsquo;re facing. Rather than cowardly wear the ring and hide in the addicting shadow world of inaction and strategy, or foolishly rush in without it, we can use the ring as we need to in our journey to ultimately destroy it, and live peacefully in the world of implementation. The hard part is keeping our wits about us and learning when to slip it on and off.</p>
+
+                </div>
+                <div class="feat share">
+                    <a href="//twitter.com/share" class="popup">
+                        <span class="icon-twitter"></span>
+                    </a>
+                </div>
+                
+                <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'glennryan';
+    var disqus_identifier = 'http:\/\/glennryan.info\/2016\/04\/17\/laying-a-foundation';
+    var disqus_title = 'laying a foundation';
+    var disqus_url = 'http:\/\/glennryan.info\/2016\/04\/17\/laying-a-foundation';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+                
+                
+                    <a rel="prev" href="http://glennryan.info/2016/04/03/modular-vs-holistic" id="prev">
+                        &larr; <span class="nav-title nav-title-prev"></span>
+                    </a>
+                
+            </article>
+        </section>
+
+        <footer>
+	
+	<small>POWERED BY <a href="//gohugo.io" target="_blank">HUGO</a> - THEME: <a href="//github.com/digitalcraftsman/hugo-hikari-theme" target="_blank">HIKARI</a> - © 2016 <a href="mailto:contact@glennryan.info" target="_blank">GLENN RYAN</a></small>
+	
+</footer>
+    </div>
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://glennryan.info/js/src/main.js"></script>
+<script src="http://glennryan.info/js/vendor/Countable.js"></script>
+<script src="http://glennryan.info/js/src/util.js"></script>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-74357056-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+
+    
+    <!-- Reading time approximation -->
+    <script>util.renderReadTime(200, 'div[itemprop=articleBody]', '.js-reading-time');</script>
+</body>
+</html>
