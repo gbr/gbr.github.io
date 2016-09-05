@@ -7,8 +7,40 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Glenn Ryan 2016. All rights reserved.</copyright>
-    <lastBuildDate>Sun, 17 Apr 2016 12:49:12 -0700</lastBuildDate>
+    <lastBuildDate>Sun, 04 Sep 2016 15:35:51 -0700</lastBuildDate>
     <atom:link href="http://glennryan.info/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>function vs form</title>
+      <link>http://glennryan.info/2016/09/04/function-vs-form</link>
+      <pubDate>Sun, 04 Sep 2016 15:35:51 -0700</pubDate>
+      
+      <guid>http://glennryan.info/2016/09/04/function-vs-form</guid>
+      <description>
+
+&lt;p&gt;I&amp;rsquo;ve been doing some research to look into visual and graphic design, interested in seeing what makes a good designer. There are quite a few websites devoted to helping budding UX designers find their footing, particularly those coming from an engineering background. One in particular I&amp;rsquo;ve been enjoying is &lt;a href=&#34;https://hackdesign.org/&#34; target=&#34;_blank&#34;&gt;Hack Design&lt;/a&gt;. The weekly lessons are so good I&amp;rsquo;m half expecting to find a bill in my inbox one of these days. It&amp;rsquo;s pretty unbelievable that it&amp;rsquo;s free.&lt;/p&gt;
+
+&lt;p&gt;What captured my attention this week is the topic of typography. I was already familiar with the concept of serif vs sans-serif, monospace vs proportional. I may not have known the names for the measurement points for lettering, but I knew there were varying peaks and valleys for different characters. There is obviously more to learn, but the basic concepts are intuitive enough. However, what I didn&amp;rsquo;t realize on my own was just how much typeface influenced my interaction with the printed word. Clearly, we choose one font over another. But I don&amp;rsquo;t think most of us realize at times the true relationship between form and content, lettering and letters.&lt;/p&gt;
+
+&lt;h3 id=&#34;helvetica-you-were-here-the-whole-time&#34;&gt;helvetica, you were here the whole time&lt;/h3&gt;
+
+&lt;p&gt;At the end of the list of links and book recommendations this week was a film. It was &lt;a href=&#34;http://www.hustwit.com/category/helvetica/&#34; target=&#34;_blank&#34;&gt;Helvetica&lt;/a&gt;, which I had heard of but never took much interest in seeing. I don&amp;rsquo;t have Netflix, so I spent $0.99 for an SD rental on Amazon to see it. Not too much investment. The documentary is structured in what turns out to be a three-act narrative on the ubiquitous Helvetica font in the modern world. Along the way we first see it from a fully modernist perspective (Part I), through the eyes of the generation directly succeeding its birth. Next, we see the post-modern, grunge generation that derided and sought to overcome it (Part II). And we finally see the most recent generation that has, for better or worse, re-embraced Helvetica and sought to re-vitalize it within the context of post-modernism (Part III).&lt;/p&gt;
+
+&lt;p&gt;I have not chosen whether to be in Team Helvetica or not, but it&amp;rsquo;s clear that Helvetica serves not just as our reference point for how a font can change the world but as an extreme in the question of whether design should serve only as a utility for delivering content or whether design should be content in itself. It&amp;rsquo;s funny. In Part I, Helvetica was noted for its strengths in the former. Yet, in Part III, for its ability to carry so many tones and subtexts, even contradictary ones. One commentor in the film notes its cheekiness in American Apparel, yet its clean, conforming feel in the lettering of GAP and Banana Republic. So even the poster child for clarity and neutrality crosses the line into becoming a form of content, carrying a message whether in irony or earnestness.&lt;/p&gt;
+
+&lt;h3 id=&#34;for-us-or-against-us&#34;&gt;for us or against us&lt;/h3&gt;
+
+&lt;p&gt;This got me thinking about design in general. Not that I have ever studied formal design theory, but I am curious from a layman&amp;rsquo;s perspective about the role design currently plays, should play and should never play. Should design be expressive? To what extent? If a design challenges its audience, is it bad design? Is design art?&lt;/p&gt;
+
+&lt;p&gt;I was reading a wonderful article by Irene Au on &lt;a href=&#34;https://medium.com/design-your-life/design-and-the-self-a5670a000fee#.6z0vy2ge8&#34; target=&#34;_blank&#34;&gt;Design and the Self&lt;/a&gt;. It takes a clear stance in the camp of design being function, identity and intent, not art, nor an expression of anything more than a product. Clarity and simplicity triumph over all else. If not, it is a sign of &amp;ldquo;affliction of the Self&amp;rdquo;&amp;mdash;something like fear, greed or attachment corrupting the purity of true intention (see her article for details on what she means by that). There&amp;rsquo;s a bit of spirtuality in the argument that &amp;ldquo;the more able we are to transcend our beliefs about our Self, the better we can create a great design that clearly expresses our intention&amp;rdquo;, which she punctuates by saying, &amp;ldquo;What we create reflects our inner state&amp;rdquo;. And then, conversely, what we consume and use changes our inner state. Being and acting in association with a well-designed product with positive values and intentions nurtures our potential to embody the best version of ourselves. A product that moves in contradiction to our intentions only carries friction and adverisity to its user.&lt;/p&gt;
+
+&lt;p&gt;And if that were not enough, in the comments, a prominent UX Designer named Austin Knight commends the essay but counters that the examples provided put celebrity designers on display, like Coco Chanel and Dieter Rams, who are not the humble product designers Irene claims them to be. &amp;ldquo;&lt;em&gt;They are the brand&lt;/em&gt; that they represent&amp;rdquo;, he says. He lists some of his own articles at the end with very direct titles: &lt;a href=&#34;https://austinknight.com/writing/design-is-not-art/&#34; target=&#34;_blank&#34;&gt;Design is not Art&lt;/a&gt;, &lt;a href=&#34;https://austinknight.com/writing/good-design-is-humble/&#34; target=&#34;_blank&#34;&gt;Good Design is Humble&lt;/a&gt;, &lt;a href=&#34;https://blogs.adobe.com/creativecloud/the-art-of-lean-ux-and-the-death-of-ego-with-austin-knight/&#34; target=&#34;_blank&#34;&gt;Lean UX and the Death of Ego with Austin Knight&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;m typically such a yes-man when it comes to the question of the &amp;ldquo;is X art&amp;rdquo; question. But I agree with him here. A good designer is invisible to the beholder, while a good artist gets to choose how visible they want to be. That&amp;rsquo;s what expression means in this context.&lt;/p&gt;
+
+&lt;p&gt;In any case, I don&amp;rsquo;t think I &amp;ldquo;solved&amp;rdquo; this issue, but this seems as good as any place to stop. I look forward to learning more about visual design. I&amp;rsquo;d love to make an amateur attempt at designing my own font one day as well.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>laying a foundation</title>
