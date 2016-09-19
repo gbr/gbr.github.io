@@ -7,8 +7,45 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Glenn Ryan 2016. All rights reserved.</copyright>
-    <lastBuildDate>Sun, 04 Sep 2016 15:35:51 -0700</lastBuildDate>
+    <lastBuildDate>Sun, 18 Sep 2016 16:04:20 -0700</lastBuildDate>
     <atom:link href="http://glennryan.info/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>dark patterns</title>
+      <link>http://glennryan.info/2016/09/18/dark-patterns</link>
+      <pubDate>Sun, 18 Sep 2016 16:04:20 -0700</pubDate>
+      
+      <guid>http://glennryan.info/2016/09/18/dark-patterns</guid>
+      <description>&lt;!--
+    TODO change the CSS for image captions to be smaller, maybe even center it with  the title
+--&gt;
+
+&lt;p&gt;Recently I stumbled upon some Medium posts about the Dark Patterns LinkedIn uses to expand its userbase via the &lt;a href=&#34;https://medium.com/@danrschlosser/linkedin-dark-patterns-3ae726fe1462#.b0camxlfi&#34; target=&#34;_blank&#34;&gt;unwittingly imported address books of unsuspecting users&lt;/a&gt;. This was the first time I had heard of Dark Patterns. I got interested in the subject (not as a potential culprit, mind you), so I chose it as this week&amp;rsquo;s topic.&lt;/p&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://glennryan.info/img/lrrh.png&#34; alt=&#34;My shoddy Photoshop recreation of Molly Bang&amp;#39;s iconic paper art&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;Little Red Riding Hood&lt;/h4&gt;
+        &lt;p&gt;
+        My shoddy Photoshop recreation of Molly Bang&amp;#39;s iconic paper art
+        
+            
+        
+        &lt;/p&gt; 
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+
+&lt;p&gt;According to &lt;a href=&#34;http://darkpatterns.org/&#34; target=&#34;_blank&#34;&gt;Harry Brignull et al&lt;/a&gt;, &amp;ldquo;a Dark Pattern is a user interface that has been carefully crafted to trick users into doing things, such as buying insurance with their purchase or signing up for recurring bills.&amp;rdquo; Dark Patterns have existed since time memorial in web years, and they are not usually as sinister as the &lt;a href=&#34;https://en.wikipedia.org/wiki/Dark_web&#34; target=&#34;_blank&#34;&gt;Dark Web&lt;/a&gt;. However, the topic poses as an interesting example for how bad design can be good for business and vice versa. But is there ever a time when good UX can superside a Dark Pattern and be just as good if not better for business?&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;m not an expert on this matter (or anything else design-related), but it seems to me the majority of cases where management and business demands Dark Patterns, a more empathetic design alternative would make less money. I scrolled through dozens of cases. The leading argument for how Dark Patterns hurts a business is a loss of &lt;em&gt;trust&lt;/em&gt;. Opponents to the idea argue that Dark patterns may help a business in the short-term, but it hurts in the long-term. Unfortunately, in studying more sophistic cases of Dark Patterns by tech giants with the technical prowess to pull it off, there are workarounds to circumvent the trust issue by misleading the user so deeply that they remain completely unaware.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>function vs form</title>
