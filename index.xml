@@ -7,8 +7,52 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; Glenn Ryan 2016. All rights reserved.</copyright>
-    <lastBuildDate>Sun, 18 Sep 2016 16:04:20 -0700</lastBuildDate>
+    <lastBuildDate>Sun, 25 Sep 2016 20:14:33 -0700</lastBuildDate>
     <atom:link href="http://glennryan.info/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>the new design</title>
+      <link>http://glennryan.info/2016/09/25/the-new-design</link>
+      <pubDate>Sun, 25 Sep 2016 20:14:33 -0700</pubDate>
+      
+      <guid>http://glennryan.info/2016/09/25/the-new-design</guid>
+      <description>
+
+&lt;p&gt;I was reading through &lt;a href=&#34;https://medium.com/the-mission/the-best-design-writing-of-2015-7776699d4796#.8irep7c8n&#34; target=&#34;_blank&#34;&gt;Medium&amp;rsquo;s Best Design Writing of 2015&lt;/a&gt; and found quite a few valuable articles for the budding designer. These were mostly on the subject of modern-day workflows, design philosophies and trends. However, the most eye-catching articles were those on the design career. I gave into temptation and clicked on them, knowing these could only affirm what I already know at best and give me severe career anxiety at worst.&lt;/p&gt;
+
+&lt;p&gt;A few of said articles had an alarmist ring to them&amp;ndash;and I knew to take them with a grain of salt&amp;ndash;, but &lt;a href=&#34;https://medium.com/swlh/will-ui-designers-be-unemployed-soon-edaffe9e5f1b#.1xzjhpcfl&#34; target=&#34;_blank&#34;&gt;one in particular&lt;/a&gt; that I initially suspected of crying wolf may bear some truth to it.&lt;/p&gt;
+
+&lt;h2 id=&#34;a-parting-train&#34;&gt;a parting train&lt;/h2&gt;
+
+&lt;p&gt;Essentially, Ariel Verber, the author, is making the case for the death of &lt;em&gt;UI Designer&lt;/em&gt; as a career trek. He argues that the job has greatly simplified in the advent of other roles that have risen around it in recent years. The Art Director&amp;ndash;what I like to think of as the design version of the PM&amp;ndash;ensures a consistent vision throughout the company products and creates brand guidelines the UI Designer must adhere to. Meanwhile, the UX Designer has created a flow for the inidivual product that the UI designer must tip-toe around. In other words, the UI designer is in this go-between of muck that is slowly closing in on itself.&lt;/p&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;http://67.media.tumblr.com/7ab8bee5349d0a889f32d621710ef465/tumblr_nnu6c8sdv41s3y9slo3_500.gif&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;trash compactor&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+
+&lt;p&gt;Verber is not saying that all current (at his time of writing) UI Designers are doomed to unemployment. He is saying they are in a perfect position either to pivot to another form of design or to become a developer. He recommends learning some new skills, be it in UX, ID, 3D, front-end engineering or illustration.&lt;/p&gt;
+
+&lt;p&gt;From what I&amp;rsquo;ve seen on the job market, I think there is something to be said about this argument. A fair amount of front-end jobs ask for some design expertise. Many manifest this trend as not just a skill but as an identity in its own right: &amp;ldquo;Front-end + UI Engineer&amp;rdquo;.&lt;/p&gt;
+
+&lt;h2 id=&#34;it-s-all-about-the-terms&#34;&gt;it&amp;rsquo;s all about the terms&lt;/h2&gt;
+
+&lt;p&gt;Where I think this argument goes awry is in its naïf, implicit trust in naming conventions. The truth is that employers often don&amp;rsquo;t use the right name for what they need and/or &lt;a href=&#34;http://ux.stackexchange.com/questions/99201/has-anyone-out-there-found-examples-of-solid-ux-career-path-definitions-with-rol&#34; target=&#34;_blank&#34;&gt;don&amp;rsquo;t understand the true career trajectory of certain types of designers&lt;/a&gt;. As one commentor points out, what Verber is calling UI Design is really Visual Design&amp;ndash;a digital cousin of graphic design. Modern UI designers actually do understand UX and ID pretty well.&lt;/p&gt;
+
+&lt;p&gt;(Also, another commenter accurately points out that Illustration isn&amp;rsquo;t exactly an equivalent alternative to what Verber is describing, as it is often more of a freelance thing. And, indeed, Verber&amp;rsquo;s &amp;ldquo;UI Designer&amp;rdquo; that is really a Visual Designer would probably just as likely go freelance rather than extinct.)&lt;/p&gt;
+
+&lt;p&gt;The point remains that one should not feel career anxiety if one is an active participant in the Design community. Proficient enough in the profession and with an ear low enough to the ground&amp;ndash;and not even that low, really&amp;ndash;, a designer will pick up on the right skills as they come merely out of interest and know when to call themselves by a new name. These days, we have such titles as &lt;a href=&#34;https://medium.com/@edenvidal/the-rise-of-the-full-stack-designer-and-the-tools-he-uses-3daf015eb3fc#.l9y99e4jz&#34; target=&#34;_blank&#34;&gt;&amp;ldquo;Full Stack&amp;rdquo; Designer&lt;/a&gt;, &lt;a href=&#34;https://blog.prototypr.io/design-technologists-front-end-development-in-the-design-system-era-5b0f1fa7b3de#.jol8asnje&#34; target=&#34;_blank&#34;&gt;Design Technologist&lt;/a&gt; and &lt;a href=&#34;https://medium.com/@ericeriksson/what-is-product-design-9709572cb3ff#.beplxhnkp&#34; target=&#34;_blank&#34;&gt;Product Designer&lt;/a&gt; to swap out for old ones that are no longer in vogue. Though it can be, it seems to me more than just an exercise in vanity; it seems to me a symbolic gesture of shedding old skin and re-defining your career to meet the reality of the times.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>dark patterns</title>
